@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nested Principles — A Proposal | Constructive Dialogue Institute</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=PT+Sans+Narrow:wght@400;700&display=swap');
+
+  :root {
+    --layer0: #1e1e3a;
+    --layer1: #2d2d6b;
+    --layer2: #3f3f99;
+    --layer3: #5158ff;
+    --layer4: #7b80ff;
+    --layer4b: #1e1e3a;
+    --cdi-purple: #5158ff;
+    --text-primary: #2d2d2d;
+    --text-secondary: #4a5568;
+    --text-light: #718096;
+    --bg: #fafaf8;
+    --accent: #5158ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 80px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #e2e0dc;
+  }
+  .header h1 {
+    font-family: 'PT Sans Narrow', Arial Narrow, sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 2px;
+    color: var(--cdi-purple);
+  }
+  .header .subtitle {
+    font-family: 'PT Sans Narrow', Arial Narrow, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #434343;
+    margin-bottom: 20px;
+  }
+  .header .dateline {
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 13px;
+    color: var(--text-light);
+  }
+
+  /* PROSE */
+  p { margin-bottom: 1.4em; }
+  em { font-style: italic; }
+  strong { font-weight: 600; }
+
+  .section {
+    margin-bottom: 60px;
+  }
+  .section-label {
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--layer4b);
+    margin-bottom: 12px;
+  }
+  .section h2 {
+    font-family: 'PT Sans Narrow', Arial Narrow, sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--cdi-purple);
+  }
+
+  .highlight {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* EPIGRAPH */
+  .epigraph {
+    border-left: 3px solid var(--cdi-purple);
+    padding: 16px 24px;
+    margin: 30px 0 30px 20px;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 17px;
+  }
+  .epigraph .attr {
+    font-style: normal;
+    font-size: 14px;
+    margin-top: 8px;
+    color: var(--text-light);
+  }
+
+  /* === PRIMARY VISUALIZATION: CONCENTRIC RINGS === */
+  .viz-container {
+    margin: 60px 0;
+    text-align: center;
+  }
+  .viz-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+  .viz-caption {
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  /* === NESTING VISUALIZATION: LAYERED BOXES === */
+  .nest-visual {
+    margin: 50px 0;
+    position: relative;
+  }
+  .nest-layer {
+    border-left: 3px solid;
+    padding: 20px 24px;
+    margin-bottom: 0;
+    margin-left: 0;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .nest-layer:hover {
+    background: rgba(0,0,0,0.015);
+  }
+  .nest-layer.l0 { border-color: var(--layer0); margin-left: 0; }
+  .nest-layer.l1 { border-color: var(--layer1); margin-left: 30px; }
+  .nest-layer.l2 { border-color: var(--layer2); margin-left: 60px; }
+  .nest-layer.l3 { border-color: var(--layer3); margin-left: 90px; }
+  .nest-layer.l4 { border-color: var(--layer4); margin-left: 120px; }
+  .nest-layer.l5 { border-color: var(--layer5); margin-left: 150px; }
+
+  .nest-label {
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .nest-layer.l0 .nest-label { color: var(--layer0); }
+  .nest-layer.l1 .nest-label { color: var(--layer1); }
+  .nest-layer.l2 .nest-label { color: var(--layer2); }
+  .nest-layer.l3 .nest-label { color: var(--layer3); }
+  .nest-layer.l4 .nest-label { color: var(--layer4); }
+  .nest-layer.l5 .nest-label { color: var(--layer5); }
+
+  .nest-principle {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .nest-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  /* === COHERENCE TEST VISUAL === */
+  .coherence-test {
+    background: #f7f6f3;
+    border-radius: 8px;
+    padding: 36px;
+    margin: 50px 0;
+  }
+  .coherence-test h3 {
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--cdi-purple);
+    margin-bottom: 24px;
+  }
+  .test-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 16px;
+  }
+  .test-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    margin-top: 2px;
+  }
+  .test-icon.pass { background: #48825d; }
+  .test-icon.fail { background: var(--accent); }
+  .test-content {
+    flex: 1;
+  }
+  .test-decision {
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .test-check {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+  .test-verdict {
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .test-verdict.pass { color: #48825d; }
+  .test-verdict.fail { color: var(--accent); }
+
+  /* === COMPARISON TABLE === */
+  .compare {
+    margin: 50px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e0dc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .compare-col {
+    padding: 30px;
+  }
+  .compare-col.left {
+    background: #f7f6f3;
+    border-right: 1px solid #e2e0dc;
+  }
+  .compare-col h3 {
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  .compare-col.left h3 { color: var(--text-light); }
+  .compare-col.right h3 { color: var(--cdi-purple); }
+  .compare-item {
+    font-size: 15px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #e8e6e2;
+  }
+  .compare-item:last-child { border-bottom: none; }
+
+  /* === FLOW DIAGRAM === */
+  .flow-section {
+    margin: 50px 0;
+    text-align: center;
+  }
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .flow-box {
+    padding: 14px 24px;
+    border-radius: 6px;
+    color: white;
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    min-width: 300px;
+    text-align: center;
+  }
+  .flow-box.b0 { background: var(--layer0); }
+  .flow-box.b1 { background: var(--layer1); }
+  .flow-box.b2 { background: var(--layer2); }
+  .flow-box.b3 { background: var(--layer3); }
+  .flow-box.b4 { background: var(--layer4); }
+  .flow-arrow {
+    font-size: 20px;
+    color: var(--text-light);
+    margin: 4px 0;
+  }
+  .flow-annotation {
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 12px;
+    color: var(--text-light);
+    font-style: italic;
+    margin: 2px 0 8px;
+  }
+
+  /* BREATHING ANIMATION — scale + fill shading in sync */
+  @keyframes svgBreathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+  @keyframes ringBreathe0 {
+    0%, 100% { opacity: 0.01; }
+    50% { opacity: 0.09; }
+  }
+  @keyframes ringBreathe1 {
+    0%, 100% { opacity: 0.01; }
+    50% { opacity: 0.08; }
+  }
+  @keyframes ringBreathe2 {
+    0%, 100% { opacity: 0.01; }
+    50% { opacity: 0.07; }
+  }
+  @keyframes ringBreathe3 {
+    0%, 100% { opacity: 0.01; }
+    50% { opacity: 0.065; }
+  }
+  @keyframes ringBreathe4 {
+    0%, 100% { opacity: 0.015; }
+    50% { opacity: 0.08; }
+  }
+  #nestSvg {
+    animation: svgBreathe 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    transform-origin: center 73%;
+  }
+  #nestSvg .ring-breathe-0 { animation: ringBreathe0 6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+  #nestSvg .ring-breathe-1 { animation: ringBreathe1 6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+  #nestSvg .ring-breathe-2 { animation: ringBreathe2 6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+  #nestSvg .ring-breathe-3 { animation: ringBreathe3 6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+  #nestSvg .ring-breathe-4 { animation: ringBreathe4 6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+
+  /* Ripple arc breathing — pulse opacity and radius in sync with rings */
+  @keyframes rippleBreathe1 {
+    0%, 100% { opacity: 0.03; r: 438; }
+    50% { opacity: 0.22; r: 455; }
+  }
+  @keyframes rippleBreathe2 {
+    0%, 100% { opacity: 0.01; r: 455; }
+    50% { opacity: 0.15; r: 480; }
+  }
+  @keyframes rippleBreathe3 {
+    0%, 100% { opacity: 0.0; r: 472; }
+    50% { opacity: 0.09; r: 508; }
+  }
+  #nestSvg .ripple-1 { animation: rippleBreathe1 6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+  #nestSvg .ripple-2 { animation: rippleBreathe2 6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+  #nestSvg .ripple-3 { animation: rippleBreathe3 6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+
+  #nestSvg.hovered {
+    animation-play-state: paused;
+  }
+  #nestSvg.hovered .ring-breathe-0,
+  #nestSvg.hovered .ring-breathe-1,
+  #nestSvg.hovered .ring-breathe-2,
+  #nestSvg.hovered .ring-breathe-3,
+  #nestSvg.hovered .ring-breathe-4,
+  #nestSvg.hovered .ripple-1,
+  #nestSvg.hovered .ripple-2,
+  #nestSvg.hovered .ripple-3 {
+    animation-play-state: paused;
+  }
+
+  /* SEPARATOR */
+  .sep {
+    text-align: center;
+    margin: 60px 0;
+    color: var(--text-light);
+    font-size: 24px;
+    letter-spacing: 12px;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 80px;
+    padding-top: 30px;
+    border-top: 1px solid #e2e0dc;
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    font-size: 13px;
+    color: var(--text-light);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Nested Principles: A Living Framework</h1>
+    <div style="font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 13px; font-style: italic; color: var(--text-light); letter-spacing: 1px; margin-bottom: 1px;">for</div>
+    <div style="font-family: 'PT Sans Narrow', Arial Narrow, sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: 4px; color: var(--text-light); margin-bottom: 10px;">Constructive Dialogue Institute</div>
+    <div class="dateline" style="letter-spacing: 2px;"><span style="text-transform: uppercase; color: var(--text-primary); font-weight: 600;">Draft Proposal</span> &middot; Ari Allen &middot; February 2026</div>
+  </div>
+
+  <!-- OPENING: THE PROBLEM -->
+  <div class="section">
+    <div class="section-label">The Paradox of Constructive Dialogue</div>
+    <h2>Cultivating a Posture, Not a Position</h2>
+    <p>
+      Most people do not experience their moral and political positions as positions. They experience them as reality. The framework through which they see the world is invisible to them&mdash;like water to a fish. This is why disagreements so often feel like battles between good and evil rather than encounters between different ways of seeing. CDI's foundational premise is that this invisibility can be overcome. We call the capacity to recognize it <em>meta-perspectival awareness</em>: a perspective on perspectives. Not an -ism. Not a doctrine. An acknowledgement&mdash;one you make again and again, not once.
+    </p>
+    <p>
+      This is not the claim to have transcended perspective&mdash;that would be its own kind of blindness. It is the recognition that every perspective is irreducibly particular&mdash;that's selfhood, not a flaw; our common ground, a shared <em>condition</em>&mdash;combined with the flexibility to <em>under-stand</em> how others see from where they <em>stand</em> (<em>inter-stand</em>, if you will). You cannot share someone else's perspective any more than you can occupy their life&mdash;and any attempt will still carry projections of your own being. But you <em>can</em> cultivate a quality of holding your own that makes genuine encounter possible&mdash;the difference between arguing about <em>who</em> is right and understanding <em>how</em> each person came to see what they see.
+    </p>
+    <p>
+      Here is the challenge: meta-perspectival awareness is not a <em>position</em>&mdash;it's not a point on a political spectrum, not a coordinate you can map. It is a <em>posture</em>&mdash;the quality of how you hold whatever position you happen to occupy. A position is <strong>where</strong> you stand: progressive, conservative, libertarian. A posture is <strong>how</strong> you stand there: whether you hold your beliefs rigidly or with curiosity, whether you're listening or just waiting to rebut. And posture cannot be transmitted as content. You cannot teach someone how to hold their beliefs. You can only create conditions in which they practice a different way of holding&mdash;through conversation, through encounter, through being present to one another.
+    </p>
+    <p>
+      This creates a unique architectural problem. Organizations typically organize around <em>first principles</em>&mdash;fixed foundations from which strategy, tactics, and execution are derived. But a first principle about perspectival awareness cannot be foundational without contradicting itself. The principle must be held the way it teaches you to hold everything else: provisionally, as <strong>orientation</strong> rather than destination. The "first" is not bedrock. It is a horizon. Horizons move as we move. That is what makes them useful for navigation.
+    </p>
+    <p>
+      But even "first" carries baggage. It implies a <strong>sequence</strong>&mdash;a starting point from which other things are derived, like theorems from axioms. Establish foundations, derive strategy, execute tactics. Linear. Clean.
+    </p>
+    <p>
+      What if our principles don't&mdash;<em>can't</em>&mdash;work this way? What if they don't stack and cascade but rather <em>nest and align</em>&mdash;each one containing the others, each one expressing the same insight at a different altitude?
+    </p>
+  </div>
+
+  <div class="sep">&middot; &middot; &middot;</div>
+
+  <!-- METAPHOR -->
+  <div class="section">
+    <div class="section-label">The Framework</div>
+    <h2>Russian Dolls, Not Hierarchies</h2>
+    <p>
+      In a hierarchy, the top tells the bottom what to do. In a <em>nesting</em>, the inner <strong>generates</strong> the outer. Every layer grows from the layers within it. The same pattern repeats at every level&mdash;recognizable whether you're looking at a board-level strategy question or a metrics decision in a single product feature.
+    </p>
+    <p>
+      Why does this matter? Products embed philosophy whether or not you articulate it. Every feature, every UX choice, every metric you optimize for carries assumptions about what you're building and why. Unarticulated philosophy doesn't mean no philosophy&mdash;it means <em>unconscious</em> philosophy. And unconscious philosophy fragments: education makes one set of assumptions, engineering another, research another, growth another. You get drift. You lose coherence. The product becomes a collection of features rather than an integrated whole. For <em>developmental</em> products&mdash;products designed to create conditions for human and institutional transformation&mdash;this fragmentation is fatal.
+    </p>
+    <p>
+      The usual fix is first principles: validate each decision against its consistency with foundational commitments. But nesting offers a different type of evaluation. Not <em>is this <strong>consistent</strong> with our principles?</em> but <em>is this <strong>coherent</strong> with the layers it grows from?</em> In short: <span class="highlight">does this nest?</span>
+    </p>
+  </div>
+
+  <!-- PRIMARY VISUALIZATION: INTERACTIVE CONCENTRIC RINGS -->
+  <div class="viz-container" style="position: relative;">
+    <svg id="nestSvg" viewBox="0 -20 760 640" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- Arrowhead markers -->
+      <defs>
+        <marker id="flywheel-tip" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M 0 1.5 L 7 4 L 0 6.5" fill="none" stroke="#1e1e3a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <marker id="ripple-tip" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="4" markerHeight="4" orient="auto">
+          <path d="M 0 1.5 L 7 4 L 0 6.5" fill="none" stroke="#1e1e3a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- Visible rings — pointer-events:none so hit areas work -->
+      <circle id="ring0fill" class="ring-breathe-0" cx="380" cy="440" r="430" fill="#1e1e3a" style="pointer-events:none;"/>
+      <circle id="ring0stroke" cx="380" cy="440" r="430" fill="none" stroke="#1e1e3a" stroke-width="1.5" opacity="0.85" style="pointer-events:none;"/>
+
+      <circle id="ring1fill" class="ring-breathe-1" cx="380" cy="440" r="340" fill="#2d2d6b" style="pointer-events:none;"/>
+      <circle id="ring1stroke" cx="380" cy="440" r="340" fill="none" stroke="#2d2d6b" stroke-width="1.5" opacity="0.75" style="pointer-events:none;"/>
+
+      <circle id="ring2fill" class="ring-breathe-2" cx="380" cy="440" r="258" fill="#3f3f99" style="pointer-events:none;"/>
+      <circle id="ring2stroke" cx="380" cy="440" r="258" fill="none" stroke="#3f3f99" stroke-width="1.5" opacity="0.65" style="pointer-events:none;"/>
+
+      <circle id="ring3fill" class="ring-breathe-3" cx="380" cy="440" r="178" fill="#5158ff" style="pointer-events:none;"/>
+      <circle id="ring3stroke" cx="380" cy="440" r="178" fill="none" stroke="#5158ff" stroke-width="1.5" opacity="0.55" style="pointer-events:none;"/>
+
+      <!-- Core: simple fill with breathing + solid stroke -->
+      <circle id="ring4fill" class="ring-breathe-4" cx="380" cy="440" r="105" fill="#7b80ff" style="pointer-events:none;"/>
+      <circle id="ring4stroke" cx="380" cy="440" r="105" fill="none" stroke="#7b80ff" stroke-width="1.5" opacity="0.55" style="pointer-events:none;"/>
+
+      <!-- Text labels (pointer-events:none so hit areas work) -->
+      <g style="pointer-events:none;">
+      <text x="380" y="54" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" letter-spacing="3" fill="#1e1e3a">PRODUCT IMPACT</text>
+      <!-- Education ⇄ Research flywheel with circular arrows -->
+      <text x="295" y="80" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#1e1e3a" font-style="italic">Education</text>
+      <text x="465" y="80" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#1e1e3a" font-style="italic">Research</text>
+      <!-- Top arc: Education → Research (shallow) -->
+      <path d="M 340,73 Q 380,63 420,73" fill="none" stroke="#1e1e3a" stroke-width="1" opacity="0.4" marker-end="url(#flywheel-tip)"/>
+      <!-- Bottom arc: Research → Education (shallow) -->
+      <path d="M 420,87 Q 380,97 340,87" fill="none" stroke="#1e1e3a" stroke-width="1" opacity="0.4" marker-end="url(#flywheel-tip)"/>
+
+      <text x="380" y="136" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" letter-spacing="3" fill="#2d2d6b">THE CONDITIONS</text>
+      <text x="380" y="162" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#2d2d6b" font-style="italic">Five Pillars that drive sustained <tspan fill="#1e1e3a" font-weight="600">impact</tspan></text>
+
+      <text x="380" y="222" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" letter-spacing="3" fill="#3f3f99">THE POSTURE</text>
+      <text x="380" y="244" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#3f3f99" font-style="italic">Create <tspan fill="#2d2d6b" font-weight="600">conditions</tspan> for genuine encounter</text>
+
+      <text x="380" y="300" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" letter-spacing="2" fill="#5158ff">OUR PERSPECTIVE</text>
+      <text x="380" y="322" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#5158ff" font-style="italic">Cultivate <tspan fill="#3f3f99" font-weight="600">posture</tspan>, not position</text>
+
+      <!-- Meta-Perspective core -->
+      <text x="380" y="430" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" letter-spacing="2" fill="#5158ff">THE META-PERSPECTIVE</text>
+      <text x="380" y="455" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="#5158ff" font-style="italic">We each hold a unique perspective</text>
+
+      <text x="380" y="505" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="8" fill="#1e1e3a" opacity="0.35" font-style="italic">the measure is the model</text>
+
+      </g><!-- end text labels group -->
+
+      <!-- Outward ripple arcs — impact radiating outward, animated with breathing -->
+      <g style="pointer-events:none;">
+        <circle class="ripple-1" cx="380" cy="440" r="445" fill="none" stroke="#1e1e3a" stroke-width="1.5" stroke-dasharray="8,14"/>
+        <circle class="ripple-2" cx="380" cy="440" r="468" fill="none" stroke="#1e1e3a" stroke-width="1.2" stroke-dasharray="6,16"/>
+        <circle class="ripple-3" cx="380" cy="440" r="492" fill="none" stroke="#1e1e3a" stroke-width="0.8" stroke-dasharray="4,18"/>
+      </g>
+
+
+      <!-- Hit areas LAST so they sit on top of everything -->
+      <path d="M380,440 m-430,0 a430,430 0 1,1 860,0 a430,430 0 1,1 -860,0 Z M380,440 m-340,0 a340,340 0 1,0 680,0 a340,340 0 1,0 -680,0 Z"
+            fill="transparent" data-ring="0" class="ring-hit" style="cursor:pointer;"/>
+      <path d="M380,440 m-340,0 a340,340 0 1,1 680,0 a340,340 0 1,1 -680,0 Z M380,440 m-258,0 a258,258 0 1,0 516,0 a258,258 0 1,0 -516,0 Z"
+            fill="transparent" data-ring="1" class="ring-hit" style="cursor:pointer;"/>
+      <path d="M380,440 m-258,0 a258,258 0 1,1 516,0 a258,258 0 1,1 -516,0 Z M380,440 m-178,0 a178,178 0 1,0 356,0 a178,178 0 1,0 -356,0 Z"
+            fill="transparent" data-ring="2" class="ring-hit" style="cursor:pointer;"/>
+      <path d="M380,440 m-178,0 a178,178 0 1,1 356,0 a178,178 0 1,1 -356,0 Z M380,440 m-105,0 a105,105 0 1,0 210,0 a105,105 0 1,0 -210,0 Z"
+            fill="transparent" data-ring="3" class="ring-hit" style="cursor:pointer;"/>
+      <circle cx="380" cy="440" r="105" fill="transparent" data-ring="4" class="ring-hit" style="cursor:pointer;"/>
+
+    </svg>
+
+  </div>
+
+  <!-- Hover info panel — flows below SVG, pushes content down -->
+  <div id="hoverPanel" style="
+    margin: 0 auto; max-width: 620px; width: 90%;
+    background: white; border: 1px solid #e2e0dc; border-radius: 8px;
+    padding: 16px 24px;
+    font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 13px; color: #4a5568;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s, padding 0.3s, margin 0.3s;
+    line-height: 1.5;
+    padding-top: 0; padding-bottom: 0; margin-top: 0;
+  ">
+    <div id="hoverContent"></div>
+  </div>
+
+  <script>
+  (function() {
+    const data = [
+      {
+        name: 'The Product Impact',
+        desc: 'The outermost layer&mdash;where the nesting touches the world. Everything built here expresses every layer within it. An education decision is simultaneously a conditions decision, a posture decision, and a perspectival act.',
+        example: '<strong>Example:</strong> A product feature is simultaneously an education decision, a conditions decision, a posture decision, and a perspectival act. The nesting means you can check it against any layer&mdash;not just the adjacent one.'
+      },
+      {
+        name: 'The Conditions',
+        desc: 'The Five Pillars aren\'t just tested by the Product Impact outside them&mdash;they\'re also grown from everything within. Committed Leadership is an institutional expression of posture. Curricular Integration is the Posture becoming routine. Campus Climate Assessment measures whether the campus is actually practicing what the Meta-Perspective teaches.',
+        example: '<strong>Example:</strong> A campus has broad-based programming but no leadership buy-in. The Conditions say the pillar is missing&mdash;but the <em>reason</em> it matters traces all the way in: without leadership modeling posture, programming stays peripheral to culture.'
+      },
+      {
+        name: 'The Posture',
+        desc: 'Create conditions for genuine encounter over agreement or compromise&mdash;but this doesn\'t only govern the Conditions layer outside it. It also disciplines what the Product Impact builds. A product feature that delivers content <em>about</em> posture instead of creating conditions <em>for</em> encounter breaks the nest, even though it\'s two layers out.',
+        example: '<strong>Example:</strong> A "Share Stories" lesson teaches students to move from <em>what</em> they believe to <em>why</em>. This is the Posture operating through curriculum (Conditions) and product (Product Impact) simultaneously.'
+      },
+      {
+        name: 'Our Perspective',
+        desc: 'Cultivating posture over position doesn\'t just hand up to the Posture layer&mdash;it shapes everything outside it. Education design is cultivating posture. Measurement is cultivating posture. The Five Pillars are institutional posture.',
+        example: '<strong>Example:</strong> Say we create a tool that sorts dialogue styles into two types&mdash;"warrior" (direct) and "explorer" (curious). Does it nest? It risks turning posture into a type&mdash;something you <em>are</em> rather than something you <em>practice</em>&mdash;and implies the two can\'t coexist. But principled humility <em>is</em> their coexistence: grounded enough to be direct, open enough to be curious. The nesting test: does this cultivate <em>how</em> someone holds disagreement, or sort them into categories?'
+      },
+      {
+        name: 'The Meta-Perspective',
+        desc: 'The innermost layer is the seed every outer layer grows from. It doesn\'t just touch Our Perspective&mdash;it\'s present in the Posture, the Conditions, and the Product Impact. An education decision three rings out is still an expression of "we each hold a unique perspective."',
+        example: '<strong>Example:</strong> A board member asks, "Is CDI liberal or conservative?" The question assumes we occupy a position on the political spectrum. Our answer is: that question misframes what we do. We\'re not left or right&mdash;we\'re asking how people with different views can actually listen to each other. That reframe <em>is</em> the Meta-Perspective at work.'
+      }
+    ];
+
+    const svg = document.getElementById('nestSvg');
+    const fills = ['ring0fill','ring1fill','ring2fill','ring3fill','ring4fill'];
+    const strokes = ['ring0stroke','ring1stroke','ring2stroke','ring3stroke','ring4stroke'];
+    const activeOpacity = 0.1;
+    const adjacentOpacity = 0.06;
+
+    const panel = document.getElementById('hoverPanel');
+    const content = document.getElementById('hoverContent');
+
+    function reset() {
+      svg.classList.remove('hovered');
+      fills.forEach(id => document.getElementById(id).style.opacity = '');
+      strokes.forEach(id => { if (id) document.getElementById(id).style.opacity = ''; });
+      panel.style.opacity = '0';
+      panel.style.maxHeight = '0';
+      panel.style.paddingTop = '0';
+      panel.style.paddingBottom = '0';
+      panel.style.marginTop = '0';
+    }
+
+    document.querySelectorAll('.ring-hit').forEach(el => {
+      el.addEventListener('mouseenter', function() {
+        const idx = parseInt(this.getAttribute('data-ring'));
+        const d = data[idx];
+
+        // Stop breathing
+        svg.classList.add('hovered');
+
+        // Highlight: hovered ring darkest, all source layers (closer to center) visible, expression layers (further from center) fade
+        fills.forEach((id, i) => {
+          const el = document.getElementById(id);
+          if (i === idx) el.style.opacity = activeOpacity;
+          else if (i > idx) el.style.opacity = 0.04; // source layers (closer to center) stay present
+          else el.style.opacity = 0.015; // expression layers (further from center) fade
+        });
+        strokes.forEach((id, i) => {
+          if (!id) return;
+          const el = document.getElementById(id);
+          if (i === idx) el.style.opacity = 1;
+          else if (i > idx) el.style.opacity = 0.55; // source strokes stay visible
+          else el.style.opacity = 0.2; // expression strokes fade
+        });
+
+        // Build panel
+        let html = '<div style="font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px; color:#1a1a2e;">' + d.name + '</div>';
+        html += '<div style="margin-bottom:6px;">' + d.desc + '</div>';
+        html += '<div style="margin-top:8px; padding-top:8px; border-top:1px solid #e8e6e2; color:#1a1a2e;">' + d.example + '</div>';
+        content.innerHTML = html;
+        panel.style.opacity = '1';
+        panel.style.maxHeight = '400px';
+        panel.style.paddingTop = '16px';
+        panel.style.paddingBottom = '16px';
+        panel.style.marginTop = '16px';
+      });
+
+      el.addEventListener('mouseleave', reset);
+    });
+  })();
+  </script>
+
+  <div class="sep">&middot; &middot; &middot;</div>
+
+  <!-- THE LAYERS UNPACKED -->
+  <div class="section">
+    <div class="section-label">Creating Coherence</div>
+    <h2>Five Layers, One Insight</h2>
+    <p>
+      What follows is not five separate principles. It is <em>one</em> insight&mdash;we each hold a unique perspective&mdash;expressed at five different scales. Because no one can share another person's perspective, this insight can't be taught as content. It can only be learned through being present to one another&mdash;through conversations where you notice your own frame, listen to someone else's, and realize they genuinely see something you don't. So each layer moves from recognition toward action: at the center, the acknowledgment that every perspective is particular. Then, growing outward, what that means for how we hold our own. Then, what we build so others can practice the same. Then, the institutional conditions that make that practice stick. And at the outermost ring, where philosophy is concretized as product impact&mdash;the education and research that bring it to life. Each layer is named for what the one within it produces.
+    </p>
+  </div>
+
+  <!-- NESTED LAYERS VISUALIZATION -->
+  <div class="nest-visual">
+    <div class="nest-layer" style="border-color: var(--cdi-purple); border-width: 2px; margin-left: 0;">
+      <div class="nest-label" style="color: var(--cdi-purple);">The Meta-Perspective</div>
+      <div class="nest-principle">We each hold a unique <span style="color: var(--layer3); font-style: italic; font-weight: 600;">perspective</span></div>
+      <div class="nest-desc">Not a doctrine to subscribe to but a way of being to acknowledge&mdash;again and again. Each person's perspective is irreducibly particular&mdash;that's selfhood, not a flaw; our common ground, a shared <em>condition</em>: we all see from somewhere.</div>
+    </div>
+    <div class="nest-layer l3" style="margin-left: 30px;">
+      <div class="nest-label">Our Perspective</div>
+      <div class="nest-principle">Cultivate <span style="color: var(--layer2); font-style: italic; font-weight: 600;">posture</span>, not position</div>
+      <div class="nest-desc">This is where CDI sees from. If each perspective is unique, we can't share positions. But we <em>can</em> cultivate the same quality of holding. Not <em>where</em> you stand but <em>how</em> you stand.</div>
+    </div>
+    <div class="nest-layer l2" style="margin-left: 60px;">
+      <div class="nest-label">The Posture</div>
+      <div class="nest-principle">Create <span style="color: var(--layer1); font-style: italic; font-weight: 600;">conditions</span> for genuine encounter</div>
+      <div class="nest-desc">Content is never the point&mdash;it's the vehicle. If what matters is posture, the content we build exists to create conditions for genuine encounter over agreement or compromise. The &ldquo;thing&rdquo; itself can't be extracted and handed over.</div>
+    </div>
+    <div class="nest-layer l1" style="margin-left: 90px;">
+      <div class="nest-label">The Conditions</div>
+      <div class="nest-principle">Five Pillars that drive sustained <span style="color: var(--layer0); font-style: italic; font-weight: 600;">impact</span></div>
+      <div class="nest-desc">What does it take for practice to become culture? Committed leadership. Broad-based programming. Curricular integration. Student-led initiatives. Campus climate assessment. The campus is the unit of impact.</div>
+    </div>
+    <div class="nest-layer l0" style="margin-left: 120px;">
+      <div class="nest-label">The Product Impact</div>
+      <div class="nest-principle">Build on the pillars. Measure capacity for encounter.</div>
+      <div class="nest-desc">The measure is the model&mdash;what you build shapes what you can measure; what you measure shapes what you build. Education and research face each other here.</div>
+    </div>
+  </div>
+
+  <!-- Translation Chain — merged into Five Layers section -->
+  <h3 style="font-family: 'PT Sans Narrow', Arial Narrow, sans-serif; font-size: 24px; font-weight: 700; color: var(--cdi-purple); margin-top: 50px; margin-bottom: 16px;">One Insight, Five Altitudes</h3>
+  <p>
+    Read downward to see how one insight translates from center outward. Read upward to trace any decision back to its source. Notice the names on the left: each layer is what the one within it yields.
+  </p>
+
+  <div class="flow-section">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+      <span style="font-family: IBM Plex Sans, sans-serif; font-size: 10px; color: #aaa; letter-spacing: 1px; text-transform: uppercase; min-width: 140px; text-align: right;">The Meta-Perspective</span>
+      <div class="flow-box b4">We each hold a unique perspective</div>
+    </div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-annotation">therefore what matters is...</div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+      <span style="font-family: IBM Plex Sans, sans-serif; font-size: 10px; color: #aaa; letter-spacing: 1px; text-transform: uppercase; min-width: 140px; text-align: right;">Our Perspective</span>
+      <div class="flow-box b3">How we stand, not where</div>
+    </div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-annotation">which means we must create space for encounter, because posture can only be practiced...</div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+      <span style="font-family: IBM Plex Sans, sans-serif; font-size: 10px; color: #aaa; letter-spacing: 1px; text-transform: uppercase; min-width: 140px; text-align: right;">The Posture</span>
+      <div class="flow-box b2">Create conditions for genuine encounter over agreement or compromise</div>
+    </div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-annotation">which at campus scale means...</div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+      <span style="font-family: IBM Plex Sans, sans-serif; font-size: 10px; color: #aaa; letter-spacing: 1px; text-transform: uppercase; min-width: 140px; text-align: right;">The Conditions</span>
+      <div class="flow-box b1">Five Pillars that drive sustained impact</div>
+    </div>
+    <div class="flow-arrow" style="color: var(--layer0);">&darr;</div>
+    <div class="flow-annotation" style="color: var(--layer0);">philosophy is concretized as product impact</div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+      <span style="font-family: IBM Plex Sans, sans-serif; font-size: 10px; color: var(--layer0); letter-spacing: 1px; text-transform: uppercase; min-width: 140px; text-align: right;">The Product Impact</span>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div class="flow-box b0" style="min-width: 180px;">Education:<br>build on the pillars</div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+            <svg width="40" height="32" viewBox="0 0 40 32" style="display: block;">
+              <defs>
+                <marker id="flow-arrow-tip" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="4" markerHeight="4" orient="auto">
+                  <path d="M 0 0.8 L 5 3 L 0 5.2" fill="none" stroke="var(--layer0)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </marker>
+              </defs>
+              <path d="M 4,10 Q 20,2 36,10" fill="none" stroke="var(--layer0)" stroke-width="1" opacity="0.5" marker-end="url(#flow-arrow-tip)"/>
+              <path d="M 36,22 Q 20,30 4,22" fill="none" stroke="var(--layer0)" stroke-width="1" opacity="0.5" marker-end="url(#flow-arrow-tip)"/>
+            </svg>
+          </div>
+          <div class="flow-box b0" style="min-width: 180px; opacity: 0.85;">Research:<br>measure encounter capacity</div>
+        </div>
+        <div style="font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; color: var(--layer0); font-style: italic; margin-top: 4px;">the measure is the model</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep">&middot; &middot; &middot;</div>
+
+  <!-- THE CONDITIONS: FIVE PILLARS -->
+  <div class="section">
+    <div class="section-label">Institutional Transformation</div>
+    <h2>What Campus Culture Change Requires</h2>
+    <p>
+      The Posture says: create conditions for genuine encounter over agreement or compromise. But what does that look like when the unit of impact is an entire campus? CDI's answer is Five Pillars&mdash;not five programs, but five <em>conditions</em> that must be present for genuine encounter to become culture:
+    </p>
+    <p>
+      <strong>Committed Leadership.</strong> Institutional leaders who actively champion constructive dialogue&mdash;not as a program to sponsor but as a culture to model. Without this, programming stays peripheral.
+    </p>
+    <p>
+      <strong>Broad-Based Programming.</strong> Workshops, trainings, and experiences available across the campus community&mdash;not siloed in one department or one student population. Breadth is the condition for density.
+    </p>
+    <p>
+      <strong>Curricular Integration.</strong> Constructive dialogue woven into courses and academic structures, not treated as extracurricular. This is where practice becomes routine rather than event.
+    </p>
+    <p>
+      <strong>Student-Led Initiatives.</strong> Students owning and driving dialogue culture, not merely receiving it. The posture must be <em>practiced by</em> the community, not <em>performed for</em> them.
+    </p>
+    <p>
+      <strong>Campus Climate Assessment.</strong> Ongoing measurement of the campus environment itself&mdash;which loops directly into the Product Impact. This is where the Conditions and the Product Impact meet: assessment is both a condition (the practice of self-examination) and measurement (tracking whether the other conditions are producing culture change).
+    </p>
+    <p>
+      Notice what the pillars are <em>not</em>. They are not products. They are not features. They are not deliverables. They are the conditions under which CDI's products and features and deliverables can produce the thing that matters: a campus where constructive dialogue is how people engage, not just something they've been trained in. Why do the pillars grow from the Posture? Because the Posture says <em>create conditions for encounter</em>&mdash;and the pillars are exactly that: the same practice, scaled from individual to institution.
+    </p>
+  </div>
+
+  <div class="sep">&middot; &middot; &middot;</div>
+
+  <!-- THE DIMENSIONS OF AWARENESS -->
+  <div class="section">
+    <div class="section-label">The Full Field</div>
+    <h2>Four Quadrants of Encounter</h2>
+    <p>
+      The nesting describes the <em>architecture</em> of CDI's principles&mdash;how they relate to each other. But what does meta-perspectival awareness actually look like when someone practices it? The content unfolds across four dimensions, mapped along two axes: interior/exterior (subjective experience vs. observable behavior) and individual/collective (what one person can cultivate vs. what emerges between people or within systems).
+    </p>
+
+    <!-- AQAL-style quadrant visualization with hover panels -->
+    <div id="aqalContainer" style="margin: 40px 0 20px; margin-left: auto; margin-right: auto;">
+      <div style="display: grid; grid-template-columns: 36px 1fr 1fr; grid-template-rows: 28px auto auto; gap: 0; font-family: 'IBM Plex Sans', Arial, sans-serif;">
+
+        <!-- Axis labels: top row -->
+        <div></div>
+        <div style="text-align: center; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-light); padding-bottom: 8px;">Interior</div>
+        <div style="text-align: center; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-light); padding-bottom: 8px;">Exterior</div>
+
+        <!-- Row 1: Individual -->
+        <div style="writing-mode: vertical-lr; transform: rotate(180deg); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-light); display: flex; align-items: center; justify-content: center; padding-right: 8px;">Individual</div>
+
+        <!-- UL: Self-Awareness + Perspective-Taking -->
+        <div class="aqal-quad" data-quad="0" style="background: rgba(81, 88, 255, 0.06); border: 1px solid rgba(81, 88, 255, 0.15); border-radius: 6px 0 0 0; padding: 20px 18px; position: relative; cursor: pointer; transition: background 0.2s;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+            <!-- Self-Awareness: left-aligned -->
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: var(--cdi-purple); margin-bottom: 6px;">Self-Awareness</div>
+              <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.4;">Do I know I see through a lens?</div>
+            </div>
+            <!-- Reinforcing loop: small SVG with curved arrows -->
+            <div style="flex-shrink: 0; align-self: center;">
+              <svg width="36" height="36" viewBox="0 0 36 36" style="display: block;">
+                <defs>
+                  <marker id="loop-tip" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="4" markerHeight="4" orient="auto">
+                    <path d="M 0 0.8 L 5 3 L 0 5.2" fill="none" stroke="var(--cdi-purple)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                </defs>
+                <!-- Top arc: left → right -->
+                <path d="M 8,14 Q 18,4 28,14" fill="none" stroke="var(--cdi-purple)" stroke-width="1" opacity="0.45" marker-end="url(#loop-tip)"/>
+                <!-- Bottom arc: right → left -->
+                <path d="M 28,22 Q 18,32 8,22" fill="none" stroke="var(--cdi-purple)" stroke-width="1" opacity="0.45" marker-end="url(#loop-tip)"/>
+              </svg>
+            </div>
+            <!-- Perspective-Taking: right-aligned -->
+            <div style="flex: 1; text-align: right;">
+              <div style="font-size: 14px; font-weight: 600; color: var(--cdi-purple); margin-bottom: 6px;">Perspective-Taking</div>
+              <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.4;">Can I see what another&rsquo;s frame illuminates?</div>
+            </div>
+          </div>
+          <div style="position: absolute; top: 8px; right: 10px; font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--cdi-purple); opacity: 0.5;">CDI today</div>
+        </div>
+
+        <!-- UR: Behavior & Skills -->
+        <div class="aqal-quad" data-quad="1" style="background: rgba(81, 88, 255, 0.06); border: 1px solid rgba(81, 88, 255, 0.15); border-left: none; border-radius: 0 6px 0 0; padding: 20px 18px; position: relative; cursor: pointer; transition: background 0.2s;">
+          <div style="font-size: 14px; font-weight: 600; color: var(--cdi-purple); margin-bottom: 10px;">Behavior &amp; Skills</div>
+          <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">Asking questions, telling stories, slowing down, staying present in discomfort</div>
+          <div style="position: absolute; top: 8px; right: 10px; font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--cdi-purple); opacity: 0.5;">CDI today</div>
+        </div>
+
+        <!-- Row 2: Collective -->
+        <div style="writing-mode: vertical-lr; transform: rotate(180deg); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-light); display: flex; align-items: center; justify-content: center; padding-right: 8px;">Collective</div>
+
+        <!-- LL: Intersubjective Awareness -->
+        <div class="aqal-quad" data-quad="2" style="background: rgba(81, 88, 255, 0.025); border: 1px solid rgba(81, 88, 255, 0.10); border-top: none; border-radius: 0 0 0 6px; padding: 20px 18px; position: relative; cursor: pointer; transition: background 0.2s;">
+          <div style="font-size: 14px; font-weight: 600; color: #3f3f99; margin-bottom: 10px;">Intersubjective Awareness</div>
+          <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">The constructive friction <em>between</em> perspectives&mdash;the <em>us</em> that arises when frames come into contact</div>
+          <div style="position: absolute; top: 8px; right: 10px; font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #3f3f99; opacity: 0.4;">where it points</div>
+        </div>
+
+        <!-- LR: Systemic Awareness -->
+        <div class="aqal-quad" data-quad="3" style="background: rgba(81, 88, 255, 0.025); border: 1px solid rgba(81, 88, 255, 0.10); border-top: none; border-left: none; border-radius: 0 0 6px 0; padding: 20px 18px; position: relative; cursor: pointer; transition: background 0.2s;">
+          <div style="font-size: 14px; font-weight: 600; color: #3f3f99; margin-bottom: 10px;">Systemic Awareness</div>
+          <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">Structures, incentives, and dynamics that shape encounter independent of participant intention</div>
+          <div style="position: absolute; top: 8px; right: 10px; font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #3f3f99; opacity: 0.4;">where it points</div>
+        </div>
+      </div>
+
+      <!-- Hover info panel -->
+      <div id="aqalPanel" style="
+        margin: 0 auto; max-width: 620px; width: 100%;
+        background: white; border: 1px solid #e2e0dc; border-radius: 8px;
+        padding: 16px 24px;
+        font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 13px; color: #4a5568;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        max-height: 0; overflow: hidden; opacity: 0;
+        transition: max-height 0.4s ease, opacity 0.3s, padding 0.3s, margin 0.3s;
+        line-height: 1.6;
+        padding-top: 0; padding-bottom: 0; margin-top: 0;
+      ">
+        <div id="aqalContent"></div>
+      </div>
+
+      <!-- Attribution -->
+      <div style="text-align: center; margin-top: 14px; font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 11px; color: var(--text-light); font-style: italic;">
+        Quadrant structure adapted from Ken Wilber&rsquo;s <a href="https://integrallife.com/four-quadrants/" style="color: var(--text-light); text-decoration: underline; text-decoration-color: rgba(113,128,150,0.4);">integral framework</a>
+      </div>
+    </div>
+
+    <script>
+    (function() {
+      const quadData = [
+        {
+          name: 'Self-Awareness &amp; Perspective-Taking',
+          tag: 'interior &middot; individual',
+          desc: '<strong>Self-Awareness.</strong> Do I know that I see through a lens at all? Can I notice that my beliefs, my sense of what&rsquo;s right, come from my experience and background&mdash;not just <em>what</em> I believe, but <em>that</em> I believe from somewhere, and why that somewhere makes certain things visible while obscuring others?<br><br><strong>Perspective-Taking.</strong> Can I perceive that others operate from genuinely different moral configurations&mdash;different moral intuitions, different senses of what matters and why? Can I try on their frame with enough fidelity to see what it illuminates, even if I do not adopt it? The goal is not agreement but genuine understanding.<br><br>These two form a reinforcing loop: self-awareness enables perspective-taking, which reveals more about oneself, which deepens one&rsquo;s capacity for perspective-taking. The common ground is not a shared position. It is a shared <em>condition</em>: we all see from somewhere.'
+        },
+        {
+          name: 'Behavior &amp; Skills',
+          tag: 'exterior &middot; individual',
+          desc: 'The interior capacities must be enacted&mdash;through asking questions, telling stories, slowing down, noticing reactivity, staying present in discomfort. These are learnable, practicable skills that make the interior shifts visible and effective in actual encounter.'
+        },
+        {
+          name: 'Intersubjective Awareness',
+          tag: 'interior &middot; collective',
+          desc: 'The quality of the field <em>between</em> perspectives when they meet. How do our frames interact? What emerges in the encounter that exists in neither frame alone? Think of the parable of the blind men and the elephant: each perspective grasps something real, but the whole only becomes visible through their integration. This is the constructive element of disagreement&mdash;productive friction that generates something greater than the sum of its parts. It is not merely understanding you and understanding me. It is attending to the <em>us</em> that arises when frames come into contact. CDI&rsquo;s dialogue work is implicitly relational; this dimension names what has been present but not yet explicitly cultivated.'
+        },
+        {
+          name: 'Systemic Awareness',
+          tag: 'exterior &middot; collective',
+          desc: 'There are structures, incentives, and dynamics that shape encounter independent of participant intention. The algorithm does not care about your perspective&mdash;it optimizes for engagement regardless of whether that engagement is generative or destructive. Social media does not host conversation; it structures it&mdash;and the structure rewards outrage over understanding. One can be exquisitely attuned to one&rsquo;s own frame, genuinely curious about another&rsquo;s, and still be played by structural dynamics that neither party sees. Perspective-taking alone cannot save us if the structures we inhabit are designed to undermine it.'
+        }
+      ];
+
+      const panel = document.getElementById('aqalPanel');
+      const content = document.getElementById('aqalContent');
+
+      function resetAqal() {
+        document.querySelectorAll('.aqal-quad').forEach(q => q.style.background = '');
+        panel.style.opacity = '0';
+        panel.style.maxHeight = '0';
+        panel.style.paddingTop = '0';
+        panel.style.paddingBottom = '0';
+        panel.style.marginTop = '0';
+      }
+
+      document.querySelectorAll('.aqal-quad').forEach(el => {
+        el.addEventListener('mouseenter', function() {
+          const idx = parseInt(this.getAttribute('data-quad'));
+          const d = quadData[idx];
+
+          // Highlight hovered quadrant
+          document.querySelectorAll('.aqal-quad').forEach((q, i) => {
+            if (i === idx) q.style.background = idx < 2 ? 'rgba(81, 88, 255, 0.12)' : 'rgba(81, 88, 255, 0.06)';
+            else q.style.background = 'rgba(0,0,0,0.01)';
+          });
+
+          // Build panel
+          let html = '<div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px;">';
+          html += '<span style="font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:1.5px; color:#1a1a2e;">' + d.name + '</span>';
+          html += '<span style="font-size:10px; color:#aaa; text-transform:uppercase; letter-spacing:1px;">' + d.tag + '</span>';
+          html += '</div>';
+          html += '<div>' + d.desc + '</div>';
+          content.innerHTML = html;
+          panel.style.opacity = '1';
+          panel.style.maxHeight = '500px';
+          panel.style.paddingTop = '16px';
+          panel.style.paddingBottom = '16px';
+          panel.style.marginTop = '12px';
+        });
+
+        el.addEventListener('mouseleave', resetAqal);
+      });
+    })();
+    </script>
+
+    <p style="margin-top: 30px;">
+      CDI's current work lives primarily in the individual dimensions&mdash;self-awareness, perspective-taking, skills. The collective dimensions name where the nesting points next for <em>potential</em> product design.
+    </p>
+  </div>
+
+  <div class="sep">&middot; &middot; &middot;</div>
+
+  <!-- THE COHERENCE TEST -->
+  <div class="section">
+    <div class="section-label">Example Applications</div>
+    <h2>The Nesting Test</h2>
+    <p>
+      Any decision at any layer can be interrogated by asking one question: <em>Is this <strong>coherent</strong> with the layers it grows from?</em> In short: <span class="highlight">does this nest?</span>
+    </p>
+  </div>
+
+  <div class="coherence-test">
+    <h3>Example: Does This Decision Nest?</h3>
+
+    <div class="test-row">
+      <div class="test-icon pass">&check;</div>
+      <div class="test-content">
+        <div class="test-decision">"Add a reflection pause before participants respond in dialogue"</div>
+        <div class="test-check"><strong>Product Impact</strong> &rarr; grows from <strong>The Conditions</strong>? Serves programming pillar. Yes.</div>
+        <div class="test-check"><strong>The Conditions</strong> &rarr; grows from <strong>The Posture</strong>? Creates conditions for genuine encounter. Yes.</div>
+        <div class="test-verdict pass">Nests cleanly.</div>
+      </div>
+    </div>
+
+    <div class="test-row">
+      <div class="test-icon fail">&times;</div>
+      <div class="test-content">
+        <div class="test-decision">"Add a score showing how well users 'perspective-took' in each session"</div>
+        <div class="test-check"><strong>Product Impact</strong> &rarr; grows from <strong>The Conditions</strong>? Tracks individual performance, not campus culture change. Concerning.</div>
+        <div class="test-check"><strong>The Posture</strong> &rarr; grows from <strong>Our Perspective</strong>? Delivers a score (content) rather than conditions. No.</div>
+        <div class="test-verdict fail">Breaks the nest. What nests is <em>feedback</em>&mdash;reflecting experience back so learners notice how they showed up. Scores extract a number from a living interaction; feedback preserves context. &ldquo;The measure is the model&rdquo;: score perspective-taking and people perform it; reflect on encounter quality and people practice it.</div>
+      </div>
+    </div>
+
+    <div class="test-row">
+      <div class="test-icon pass">&check;</div>
+      <div class="test-content">
+        <div class="test-decision">"Partner with Center for Humane Technology on attachment economy research"</div>
+        <div class="test-check"><strong>Research</strong> &rarr; grows from <strong>The Conditions</strong>? Studies threats to the conditions for campus culture change. Yes.</div>
+        <div class="test-check"><strong>Education &harr; Research</strong>? Findings inform what we build; what we build determines what we study. Yes.</div>
+        <div class="test-verdict pass">Nests cleanly.</div>
+        <div style="margin-top: 8px; font-size: 14px; font-style: italic; color: var(--text-secondary);">Understanding what degrades encounter capacity is how research serves education.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sep">&middot; &middot; &middot;</div>
+
+  <!-- PRINCIPLED HUMILITY -->
+  <div class="section">
+    <div class="section-label">The Posture</div>
+    <h2>Principled Humility</h2>
+    <p>
+      If the framework is self-aware enough to know it cannot escape its own perspectivalism, how does it avoid collapsing into relativism? The answer is not a logical escape but&mdash;as we've mentioned before&mdash;a <em>posture</em>: what we call <strong>principled humility</strong>. The recursion has been honestly worked through&mdash;we make a perspectival claim about perspectivalism itself, we hold even this provisionally&mdash;and what emerges is not vertigo but firm ground.
+    </p>
+    <p>
+      Think of it as two qualities held simultaneously. <em>Grounded</em>&mdash;stable in your principle; you know what you believe and you will not be knocked over. <em>Rooted</em>&mdash;open to growth, drawing nourishment from encounter with others. You need the grounding to root. You need the roots to grow. Conviction without openness hardens. Openness without conviction drifts. But notice: the grounding is not just in <em>where</em> you stand. It is in <em>how</em> you stand&mdash;in the practice itself. Grounded in principle, rooted in curiosity.
+    </p>
+    <p>
+      This is what distinguishes <em>examined</em> belief from unreflective conviction. Believing something because you have genuinely reckoned with alternatives and found your position more compelling is fundamentally different from believing it because you have never encountered an alternative. The first is more defensible, more capable of engaging across difference without collapsing into either relativism or tribalism. Principled humility is the posture that makes examined belief possible.
+    </p>
+    <p>
+      <em>Alternatives considered: "robust belief," "reflective conviction," "tested belief." We landed on "examined" because it implies ongoing inquiry rather than a conclusion reached&mdash;but this language is open for discussion.</em>
+    </p>
+  </div>
+
+  <div class="sep">&middot; &middot; &middot;</div>
+
+  <!-- INSTITUTIONAL HUMILITY (formerly The Recursion) -->
+  <div class="section">
+    <div class="section-label">Institutional Humility</div>
+    <h2>The Framework Practices What It Preaches</h2>
+    <p>
+      The <em>content</em> of CDI's work says: we each hold a unique perspective; hold your frameworks provisionally; attend to posture, not just position. The <em>architecture</em> of nested principles does the same thing. It holds its own organizing logic the way it teaches us to hold everything else: not as fixed foundation, but as living context. The layers nest the way perspectives nest&mdash;each growing from and giving rise to others, none claiming to be the view from nowhere.
+    </p>
+    <p>
+      First principles claim a stable ground to build on. Nested principles acknowledge that the ground itself is <em>part of the nesting</em>&mdash;held, inhabited, always in relation. This is not a weakness. It is what makes the framework <span class="highlight">practice what it preaches</span>. A framework about perspectival awareness <em>should</em> be perspectival.
+    </p>
+    <p>
+      Nesting makes this possible. First principles, despite their virtues, do not.
+    </p>
+    <p>
+      The same posture applies at the institutional level. CDI holds a position: that pluralism is necessary, that engagement across difference is worth the difficulty, that meta-perspectival awareness is better than framework blindness, that structural conditions matter. These are contestable claims, and we own them as such. Our role is to build the table, not to sit at its head. This is <strong>institutional humility</strong>&mdash;the organization practicing what it is working to create and cultivate.
+    </p>
+    <p>
+      The inner layers orient. The outermost ring <em>acts</em>. Education and research face each other there, generating the feedback loop that keeps the whole system honest.
+    </p>
+  </div>
+
+  <!-- APPENDIX SEPARATOR -->
+  <div style="margin: 80px 0 60px; border-top: 2px solid var(--cdi-purple); padding-top: 60px; text-align: center;">
+    <div style="font-family: 'PT Sans Narrow', Arial Narrow, sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: 4px; color: var(--text-light); margin-bottom: 12px;">Appendix</div>
+    <h2 style="font-family: 'PT Sans Narrow', Arial Narrow, sans-serif; font-size: 36px; font-weight: 700; color: var(--cdi-purple); text-align: center;">First vs. Nested</h2>
+    <p>
+      The shift from "first" to "nested" changes how the principles <em>function</em> in practice.
+    </p>
+  </div>
+
+  <div class="compare">
+    <div class="compare-col left">
+      <h3>First Principles</h3>
+      <div class="compare-item">Foundation &rarr; Derivation</div>
+      <div class="compare-item">Trace decisions <em>back</em> to axioms</div>
+      <div class="compare-item">Coherence = logical entailment</div>
+      <div class="compare-item">Failure mode: rigidity</div>
+      <div class="compare-item">Metaphor: <strong>bedrock</strong></div>
+    </div>
+    <div class="compare-col right">
+      <h3>Nested Principles</h3>
+      <div class="compare-item">Context &rarr; Expression</div>
+      <div class="compare-item">Check decisions against <em>adjacent</em> layer</div>
+      <div class="compare-item">Coherence = nesting fit</div>
+      <div class="compare-item">Failure mode: opacity</div>
+      <div class="compare-item">Metaphor: <strong>living system</strong></div>
+    </div>
+  </div>
+
+  <p style="margin-top: 40px;">
+    The failure mode matters. First principles fail by becoming <em>rigid</em>&mdash;people treat them as settled truth rather than living orientation. Nested principles fail by becoming <em>opaque</em>&mdash;people can't see how the layers relate, so they stop checking. The antidote to the first is holding principles provisionally. The antidote to the second is making the nesting <em>visible</em>.
+  </p>
+
+  <div class="sep" style="margin: 40px 0;">&middot; &middot; &middot;</div>
+
+  <div class="section">
+    <h2>Warm Data Requires Warm Architecture</h2>
+    <p>
+      The systems theorist Nora Bateson names something essential: relational information&mdash;what she calls <em>warm data</em>&mdash;collapses when extracted from its living context. Strip the context, lose the data. The warmth is not a property of the information. It is a property of the information's <em>embeddedness</em>.
+    </p>
+    <p>
+      First principles <em>extract</em>. They take a living insight and pin it to a fixed point: "Here is the foundation. Derive from this." The insight survives, but it dries out. It becomes something to <em>reference</em> rather than something to <em>inhabit</em>.
+    </p>
+    <p>
+      Nested principles <em>preserve context at every layer</em>. An education decision in the Product Impact carries the Conditions it serves, which carry the Posture, which carries Our Perspective, which carries the Meta-Perspective. A research decision mirrors the education decision that mirrors the Conditions. Nothing gets extracted. Nothing gets pinned. The warm data stays warm&mdash;because the nesting <em>is</em> the context.
+    </p>
+
+    <div class="epigraph">
+      The thing cannot be transmitted&mdash;only the conditions for its emergence.
+    </div>
+
+    <p>
+      The same is true of the principles themselves. They cannot be transmitted as axioms. They can only be <em>nested</em> in a way that preserves their relational meaning.
+    </p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p style="margin-top: 16px;">Ari Allen &middot; Constructive Dialogue Institute &middot; February 2026</p>
+  </div>
+
+</div>
+
+</body>
+</html>
