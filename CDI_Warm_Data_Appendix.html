@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warm Data Appendix — CDI</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=PT+Sans+Narrow:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cdi: #5158ff;
+    --cdi-light: #7b80ff;
+    --cdi-dark: #1e1e3a;
+    --bg: #0a0a14;
+    --bg-section: #0e0e1a;
+    --text: #e0e0e8;
+    --text-dim: #888899;
+    --text-bright: #ffffff;
+    --q1: #7b80ff;
+    --q2: #5fd4a9;
+    --q3: #ff9d5c;
+    --q4: #e06090;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+
+  body {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 17px;
+    overflow-x: hidden;
+  }
+
+  .section {
+    min-height: 100vh;
+    padding: 100px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-inner {
+    max-width: 720px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .section-inner.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .s-label {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cdi);
+    margin-bottom: 12px;
+  }
+
+  .s-title {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 28px;
+  }
+
+  .s-prose {
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .hl {
+    color: var(--cdi-light);
+    font-weight: 500;
+  }
+
+  .epigraph {
+    font-style: italic;
+    color: var(--text-dim);
+    border-left: 2px solid var(--cdi);
+    padding-left: 20px;
+    margin: 32px 0;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* Comparison table */
+  .compare-row {
+    display: flex;
+    gap: 2px;
+    margin: 40px 0;
+    text-align: left;
+  }
+
+  .compare-col {
+    flex: 1;
+    padding: 24px;
+    font-size: 14px;
+    line-height: 2.2;
+  }
+
+  .compare-col h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* Nora Bateson quote card */
+  .bateson-card {
+    margin: 48px 0;
+    padding: 32px;
+    background: rgba(81,88,255,0.04);
+    border: 1px solid rgba(81,88,255,0.12);
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .bateson-card::before {
+    content: '"';
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    font-size: 72px;
+    font-family: Georgia, serif;
+    color: var(--cdi);
+    opacity: 0.3;
+    line-height: 1;
+  }
+
+  .bateson-card .quote-text {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 12px;
+    padding-top: 8px;
+  }
+
+  .bateson-card .quote-attr {
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  /* Implications grid */
+  .impl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .impl-card {
+    padding: 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    border-top: 2px solid var(--cdi);
+  }
+
+  .impl-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+  }
+
+  .impl-card p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* SEP */
+  .sep {
+    width: 40px;
+    height: 2px;
+    background: var(--cdi);
+    margin: 48px auto;
+    opacity: 0.4;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 60px 24px;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+  .footer-org {
+    font-weight: 600;
+    color: var(--cdi-light);
+    margin-bottom: 4px;
+  }
+
+  /* Breathing rings */
+  .ring-breathe {
+    animation: breathe 4s ease-in-out infinite alternate;
+  }
+  .ring-breathe:nth-child(2) { animation-delay: 0.3s; }
+  .ring-breathe:nth-child(3) { animation-delay: 0.6s; }
+  .ring-breathe:nth-child(4) { animation-delay: 0.9s; }
+  .ring-breathe:nth-child(5) { animation-delay: 1.2s; }
+
+  @keyframes breathe {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.04); opacity: 1; }
+  }
+
+  @media (max-width: 768px) {
+    .s-title { font-size: 30px; }
+    .section { padding: 60px 20px; }
+    .impl-grid { grid-template-columns: 1fr; }
+    .compare-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================== -->
+<!-- HERO                      -->
+<!-- ======================== -->
+<div class="section" style="min-height: 80vh; background: radial-gradient(ellipse at 50% 60%, rgba(81,88,255,0.06) 0%, transparent 50%);">
+  <div class="section-inner visible" style="text-align: center;">
+    <div class="s-label">Appendix</div>
+    <div class="s-title">Warm Data Requires<br>Warm Architecture</div>
+
+    <div class="epigraph" style="text-align: left; max-width: 600px; margin: 36px auto;">
+      The thing cannot be transmitted — only the conditions for its emergence.
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- THE ARGUMENT              -->
+<!-- ======================== -->
+<div class="section" style="min-height: auto; padding: 60px 40px;">
+  <div class="section-inner">
+    <div class="s-label">The Concept</div>
+    <div class="s-title">Why "Warm Data" Matters for CDI</div>
+
+    <div class="bateson-card">
+      <div class="quote-text">
+        Relational information — what I call warm data — collapses when extracted from its living context. Strip the context, lose the data. The warmth is not a property of the information. It is a property of the information's <em>embeddedness</em>.
+      </div>
+      <div class="quote-attr">— Nora Bateson, <em>Small Arcs of Larger Circles</em></div>
+    </div>
+
+    <p class="s-prose">
+      First principles <em>extract</em>. They take a living insight and pin it to a fixed point. The insight survives, but it dries out.
+    </p>
+
+    <p class="s-prose">
+      Nested principles <strong>preserve context at every layer</strong>. An education decision in the Product carries the Conditions it serves, which carry the Mission, which carries the Perspective, which carries the Meta-Perspective. Nothing gets extracted. Nothing gets pinned. The warm data stays warm — because <span class="hl">the nesting <em>is</em> the context</span>.
+    </p>
+
+    <p class="s-prose">
+      This distinction isn't semantic. It's architecturally consequential. It determines how CDI builds products, measures impact, designs research, and scales across sectors. Every decision in the roadmap must preserve relational context rather than extracting isolated metrics.
+    </p>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- FIRST vs NESTED           -->
+<!-- ======================== -->
+<div class="section" style="min-height: auto; padding: 60px 40px;">
+  <div class="section-inner">
+    <div class="s-label">Comparison</div>
+    <div class="s-title">First Principles vs. Nested Principles</div>
+
+    <div class="compare-row">
+      <div class="compare-col" style="background: rgba(255,255,255,0.03); border-radius: 8px 0 0 8px;">
+        <h3 style="color: var(--text-dim);">First Principles</h3>
+        <div style="color: var(--text);">
+          Foundation → Derivation<br>
+          Trace decisions <em>back</em> to axioms<br>
+          Coherence = logical entailment<br>
+          Failure mode: <strong>rigidity</strong><br>
+          Metaphor: <strong style="color: var(--text-dim);">bedrock</strong>
+        </div>
+      </div>
+      <div class="compare-col" style="background: rgba(81,88,255,0.06); border-radius: 0 8px 8px 0; border-left: 2px solid var(--cdi);">
+        <h3 style="color: var(--cdi-light);">Nested Principles</h3>
+        <div style="color: var(--text);">
+          Context → Expression<br>
+          Check decisions against <em>adjacent</em> layer<br>
+          Coherence = nesting fit<br>
+          Failure mode: <strong>opacity</strong><br>
+          Metaphor: <strong style="color: var(--cdi-light);">living system</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- IMPLICATIONS              -->
+<!-- ======================== -->
+<div class="section" style="min-height: auto; padding: 60px 40px;">
+  <div class="section-inner">
+    <div class="s-label">Strategic Implications</div>
+    <div class="s-title">What This Means for the Roadmap</div>
+
+    <div class="impl-grid">
+      <div class="impl-card" style="border-top-color: var(--q1);">
+        <h4>Product Design</h4>
+        <p>Every product feature must preserve the relational context it operates within. AI coaching mirrors and questions — it never evaluates, ranks, or labels. The measure must be a model of what it measures.</p>
+      </div>
+      <div class="impl-card" style="border-top-color: var(--q3);">
+        <h4>Measurement</h4>
+        <p>Dialogue-level measurement (not just participant-level) is the warm data imperative applied to research. We measure the quality of the <em>encounter</em>, not just the growth of the <em>individual</em>.</p>
+      </div>
+      <div class="impl-card" style="border-top-color: var(--q2);">
+        <h4>Cross-Sector Scaling</h4>
+        <p>State systems, civic, and corporate environments have different relational contexts. Five Pillars must adapt intelligently to each — not extract a portable template. The nesting must hold in new soil.</p>
+      </div>
+      <div class="impl-card" style="border-top-color: var(--q4);">
+        <h4>Open-Sourcing</h4>
+        <p>Releasing the framework preserves context by inviting others to nest within their own. A framework about perspectival humility that hoards its methodology contradicts itself.</p>
+      </div>
+    </div>
+
+    <p class="s-prose">
+      The same is true of the field itself. CDI's landscape position — spanning three quadrants across all five altitudes — is not a competitive advantage to be defended. It is an <em>orientation</em>: a recognition that constructive dialogue requires working across every dimension of awareness, at every level of abstraction, simultaneously.
+    </p>
+
+    <p class="s-prose" style="color: var(--text-dim); font-style: italic;">
+      The matrix makes visible what the nesting makes possible.
+    </p>
+
+    <div class="sep"></div>
+
+    <div style="text-align: center;">
+      <div style="font-size: 13px; color: var(--text-dim); letter-spacing: 1px;">
+        <div style="font-weight: 600; color: var(--cdi-light); margin-bottom: 4px;">CONSTRUCTIVE DIALOGUE INSTITUTE</div>
+        Ari Allen · Draft Proposal · February 2026
+      </div>
+
+      <div style="margin-top: 48px;">
+        <svg viewBox="0 0 200 200" width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+          <circle class="ring-breathe" cx="100" cy="100" r="90" fill="#1e1e3a"/>
+          <circle class="ring-breathe" cx="100" cy="100" r="70" fill="#2d2d6b"/>
+          <circle class="ring-breathe" cx="100" cy="100" r="52" fill="#3f3f99"/>
+          <circle class="ring-breathe" cx="100" cy="100" r="36" fill="#5158ff"/>
+          <circle class="ring-breathe" cx="100" cy="100" r="20" fill="#7b80ff"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.section-inner').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

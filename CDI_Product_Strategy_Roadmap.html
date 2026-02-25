@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Strategy & Roadmap 2026–2028 — CDI</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=PT+Sans+Narrow:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a14;
+    --bg-section: #0e0e1a;
+    --cdi: #5158ff;
+    --cdi-light: #7b80ff;
+    --q1: #7b80ff;
+    --q2: #5fd4a9;
+    --q3: #ff9d5c;
+    --q4: #e06090;
+    --text: #c8c8d4;
+    --text-dim: #888899;
+    --text-bright: #e8e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* === SECTIONS === */
+  .section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 24px;
+  }
+  .section-inner {
+    max-width: 860px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .section-inner.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section.wide .section-inner { max-width: 1100px; }
+
+  /* === TYPOGRAPHY === */
+  .s-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--cdi);
+    margin-bottom: 12px;
+  }
+  .s-title {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .s-prose {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 20px;
+    max-width: 720px;
+  }
+  .hl {
+    color: var(--cdi-light);
+    text-decoration: underline;
+    text-decoration-color: rgba(81,88,255,0.4);
+    text-underline-offset: 3px;
+  }
+  .epigraph {
+    border-left: 2px solid var(--cdi);
+    padding: 16px 24px;
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 32px 0;
+    max-width: 640px;
+  }
+
+  /* === NAVIGATION DOTS === */
+  .nav-dots {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 100;
+  }
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .nav-dot.active { background: var(--cdi); transform: scale(1.3); }
+  .nav-dot:hover { background: var(--cdi-light); }
+  .dot-label {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: var(--text-dim);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+  .nav-dot:hover .dot-label { opacity: 1; }
+
+  /* === HERO === */
+  #hero {
+    background: radial-gradient(ellipse at 50% 50%, rgba(81,88,255,0.1) 0%, transparent 60%);
+  }
+  .hero-inner {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+  .hero-inner.visible { opacity: 1; transform: translateY(0); }
+  .hero-org {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--cdi);
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .hero-years {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--cdi-light);
+    letter-spacing: 6px;
+    margin-bottom: 36px;
+  }
+  .hero-thesis {
+    font-size: 17px;
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto 40px;
+    line-height: 1.75;
+  }
+  .hero-byline {
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+  .scroll-cue {
+    margin-top: 48px;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* === QUADRANT MINI-GRID (thesis section) === */
+  .quad-mini {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    width: 200px;
+    margin: 32px auto;
+  }
+  .quad-mini-cell {
+    height: 60px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.4s;
+  }
+
+  /* === YEAR BLOCKS === */
+  .year-block {
+    margin-bottom: 48px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .year-header {
+    padding: 28px 32px;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .year-num {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+  }
+  .year-theme {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-bright);
+  }
+  .year-focus {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    width: 100%;
+    margin-top: -8px;
+  }
+  .initiatives {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* === INITIATIVE CARDS === */
+  .init-card {
+    border-radius: 8px;
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+  }
+  .init-card:hover {
+    background: rgba(255,255,255,0.03);
+  }
+  .init-card.open {
+    background: rgba(255,255,255,0.04);
+  }
+  .init-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .init-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    line-height: 1.4;
+  }
+  .init-tags {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+  .qtag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .qtag.q1 { background: rgba(123,128,255,0.15); color: var(--q1); }
+  .qtag.q2 { background: rgba(95,212,169,0.15); color: var(--q2); }
+  .qtag.q3 { background: rgba(255,157,92,0.15); color: var(--q3); }
+  .qtag.q4 { background: rgba(224,96,144,0.15); color: var(--q4); }
+  .atag {
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.06);
+    color: var(--text-dim);
+  }
+  .init-preview {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .init-expand {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+  .init-card.open .init-expand {
+    max-height: 600px;
+    opacity: 1;
+  }
+  .init-detail {
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .init-outcomes {
+    margin: 12px 0;
+    padding-left: 20px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.8;
+  }
+  .init-outcomes li { margin-bottom: 4px; }
+  .nesting-check {
+    margin-top: 12px;
+    padding: 12px 16px;
+    border-left: 2px solid rgba(95,212,169,0.5);
+    background: rgba(95,212,169,0.04);
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .nesting-check strong { color: var(--q2); }
+
+  /* === MATRIX EVOLUTION === */
+  .matrix-row {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 40px 0;
+  }
+  .matrix-snap {
+    text-align: center;
+  }
+  .matrix-snap-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+  .mini-matrix {
+    display: grid;
+    grid-template-columns: repeat(4, 28px);
+    grid-template-rows: repeat(5, 20px);
+    gap: 2px;
+  }
+  .mm-cell {
+    border-radius: 2px;
+    background: rgba(255,255,255,0.04);
+    transition: all 0.4s;
+  }
+  .mm-cell.filled { opacity: 0.8; }
+  .mm-cell.new { animation: cellGlow 2s ease-in-out infinite alternate; }
+  @keyframes cellGlow {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.4); }
+  }
+  .matrix-snap-stat {
+    margin-top: 8px;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    font-family: 'PT Sans Narrow', sans-serif;
+  }
+  .matrix-snap-stat span {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-dim);
+  }
+
+  /* === FLYWHEEL === */
+  .flywheel-wrap {
+    text-align: center;
+    margin: 40px 0;
+  }
+  .flywheel-wrap svg { max-width: 380px; width: 100%; height: auto; }
+  .flywheel-notes {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+  .fw-note {
+    max-width: 220px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .fw-note-year {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  /* === PRINCIPLE CARDS === */
+  .principles-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 40px 0;
+  }
+  .p-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.3s;
+  }
+  .p-card:hover {
+    background: rgba(81,88,255,0.06);
+    border-color: rgba(81,88,255,0.2);
+    transform: translateY(-2px);
+  }
+  .p-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cdi-light);
+    margin-bottom: 8px;
+  }
+  .p-card-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* === ACTION ITEMS === */
+  .action-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+  .action-item {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 20px 24px;
+    position: relative;
+    padding-left: 56px;
+  }
+  .action-num {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--cdi);
+  }
+  .action-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .action-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .action-when {
+    font-size: 11px;
+    color: var(--cdi-light);
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* === GOVERNANCE === */
+  .cadence-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+    max-width: 600px;
+  }
+  .cadence-item {
+    display: flex;
+    gap: 20px;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .cadence-freq {
+    font-weight: 600;
+    color: var(--cdi-light);
+    font-size: 14px;
+    min-width: 90px;
+  }
+  .cadence-desc {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  /* === SEPARATOR === */
+  .sep {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--cdi), transparent);
+    margin: 40px 0;
+  }
+
+  /* === GANTT CHART === */
+  .gantt-wrap {
+    overflow-x: auto;
+    margin: 40px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  .gantt-table {
+    min-width: 1000px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  .gantt-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 9px;
+    color: var(--text-dim);
+    padding: 8px 4px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+  }
+  .gantt-table th.year-head {
+    font-size: 11px;
+    color: white;
+    letter-spacing: 2px;
+    border-bottom: 2px solid rgba(255,255,255,0.15);
+  }
+  .gantt-table td {
+    padding: 0;
+    height: 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .gantt-label {
+    padding: 6px 12px 6px 0;
+    font-size: 12px;
+    color: var(--text);
+    white-space: nowrap;
+    min-width: 220px;
+    vertical-align: middle;
+    font-weight: 500;
+  }
+  .gantt-label .gl-tag {
+    display: inline-block;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .gantt-cell {
+    position: relative;
+  }
+  .gantt-bar {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    border-radius: 3px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .gantt-bar:hover { opacity: 1; }
+  .gantt-bar.research { background: repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(0,0,0,0.15) 3px, rgba(0,0,0,0.15) 6px); }
+  .gantt-milestone {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    border: 2px solid;
+    background: var(--bg);
+  }
+  .gantt-legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--text-dim);
+    flex-wrap: wrap;
+  }
+  .gantt-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .gantt-legend-swatch {
+    width: 16px;
+    height: 8px;
+    border-radius: 2px;
+    opacity: 0.7;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    text-align: center;
+    padding: 60px 24px;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+  .footer-org {
+    font-weight: 600;
+    color: var(--cdi-light);
+    margin-bottom: 4px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .hero-title { font-size: 36px; }
+    .s-title { font-size: 30px; }
+    .year-num { font-size: 36px; }
+    .action-grid { grid-template-columns: 1fr; }
+    .nav-dots { display: none; }
+    .section { padding: 60px 20px; }
+    .matrix-row { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<div class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="dot-label">Opening</span></div>
+  <div class="nav-dot" data-target="thesis"><span class="dot-label">Strategic Thesis</span></div>
+  <div class="nav-dot" data-target="roadmap"><span class="dot-label">Roadmap</span></div>
+  <div class="nav-dot" data-target="gantt"><span class="dot-label">Gantt Timeline</span></div>
+  <div class="nav-dot" data-target="matrix"><span class="dot-label">Matrix Growth</span></div>
+  <div class="nav-dot" data-target="flywheel"><span class="dot-label">The Flywheel</span></div>
+  <div class="nav-dot" data-target="principles"><span class="dot-label">Principles</span></div>
+  <div class="nav-dot" data-target="actions"><span class="dot-label">Next Steps</span></div>
+</div>
+
+<!-- ======================== -->
+<!-- HERO                      -->
+<!-- ======================== -->
+<div class="section" id="hero">
+  <div class="hero-inner" id="hero-content">
+    <div class="hero-org">Constructive Dialogue Institute</div>
+    <div class="hero-title">Product Strategy<br>& Roadmap</div>
+    <div class="hero-years">2026 → 2028</div>
+    <div class="hero-thesis">
+      A three-year strategic direction derived from CDI's nested principles framework. Every initiative here answers the same question the framework teaches us to ask: <span class="hl">does this nest?</span>
+    </div>
+    <div style="margin-top: 16px; font-size: 13px; color: var(--text-dim); letter-spacing: 0.3px;">
+      This roadmap is informed by and aligned to CDI's <a href="https://docs.google.com/document/d/1-xwlLdHrMeq3RVKY2v9jq45eYF8PRc-kpJ-3GQphhHQ/edit?tab=t.0#heading=h.agmdu391q12y" target="_blank" rel="noopener" style="color: var(--cdi-light); text-decoration: none; border-bottom: 1px solid rgba(123,128,255,0.3); transition: border-color 0.2s;">Go-to-Market Strategy 2026</a>
+    </div>
+    <div class="hero-byline">Ari Allen · <span style="text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6);">Draft Proposal</span> · February 2026</div>
+    <div class="scroll-cue">Scroll to explore ↓</div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- STRATEGIC THESIS          -->
+<!-- ======================== -->
+<div class="section" id="thesis" style="background: linear-gradient(180deg, var(--bg) 0%, var(--bg-section) 40%, var(--bg) 100%);">
+  <div class="section-inner">
+    <div class="s-label">Strategic Thesis</div>
+    <div class="s-title">Where the Nesting Points</div>
+
+    <p class="s-prose">
+      CDI's current work lives primarily in the <strong style="color: var(--q1);">individual</strong> dimensions — Q1 (self-awareness and perspective-taking) and Q2 (behavioral skills). This is where the evidence base is deepest, the product is strongest, and the institutional flywheel is already turning. Right now, in early 2026, the team is heads-down on two parallel efforts: <strong style="color: white;">stabilizing the existing platform</strong> while <strong style="color: white;">migrating to a new one</strong> — with AI-enhanced Perspectives (coaching moments integrated into select activities) piloting with select partners in September.
+    </p>
+    <p class="s-prose">
+      But the framework itself tells us where to go next. If <em>we each hold a unique perspective</em> is the seed, and if the nesting expresses that seed at every altitude, then CDI's principles <em>require</em> us to address what happens when perspectives meet — the <strong style="color: var(--q3);">intersubjective</strong> — and what structures shape that encounter — the <strong style="color: var(--q4);">systemic</strong>. The constraint is sequencing: nothing new launches until the foundation is solid. June 2026 opens the planning window — in parallel with monitoring what the AI features teach us and preparing for full platform migration in H1 2027.
+    </p>
+
+    <div class="epigraph">
+      The collective dimensions name where the nesting points next. Not because expansion is strategically convenient, but because the architecture demands it. And not before the foundation can hold the weight.
+    </div>
+
+    <!-- Mini quadrant grid -->
+    <div class="quad-mini">
+      <div class="quad-mini-cell" style="background: rgba(123,128,255,0.25); color: var(--q1);">Q1<br><span style="font-size:8px;opacity:0.7;">STRONG</span></div>
+      <div class="quad-mini-cell" style="background: rgba(95,212,169,0.25); color: var(--q2);">Q2<br><span style="font-size:8px;opacity:0.7;">STRONG</span></div>
+      <div class="quad-mini-cell" style="background: rgba(255,157,92,0.10); color: var(--q3);">Q3<br><span style="font-size:8px;opacity:0.7;">EMERGING</span></div>
+      <div class="quad-mini-cell" style="background: rgba(224,96,144,0.05); color: var(--q4);">Q4<br><span style="font-size:8px;opacity:0.7;">FRONTIER</span></div>
+    </div>
+
+    <p class="s-prose" style="text-align: center; font-size: 14px; color: var(--text-dim);">
+      The roadmap sequences this expansion: <strong style="color: white;">deepen</strong> Q1–Q2, <strong style="color: white;">build</strong> Q3, <strong style="color: white;">pioneer</strong> Q4 — while scaling the Five Pillars beyond campus into corporate and civic sectors.
+    </p>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- THREE-YEAR ROADMAP        -->
+<!-- ======================== -->
+<div class="section wide" id="roadmap">
+  <div class="section-inner">
+    <div class="s-label">Strategic Roadmap</div>
+    <div class="s-title">Three Years of Principled Expansion</div>
+    <p class="s-prose">Click any initiative to see detail, outcomes, and its nesting check.</p>
+
+    <!-- Engagement Models Framework -->
+    <div style="margin: 32px 0; padding: 20px 24px; background: rgba(123,128,255,0.06); border-left: 3px solid var(--cdi); border-radius: 0 6px 6px 0;">
+      <h4 style="font-size: 16px; font-weight: 600; color: white; margin-bottom: 12px;">Engagement Models Framework</h4>
+      <p style="font-size: 14px; color: var(--text); line-height: 1.7; margin-bottom: 12px;">
+        CDI's product roadmap enables six engagement models — each suited to different institutional readiness levels and aligned to the GTM strategy's partner progression:
+      </p>
+      <ul style="font-size: 13px; color: var(--text); line-height: 1.9; margin-left: 20px; list-style: none; padding: 0;">
+        <li style="margin-bottom: 4px;"><strong style="color: var(--q1);">2026:</strong> <strong>Ignite</strong> (Perspectives + self-serve live programs) · <strong>Diagnose</strong> (Five Pillars asset mapping) · <strong>Focus</strong> (single-pillar consulting) · <strong>Sustain</strong> (retainer + ongoing access)</li>
+        <li style="margin-bottom: 4px;"><strong style="color: var(--q3);">2027:</strong> <strong>Transform</strong> (multi-pillar + Encounter for committed partners) · State system pilots scale <strong>Expand</strong> model</li>
+        <li><strong style="color: var(--q4);">2028:</strong> <strong>Expand</strong> (system-wide implementation across higher ed, civic, and potentially corporate sectors)</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-dim); margin-top: 12px;">
+        Each model is tied to platform capabilities, consulting capacity, and partner readiness. The roadmap ensures product capabilities evolve to support partner progression from awareness to transformation to sustained impact.
+      </p>
+    </div>
+
+    <!-- Thought Leadership Integration -->
+    <div style="margin: 24px 0 40px 0; padding: 20px 24px; background: rgba(255,157,92,0.04); border: 1px solid rgba(255,157,92,0.12); border-radius: 8px;">
+      <h4 style="font-size: 16px; font-weight: 600; color: var(--q3); margin-bottom: 12px;">Parallel Commitment: Thought Leadership & Content</h4>
+      <p style="font-size: 14px; color: var(--text); line-height: 1.7; margin-bottom: 12px;">
+        Product launches are amplified by parallel thought leadership. Each major initiative generates content that feeds the growth funnel and establishes CDI as the field's authority. Every product milestone is also a marketing and demand generation opportunity.
+      </p>
+      <div style="font-size: 13px; color: var(--text); line-height: 1.9;">
+        <strong style="color: white;">2026:</strong> Platform migration case study · AI coaching webinar series · Perspectives evidence study (white paper) · State system research brief<br>
+        <strong style="color: white;">2027:</strong> Encounter launch white paper · Dialogue-level measurement findings (op-eds) · State system pilot case studies · Cross-sector learning reports<br>
+        <strong style="color: white;">2028:</strong> Annual "State of Dialogue Conditions" report (flagship) · Systemic Awareness Tools webinars · Open-Source Nesting Framework community launch
+      </div>
+      <p style="font-size: 12px; color: var(--text-dim); margin-top: 12px;">
+        <em>Ownership:</em> Product leads content generation; Communications packages and distributes; Implementation provides partner stories; Research publishes findings. Monthly coordination ensures content calendar alignment.
+      </p>
+    </div>
+
+    <!-- 2026 -->
+    <div class="year-block" style="border-left: 3px solid var(--q1);">
+      <div class="year-header">
+        <div class="year-num">2026</div>
+        <div class="year-theme">Stabilize, Ship AI, Plant Seeds</div>
+        <div class="year-focus">Platform migration · AI Perspectives pilot (Sept) · Q3 research scoping (June+) · Booked through May</div>
+      </div>
+      <div class="initiatives">
+
+        <div class="init-card" style="border-left-color: var(--cdi);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Platform Stabilization & New Platform Migration</div>
+              <div class="init-preview">Stabilize the existing platform through May while building and migrating to the new platform — the foundation everything else depends on. Select partner pilots launch September.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q1">Q1</span><span class="qtag q2">Q2</span>
+              <span class="atag">Alt 1–2</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              This is the work that's happening <em>right now</em>. The team is booked through May on two parallel tracks: (1) <strong>Stabilize the existing platform</strong> — ensuring current partners and customers have a reliable, performant experience while the new platform is built. (2) <strong>Build and migrate to the new platform</strong> — the architectural foundation for everything in this roadmap. The new platform is the surface on which AI coaching, generative assessment, and eventually Encounter will run. <strong>September 2026:</strong> Select partners pilot the new platform with the AI-enhanced Perspectives curriculum. <strong>Full migration completes H1 2027</strong> — all customers on the new platform for the 2027–2028 academic year. Nothing else in this roadmap can scale until this is done. The platform <em>is</em> the Conditions layer made concrete.
+              <ul class="init-outcomes">
+                <li>Existing platform stable and performant through transition (zero unplanned downtime)</li>
+                <li>New platform pilot with select partners (September 2026)</li>
+                <li>AI-enhanced Perspectives curriculum live on new platform for pilot cohort</li>
+                <li>Full migration plan finalized and communicated to all customers by Q3 2026</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — The Product layer (Alt 1) must be solid before it can express higher altitudes. A platform migration is not glamorous strategy — it's the Conditions (Alt 2) applied to CDI's own infrastructure. Institutional humility starts with getting the foundation right.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--cdi);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Ship AI-Enhanced Perspectives: Coaching Moments</div>
+              <div class="init-preview">AI coaching integrated into select Perspectives activities — personalized, reflective feedback at key practice moments. Piloting September with select partners on the new platform.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q1">Q1</span><span class="qtag q2">Q2</span>
+              <span class="atag">Alt 1–4</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              CDI's first AI feature ships this year — not as a separate product, but as an enhancement to what we already do well. <strong>AI coaching moments</strong> are integrated into select Perspectives curriculum activities where practice matters most. After a perspective-taking exercise, learners receive AI-generated reflective coaching: "You reframed the economic argument effectively, but your response to the cultural framing stayed in your original frame — what do you notice about that difference?" After a constructive disagreement simulation: "You asked 3 clarifying questions in the first exchange but shifted to rebuttal in the second — what changed?"<br><br>
+              The coaching is <strong>reflective, not evaluative</strong>. It mirrors the learner's behavior back to them with questions, not scores. It practices the same posture the curriculum teaches: curiosity over judgment.<br><br>
+              <strong>Timeline:</strong> Building now (Jan–Aug). Piloting with select partners on the new platform (September). Monitoring, learning, and iterating through fall. This is both a product launch and a learning engine — the data from AI coaching interactions informs every subsequent AI initiative in this roadmap.
+              <ul class="init-outcomes">
+                <li>AI coaching moments live in 3–5 Perspectives activities (pilot cohort)</li>
+                <li>Learner satisfaction with AI coaching &gt; 4.0/5.0</li>
+                <li>Facilitator alignment: &gt; 80% agreement that AI coaching reflects curriculum values</li>
+                <li>Coaching interaction dataset: 1,000+ coaching exchanges for analysis</li>
+                <li>Published AI principles document: "How CDI Uses AI" (public-facing)</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — AI coaching embodies principled humility (Alt 4) applied to technology: the AI mirrors, questions, and invites — it never evaluates, ranks, or labels. The coaching moments are the Perspective (Alt 4) expressed at the Product layer (Alt 1). The measure models what it measures.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--q1);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Perspectives Evidence Base & Assessment Design</div>
+              <div class="init-preview">Begins June: longitudinal research design, generative assessment prototyping, and standardized outcome measures — running in parallel with platform monitoring. Capitalizes on AI coaching data.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q1">Q1</span><span class="qtag q2">Q2</span>
+              <span class="atag">Alt 1–3</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              <strong>Starts June 2026</strong> — once capacity opens. Two parallel streams, both informed by data flowing from the AI coaching pilot:<br><br>
+              <strong>1. Evidence Base:</strong> Design a multi-site longitudinal study of Perspectives efficacy. Standardize outcome measures (Comprehensive Intellectual Humility Scale, Feeling Thermometer for affective polarization, behavioral indicators from AI coaching data). The AI coaching interactions generate a new kind of data — not just pre/post surveys, but in-session behavioral patterns. This is the first time CDI can study <em>how people actually practice</em> perspective-taking, not just whether they report doing it.<br><br>
+              <strong>2. Generative Assessment Design:</strong> Prototype a posture-based assessment framework that replaces numeric scoring with reflective narratives. Three components scoped: AI-generated reflective prompts, facilitator observation rubrics (coding for curiosity signals, perspective uptake, comfort with ambiguity), and dialogue journals with AI-assisted pattern recognition. This work informs what ships to all customers when the full platform migration completes in H1 2027.
+              <ul class="init-outcomes">
+                <li>Multi-site RCT design finalized (8+ campuses, launching with new platform rollout)</li>
+                <li>Generative assessment prototype tested with AI coaching pilot cohort</li>
+                <li>Facilitator observation rubric drafted and piloted (3 campus cohorts)</li>
+                <li>AI coaching data analysis: first behavioral insights published internally</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — Research at the Product layer (Alt 1) validates what the Conditions layer (Alt 2) delivers. The AI coaching data creates a new feedback loop: education generates behavioral data, research analyzes it, findings reshape the curriculum. The flywheel tightens.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--q3);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Scope Intersubjective Research Program</div>
+              <div class="init-preview">Begins June: formalize partnerships, define methodology, pilot observational coding. Research-only — no product commitment yet. Sets the foundation for Encounter in 2027–28.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q3">Q3</span>
+              <span class="atag">Alt 4–5</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              <strong>Starts June 2026</strong> — planning and partnership formation, not product development. CDI's current work cultivates individual capacity. But dialogue is inherently relational: the <em>quality of encounter</em> between perspectives matters as much as the posture each person holds. This research program scopes what it would take to study what happens in the space between frames.<br><br>
+              Concretely: formalize 2–3 research partnerships (Essential Partners, Sustained Dialogue Institute, university labs in social psychology and communication studies). Define shared methodology: conversation analysis of facilitated dialogues (turn-taking patterns, question quality, perspective uptake), group-level measures of epistemic trust, observational coding of what facilitators call "the shift." Pilot the coding protocol on existing CDI dialogue sessions. All of this runs in parallel with monitoring the AI coaching pilot and planning the full platform migration — it's research scoping, not product building.
+              <ul class="init-outcomes">
+                <li>2–3 research partnerships formalized with shared data agreements</li>
+                <li>Working definition of "intersubjective dialogue quality" drafted</li>
+                <li>Observational coding protocol piloted on 20+ existing dialogue sessions</li>
+                <li>Research roadmap for 2027 Q3 product development published internally</li>
+                <li>Dialogue-level measurement framework designed (see below)</li>
+              </ul>
+
+              <h5 style="font-size: 14px; font-weight: 600; color: var(--cdi-light); margin-top: 16px; margin-bottom: 8px;">The Measurement Shift: From Participants to Dialogues</h5>
+              <p style="font-size: 13px; color: var(--text); line-height: 1.7; margin: 8px 0;">
+                CDI currently measures <em>individual learners</em> — intellectual humility, perspective-taking, openness. These remain essential. But Encounter demands something new: measurement of the <em>dialogue itself</em>. Not "Did each person improve?" but <strong>"What happened between the perspectives? Did the quality of encounter improve?"</strong>
+              </p>
+              <p style="font-size: 13px; color: var(--text); line-height: 1.7; margin: 8px 0;">
+                The intersubjective research program will pilot measurement across four dimensions:
+              </p>
+              <ul style="font-size: 12px; color: var(--text); margin-left: 20px; line-height: 1.8;">
+                <li><strong style="color: var(--q1);">Conversation Structure:</strong> Participation equity (% speaking turns by viewpoint), question prevalence (authentic questions vs. rhetorical), turn-taking reciprocity, silence patterns</li>
+                <li><strong style="color: var(--q3);">Cognitive Dynamics:</strong> Perspective uptake (moments where a speaker incorporates another's view), reframing (shift from binary to nuanced framing), shared understanding emergence</li>
+                <li><strong style="color: var(--q2);">Relational Climate:</strong> Epistemic trust (group believes partners are genuine), vulnerability signals, tone shifts across the dialogue arc, repair moments after ruptures</li>
+                <li><strong style="color: var(--q4);">Collective Outcomes:</strong> Perspective integration (group-level synthesis beyond individual views), curiosity increase, conflict engagement quality, actionable shared commitments</li>
+              </ul>
+              <p style="font-size: 13px; color: var(--text); line-height: 1.7; margin: 12px 0;">
+                <strong>Measurement approaches:</strong> (1) Observational coding by facilitators and research partners, (2) AI conversation analytics — real-time facilitator alerts and post-session pattern extraction, (3) Participant self-report integrated into Encounter's reflection layer, (4) Longitudinal dialogue portfolio tracking across sessions.
+              </p>
+              <p style="font-size: 13px; color: var(--text); line-height: 1.7; margin: 12px 0;">
+                <strong style="color: white;">2026 outcomes:</strong> Working definition of "dialogue quality," observational coding protocol, AI analytics prototype, facilitator rubric. <strong style="color: white;">2027 outcomes:</strong> Baseline metrics across 50+ partner dialogues, live AI dashboard in Encounter, validation that dialogue quality correlates with institutional culture change.
+              </p>
+
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — The Meta-Perspective (Alt 5) says <em>we each hold a unique perspective</em>. If that's true, then what happens when those perspectives meet is not peripheral — it's implicit in the seed. Measuring the dialogue — not just the dialoguers — is the research method nested in the philosophy. This scoping makes explicit what the nesting already contains, without overcommitting resources before the platform foundation is solid.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--q2);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Corporate Sector Exploration (Deferred — 2027 Decision)</div>
+              <div class="init-preview">Begins June: explore whether Five Pillars nest in enterprise contexts. Identify 1–2 potential partners. Corporate is <em>not</em> a 2026 priority — this is controlled exploration only. Go/no-go decision by Q4.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q1">Q1</span><span class="qtag q2">Q2</span>
+              <span class="atag">Alt 1–2</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              <strong>Starts June 2026</strong> — exploration and relationship exploration, not delivery or commitment. Per CDI's GTM strategy, <strong>corporate workplaces are deprioritized in 2026</strong>. Higher education is the growth engine. This initiative exists only to test whether the Five Pillars <em>can</em> nest in enterprise contexts — a question worth answering without betting resources on it.<br><br>
+              Concretely: Identify 1–2 potential corporate partners (beyond existing e.g. TEKsystems). Begin preliminary conversations about how Five Pillars might adapt: <strong>Committed Leadership</strong> → executive sponsorship, <strong>Climate Assessment</strong> → org-wide psychological safety survey, <strong>Broad-Based Programming</strong> → manager cohort, <strong>Community Norms</strong> → team-charter process, <strong>Accountability</strong> → integration with existing org-health metrics. Compare corporate vs. campus change dynamics (longer sales cycles, different buyer personas, ROI definitions). <strong>No active pilots launch in 2026. No product resources diverted.</strong> If exploration surfaces strong strategic fit, formal 2027 pilot design begins in Q4 2026.
+              <ul class="init-outcomes">
+                <li>1–2 corporate partners identified and in preliminary conversations</li>
+                <li>Corporate Five Pillars adaptation opportunity assessment (is it viable?)</li>
+                <li>Corporate vs. campus GTM motion differences documented for Partnerships</li>
+                <li>Go/no-go decision for 2027 corporate pilot made by Q4 2026</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — The Conditions (Alt 2) are institutional, not campus-specific. If the Five Pillars only work on campuses, they aren't truly nested. Scoping tests the idea before committing resources — institutional humility applied to strategic planning itself.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--q2);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">State System Strategy & Pilot Design</div>
+              <div class="init-preview">Begins June: scope how Five Pillars scale across multi-campus systems. Identify 2 state system candidates for potential 2027 pilots. CDI's highest-leverage GTM channel for scale.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q1">Q1</span><span class="qtag q2">Q2</span>
+              <span class="atag">Alt 1–2</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              <strong>Starts June 2026</strong> — exploration and scoping, aligned to GTM's state system channel strategy. CDI's individual campus partnerships succeed through president/provost engagement. But state systems operate differently: system-level coordination, governing body oversight, centralized budgets, multi-campus synchronization. <strong>This initiative tests whether the Five Pillars adapt to system-level governance</strong> — a critical question for CDI's path to scale.<br><br>
+              Concretely: (1) Map state system governance structures and budget cycles (they vary enormously — Utah's 6-month procurement vs. California's 12-month). (2) Identify 2 pilot system candidates: one "fast-procurement" system (e.g. Utah, NC, Kentucky — states with existing buying signals and Lumina/Blank support) and one "complex" system (e.g. California, Florida — longer cycles, higher scale potential). (3) Design system-wide Five Pillars model: How does Committed Leadership look at system vs. campus level? How does Accountability differ when a governing body can't mandate? (4) Build on CUNY and SCHEV proof points without assuming replicability. (5) Define multi-campus onboarding, measurement, and cross-campus learning communities.<br><br>
+              This work directly supports CDI's GTM state system channel (Tier 1 and Tier 2 states) and informs 2027 pilot launches.
+              <ul class="init-outcomes">
+                <li>2 state system candidates identified and preliminary meetings conducted</li>
+                <li>State system Five Pillars adaptation framework drafted (system vs. campus translation)</li>
+                <li>System-level governance map completed for each candidate</li>
+                <li>Business case: pricing model, revenue potential, resource requirements documented</li>
+                <li>GTM state system channel strategy aligned with Partnerships team</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — The Five Pillars must adapt to system-level governance while maintaining core principles. If the framework only works at single-campus scale, it isn't truly nested. Testing across system-level structures is the most rigorous validation of whether Conditions (Alt 2) are universally applicable.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="margin: 24px 0; padding: 16px; background: rgba(123,128,255,0.04); border: 1px solid rgba(123,128,255,0.1); border-radius: 6px;">
+      <h4 style="font-size: 14px; font-weight: 600; color: var(--cdi-light); margin-bottom: 10px;">Pricing Evolution Through Roadmap</h4>
+      <p style="font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 8px;">
+        <strong style="color: var(--text);">2026:</strong> Perspectives pricing baseline (enrollment-based, complexity-adjusted, endowment-tiered). Freemium for &lt;100-learner rosters. See GTM Strategy Section 5.2.
+      </p>
+      <p style="font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 8px;">
+        <strong style="color: var(--text);">2027:</strong> Encounter priced as premium tier (+30% for select partners) or bundled in "Transform" model. AI Coaching at scale included in all packages (no premium).
+      </p>
+      <p style="font-size: 13px; color: var(--text-dim); line-height: 1.6;">
+        <strong style="color: var(--text);">2028:</strong> Systemic Awareness Tools optional add-on for "Full-Sector" programs. State System pricing custom model. Pricing strategy balances accessibility (mission) with sustainability (revenue).
+      </p>
+    </div>
+
+    <!-- 2027 -->
+    <div class="year-block" style="border-left: 3px solid var(--q3);">
+      <div class="year-header">
+        <div class="year-num">2027</div>
+        <div class="year-theme">Expand the Field</div>
+        <div class="year-focus">Full platform migration (H1) · All customers on new platform for 2027–28 AY · First Q3 product · Q4 research · State system pilots · Corporate go/no-go</div>
+      </div>
+      <div class="initiatives">
+
+        <div class="init-card" style="border-left-color: var(--cdi);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Complete Full Platform Migration & AI Rollout</div>
+              <div class="init-preview">H1 2027: All customers migrated to new platform for 2027–28 academic year. AI-enhanced Perspectives with coaching moments becomes the standard experience. Foundation for everything that follows.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q1">Q1</span><span class="qtag q2">Q2</span>
+              <span class="atag">Alt 1–2</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              The 2026 pilot proved the new platform and AI coaching moments with select partners. Now the migration completes: <strong>all customers move to the new platform for the 2027–2028 academic year</strong>. This means every learner using Perspectives gets AI-enhanced coaching moments at key practice activities. Every facilitator has access to improved analytics. Every institution benefits from the infrastructure that enables generative assessment, the Encounter product, and future AI capabilities.<br><br>
+              H1 2027 is migration, stabilization, and support. H2 2027 is when the new platform becomes the launching pad for the Q3 and Q4 initiatives below. We learned from the pilot what works, what needs adjustment, and where the AI coaching over-reaches or under-delivers. Those learnings are integrated before full rollout.
+              <ul class="init-outcomes">
+                <li>100% of customers migrated to new platform by start of 2027–28 academic year</li>
+                <li>AI coaching moments live for all Perspectives users (not just pilot cohort)</li>
+                <li>Generative assessment v1 deployed (reflective narratives, not scores)</li>
+                <li>Migration satisfaction: &lt; 5% support ticket increase during transition</li>
+                <li>AI coaching iteration: v2 incorporating pilot learnings shipped with full rollout</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — The Conditions (Alt 2) for everything in this roadmap is a stable, capable platform. Completing the migration is institutional humility in action: do the unglamorous infrastructure work before claiming the strategic vision.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--q3);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Ship Encounter — CDI's Intersubjective Product</div>
+              <div class="init-preview">A two-layer platform: facilitator-facing dialogue mapping + participant-facing shared reflection. CDI's first product designed for what happens between perspectives.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q3">Q3</span>
+              <span class="atag">Alt 1–3</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              Built on 2026 intersubjective research, <strong>Encounter</strong> is a two-layer product addressing group dialogue dynamics — not what each individual brings, but the quality of what emerges when perspectives meet.<br><br>
+              <strong>Facilitator Layer:</strong> A real-time dialogue dashboard that maps group dynamics during facilitated sessions. Who's been heard and who hasn't. Where tension concentrates. Which perspectives are missing from the room. AI-generated suggested interventions ("The group hasn't engaged the economic framing — consider surfacing it"). Post-session analytics: conversation flow visualization, participation equity metrics, moments of genuine perspective uptake flagged for facilitator debrief.<br><br>
+              <strong>Participant Layer:</strong> After each dialogue session, participants access a shared reflection space. An AI-synthesized "encounter map" shows what the group explored, where it got stuck, and what perspectives emerged. Participants annotate their own experience onto the map — "I felt defensive here," "This is where I started to understand the other view." Over time, these maps build a personal dialogue portfolio that surfaces patterns in how each person encounters difference.<br><br>
+              The two layers create a feedback loop: facilitator observations inform participant reflections, and participant annotations improve facilitator intelligence for the next session.
+              <ul class="init-outcomes">
+                <li>Encounter MVP launched with 10+ institutional partners</li>
+                <li>Facilitator dashboard: real-time dialogue mapping validated (accuracy &gt; 75% vs. human coding)</li>
+                <li>Participant reflection space: engagement &gt; 60% post-session completion rate</li>
+                <li>Dialogue-level outcome metrics validated against 2026 research baseline:
+                  <ul style="margin-top: 6px; font-size: 12px;">
+                    <li>Perspective uptake: baseline established for cross-institutional comparison</li>
+                    <li>Participation equity: target &gt; 30% any single viewpoint (vs. benchmark 15%)</li>
+                    <li>Question prevalence: &gt; 25% of turns are authentic questions</li>
+                    <li>Collective reframing: documented in 60%+ of facilitated dialogue sessions</li>
+                    <li>Epistemic trust: measured via post-dialogue survey (&gt; 4.2/5.0)</li>
+                  </ul>
+                </li>
+                <li>Integration pathway with Perspectives (individual → group → individual reflection cycle)</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — The Mission (Alt 3) is to create <em>conditions</em> for constructive dialogue. Individual skill is necessary but insufficient — the conditions include the relational space itself. Encounter serves the Mission more fully than individual-only tools can. The two-layer design mirrors the nesting: inner posture (participant reflection) expressed through outer structure (facilitator tools).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--q4);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Begin Systemic Awareness Research</div>
+              <div class="init-preview">Partnering with MIT Media Lab, Stanford Internet Observatory, and media scholars to study how algorithms, filter bubbles, and institutional incentives degrade dialogue capacity at scale.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q4">Q4</span>
+              <span class="atag">Alt 4–5</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              The attention economy, filter bubbles, partisan media, algorithmic recommendation — these structural forces shape encounter independent of participant intention. CDI cannot fully serve its mission without understanding the systems that degrade dialogue capacity before people even enter the room. Concretely: (1) Research partnership with technologists studying recommendation algorithms and their effects on perspective exposure. (2) Collaboration with media scholars on how news architecture shapes intergroup perception. (3) Joint study with institutional designers on how organizational incentive structures suppress or enable honest disagreement. Target partners include academic labs at the intersection of technology and democracy, media research institutes, and organizational behavior departments.
+              <ul class="init-outcomes">
+                <li>2–3 research partnerships with technology/media institutions</li>
+                <li>Published taxonomy of systemic dialogue-degrading forces (algorithmic, media, institutional, economic)</li>
+                <li>First publication connecting CDI's nested principles framework to systemic analysis</li>
+                <li>Pilot "systemic awareness" module: 2-hour workshop helping facilitators name the systems shaping their participants' perspectives</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — The Meta-Perspective (Alt 5) applies to <em>all</em> perspectival dynamics — including those shaped by systems rather than individuals. If CDI's framework only addresses individual awareness while ignoring the structures that erode it, the nesting is incomplete at the outer rings.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--q2);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Scale Five Pillars: State Systems, Civic Pilots & Corporate (If Go)</div>
+              <div class="init-preview">State system pilots launch. 3 civic community pilots. Corporate only if Q4 2026 go/no-go was affirmative. Focus remains on higher-ed scaling via systems channel.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q2">Q2</span><span class="qtag q3">Q3</span>
+              <span class="atag">Alt 1–2</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              2026 scoping determined which expansion channels are viable. Scaling is <strong>sequenced by confidence and alignment with CDI's GTM strategy</strong>.<br><br>
+              <strong>State Systems (Primary):</strong> Launch 2 state system pilots designed in 2026 scoping. Multi-campus Five Pillars implementation with system-level coordination, cross-campus learning communities, and governing body engagement. This is CDI's highest-leverage channel for scale and aligns directly with the Partnerships team's state system strategy (Lumina + Blank Foundation supported).<br><br>
+              <strong>Civic (Exploratory):</strong> Pilot Five Pillars in 3 community settings — city councils, public library systems, community mediation centers. Committed Leadership becomes elected official buy-in. Climate Assessment becomes community listening sessions. Each new context tests and refines the architecture.<br><br>
+              <strong>Corporate (Conditional):</strong> Only if Q4 2026 go/no-go was affirmative. If "go," begin with 3–5 enterprise pilots. If "no-go," redirect resources to deeper state system expansion and civic pilots. Corporate scaling is contingent, not assumed.
+              <ul class="init-outcomes">
+                <li>2 state system pilots launched (multi-campus Five Pillars programs)</li>
+                <li>3 civic pilot communities launched (different geographies, demographics)</li>
+                <li>Corporate pilots: 3–5 if go; redirected to systems/civic if no-go</li>
+                <li>Cross-sector comparison study published: campus vs. state system vs. civic</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — Institutional humility means holding the framework provisionally. Cross-sector scaling isn't just growth — it's the most rigorous test of whether the principles actually nest or merely worked in the original context.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--cdi);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Ship AI Coaching & Generative Assessment at Scale</div>
+              <div class="init-preview">From prototype to platform: AI coaching embedded in Perspectives and Encounter, generative assessment replacing scoring across all CDI products.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q1">Q1</span><span class="qtag q2">Q2</span><span class="qtag q3">Q3</span>
+              <span class="atag">Alt 1–4</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              2026 prototyped three AI domains. 2027 ships two at scale: <strong>AI Coaching</strong> becomes a standard feature of both Perspectives (individual) and Encounter (group), providing personalized, asynchronous feedback to every learner. Post-module coaching: "In the immigration dialogue, you asked two clarifying questions when the topic was abstract but shifted to advocacy when it became personal — what do you notice about that pattern?" Post-Encounter coaching: "Your dialogue portfolio shows you engage deeply on cultural topics but disengage on economic ones — want to explore why?"<br><br>
+              <strong>Generative Assessment</strong> replaces numeric scoring across all CDI products. Instead of "You scored 7/10 on perspective-taking," learners receive narrative reflections that synthesize their dialogue behavior across sessions, surface patterns, and generate questions. Facilitators receive group-level generative reports rather than score distributions.
+              <ul class="init-outcomes">
+                <li>AI coaching live in Perspectives + Encounter (2,000+ active users)</li>
+                <li>Generative assessment deployed across all CDI products</li>
+                <li>User satisfaction with AI features &gt; 4.2/5.0</li>
+                <li>Published paper: "Generative Assessment in Dialogue Education" — framing CDI's approach for the field</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — AI coaching at scale is principled humility applied to technology: the AI mirrors, questions, and invites — it never evaluates, ranks, or labels. The generative assessment embodies the Perspective (Alt 4) at the Product layer (Alt 1): the measure is a model of what it measures.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2028 -->
+    <div class="year-block" style="border-left: 3px solid var(--q4);">
+      <div class="year-header">
+        <div class="year-num">2028</div>
+        <div class="year-theme">Systemic Integration</div>
+        <div class="year-focus">Q4 products · Full-sector scaling · Framework open-sourcing</div>
+      </div>
+      <div class="initiatives">
+
+        <div class="init-card" style="border-left-color: var(--q4);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Pioneer Systemic Awareness Tools</div>
+              <div class="init-preview">Curriculum modules on media ecosystem literacy, algorithmic influence mapping, and institutional incentive analysis — helping people see the systems shaping their encounters.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q4">Q4</span>
+              <span class="atag">Alt 1–3</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              Built on 2027 systemic research, these are CDI's first products addressing structural forces. Three deliverables: (1) <strong>Media Ecosystem Literacy modules</strong> — interactive curriculum helping learners map their own information diet, identify filter bubble dynamics, and understand how recommendation algorithms shape their perspective exposure. AI-assisted: learners input their media consumption and receive a generated "perspective exposure profile." (2) <strong>Institutional Incentive Analysis toolkit</strong> — a facilitated workshop format for organizations to identify how their own structures (meeting formats, performance reviews, communication norms) suppress or enable genuine disagreement. (3) <strong>Systemic Awareness integration</strong> into Encounter: the facilitator dashboard gains a "systemic context" layer showing relevant structural dynamics (e.g., "This topic is highly algorithmically polarized — participants likely have divergent information bases").
+              <ul class="init-outcomes">
+                <li>Media Ecosystem Literacy: 3 modules launched, piloted across campus + civic partners</li>
+                <li>Institutional Incentive Analysis toolkit: tested with 10+ organizations</li>
+                <li>Encounter "systemic context" feature shipped</li>
+                <li>Partnership with at least 1 major technology platform on perspective exposure research</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — The Product layer (Alt 1) must eventually express the Meta-Perspective at systemic scale. A Product that only addresses individual awareness while systemic forces degrade dialogue is incomplete — it solves for posture within a structure that erodes the conditions for posture.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--q2);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Full-Sector Five Pillars at Scale</div>
+              <div class="init-preview">50+ institutions across campus, corporate, and civic sectors — unified measurement, cross-sector learning communities, annual State of Dialogue report.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q1">Q1</span><span class="qtag q2">Q2</span><span class="qtag q3">Q3</span>
+              <span class="atag">Alt 2</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              By 2028, CDI's Five Pillars operate across all three sectors with shared measurement, cross-sector learning communities, and a unified conditions framework. The architecture has been stress-tested across contexts and refined by what each sector taught us. Committed Leadership looks different in a Fortune 500 company than on a campus, but the principle nests identically. Key infrastructure: (1) <strong>Unified assessment dashboard</strong> — cross-sector dialogue capacity metrics, powered by the generative assessment engine. (2) <strong>Cross-sector learning cohorts</strong> — campus administrators, corporate L&D leaders, and civic facilitators learning from each other's adaptations. (3) <strong>Annual "State of Dialogue Conditions" report</strong> — CDI's public contribution to understanding institutional dialogue capacity across sectors. AI integration: automated trend analysis across the full institutional dataset, surfacing patterns no single sector could see alone.
+              <ul class="init-outcomes">
+                <li>50+ institutions across campus/corporate/civic sectors</li>
+                <li>Unified cross-sector assessment dashboard (generative, not scored)</li>
+                <li>3 cross-sector learning cohorts running annually</li>
+                <li>First "State of Dialogue Conditions" report published</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — The Conditions (Alt 2) are the institutional expression of the Perspective (Alt 4). If the conditions only work in one sector, the architecture is context-dependent, not principled. Full-sector scaling is the ultimate nesting test for Altitude 2.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-card" style="border-left-color: var(--cdi);">
+          <div class="init-header">
+            <div>
+              <div class="init-title">Open-Source the Nesting Test Framework</div>
+              <div class="init-preview">Published methodology, facilitation guide, and AI-assisted nesting test tool — institutional humility as practice, releasing CDI's decision architecture for anyone to use.</div>
+            </div>
+            <div class="init-tags">
+              <span class="qtag q1">Q1</span><span class="qtag q2">Q2</span><span class="qtag q3">Q3</span><span class="qtag q4">Q4</span>
+              <span class="atag">Alt 4–5</span>
+            </div>
+          </div>
+          <div class="init-expand">
+            <div class="init-detail">
+              The nesting test — <em>does this cohere with the layers it grows from?</em> — is not proprietary to CDI. Any organization that operates from principles can ask this question. Open-sourcing the framework is the ultimate expression of institutional humility: CDI builds the table, then invites everyone to sit. The toolkit includes: (1) <strong>Nesting Test Methodology</strong> — the theoretical framework, decision criteria, and worked examples (including the fails). (2) <strong>Facilitation Guide</strong> — how to run a nesting test session with a leadership team, including prompts, templates, and common failure modes. (3) <strong>AI-Assisted Nesting Test Tool</strong> — a lightweight web tool where organizations input their principles hierarchy and proposed decisions, and an AI evaluates coherence across layers, flagging where the nesting breaks. The AI doesn't decide — it surfaces questions the way CDI's framework does.
+              <ul class="init-outcomes">
+                <li>Nesting Test toolkit published (methodology + examples + facilitation guide)</li>
+                <li>AI nesting test tool launched as free web application</li>
+                <li>5+ organizations adopt and adapt the framework</li>
+                <li>Community of practice for principled organizational design (100+ members)</li>
+              </ul>
+              <div class="nesting-check">
+                <strong>Nesting check ✓</strong> — This is the framework practicing what it preaches. A framework about perspectival humility that hoards its own methodology contradicts itself. Open-sourcing is the Meta-Perspective (Alt 5) expressed as institutional action (Alt 2) — the nesting at its most self-consistent.
+              </div>
+              <div style="margin-top: 12px; font-size: 13px; color: var(--text-dim); line-height: 1.6; padding: 12px 12px 0 12px;">
+                <strong style="color: var(--text);">Thought Leadership Outcome:</strong> Open-sourcing positions CDI as field innovator and establishes the nesting framework as industry standard. This is mission-driven independent of direct revenue, but creates inbound demand through credibility and community-of-practice partnerships.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- IMPLEMENTATION RHYTHM       -->
+<!-- ======================== -->
+<div class="section wide" style="background: linear-gradient(180deg, var(--bg) 0%, var(--bg-section) 40%, var(--bg) 100%);">
+  <div class="section-inner">
+    <div class="s-label">Partner Success & Delivery</div>
+    <div class="s-title">Scaling Roadmap Around Implementation Rhythm</div>
+    <p class="s-prose">
+      Product launches are sequenced to align with Implementation's seasonal rhythm, ensuring smooth partner delivery and renewal cycle.
+    </p>
+
+    <div style="margin: 32px 0;">
+      <h4 style="font-size: 16px; font-weight: 600; color: white; margin-bottom: 16px;">Annual Implementation Cadence</h4>
+
+      <div style="margin: 20px 0;">
+        <strong style="color: var(--q1); font-size: 14px;">SPRING (March–May): Renewal & Expansion Debriefs</strong>
+        <p style="font-size: 13px; color: var(--text); margin-top: 6px; line-height: 1.6;">
+          Implementation debriefs with partners on prior year. Research shares partner analytics. Partnerships identifies expansion opportunities. Product roadmap priorities informed by partner feedback.
+        </p>
+      </div>
+
+      <div style="margin: 20px 0;">
+        <strong style="color: var(--q2); font-size: 14px;">SUMMER (June–Sept): Planning & Launch Preparation</strong>
+        <p style="font-size: 13px; color: var(--text); margin-top: 6px; line-height: 1.6;">
+          2026: AI Coaching pilot onboarding. 2027: Encounter training &amp; materials development. 2028: Systemic Awareness curriculum development. Implementation builds onboarding guides, facilitator training, adoption dashboards.
+        </p>
+      </div>
+
+      <div style="margin: 20px 0;">
+        <strong style="color: var(--q3); font-size: 14px;">FALL (Sept–Dec): Major Launches</strong>
+        <p style="font-size: 13px; color: var(--text); margin-top: 6px; line-height: 1.6;">
+          2026: AI Coaching pilot (Sept). 2027: Full platform migration + Encounter launch. 2028: Systemic Awareness tools. Implementation manages phased rollout, support, adoption tracking.
+        </p>
+      </div>
+
+      <div style="margin: 20px 0;">
+        <strong style="color: var(--q4); font-size: 14px;">WINTER (Dec–Jan): Spring Preparation & Renewals</strong>
+        <p style="font-size: 13px; color: var(--text); margin-top: 6px; line-height: 1.6;">
+          Implementation prepares for spring semester launches. Partnerships conducts renewal conversations aligned with budget calendars.
+        </p>
+      </div>
+
+      <div style="margin: 32px 0; padding: 16px; background: rgba(255,255,255,0.02); border-left: 2px solid var(--cdi); border-radius: 0 4px 4px 0;">
+        <p style="font-size: 13px; color: var(--text); line-height: 1.6;">
+          <strong>Key Metrics:</strong> Partner adoption rate (% of eligible users accessing new features) · Partner satisfaction (&gt;4.0/5.0) · Renewal rate (% renewing for year +1) · Expansion rate (% upgrading to more comprehensive engagement model).
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- GANTT TIMELINE             -->
+<!-- ======================== -->
+<div class="section wide" id="gantt" style="background: linear-gradient(180deg, var(--bg) 0%, var(--bg-section) 40%, var(--bg) 100%);">
+  <div class="section-inner">
+    <div class="s-label">Timeline</div>
+    <div class="s-title">Strategic Gantt</div>
+    <p class="s-prose">Year 1 in monthly detail. Years 2–3 in quarterly resolution. Hatched bars indicate research phases; solid bars indicate product development and delivery. Diamonds mark key milestones.</p>
+
+    <div class="gantt-wrap">
+      <table class="gantt-table" id="ganttTable">
+        <!-- Built by JS -->
+      </table>
+    </div>
+
+    <div class="gantt-legend">
+      <div class="gantt-legend-item"><div class="gantt-legend-swatch" style="background:var(--q1);"></div> Q1 Self-Awareness</div>
+      <div class="gantt-legend-item"><div class="gantt-legend-swatch" style="background:var(--q2);"></div> Q2 Skills/Conditions</div>
+      <div class="gantt-legend-item"><div class="gantt-legend-swatch" style="background:var(--q3);"></div> Q3 Intersubjective</div>
+      <div class="gantt-legend-item"><div class="gantt-legend-swatch" style="background:var(--q4);"></div> Q4 Systemic</div>
+      <div class="gantt-legend-item"><div class="gantt-legend-swatch" style="background:var(--cdi);"></div> AI / Cross-cutting</div>
+      <div class="gantt-legend-item"><div class="gantt-legend-swatch" style="background:var(--q3); background: repeating-linear-gradient(45deg, var(--q3), var(--q3) 3px, rgba(0,0,0,0.15) 3px, rgba(0,0,0,0.15) 6px);"></div> Research phase</div>
+      <div class="gantt-legend-item"><span style="display:inline-block;width:8px;height:8px;border:2px solid var(--cdi-light);transform:rotate(45deg);background:var(--bg);"></span> Milestone</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- MATRIX EVOLUTION           -->
+<!-- ======================== -->
+<div class="section" id="matrix" style="background: linear-gradient(180deg, var(--bg) 0%, var(--bg-section) 30%, var(--bg-section) 70%, var(--bg) 100%);">
+  <div class="section-inner" style="text-align: center;">
+    <div class="s-label">Coverage Growth</div>
+    <div class="s-title">The Matrix Expands</div>
+    <p class="s-prose" style="margin: 0 auto 16px; text-align: center;">
+      The four quadrants × five altitudes define a 20-cell possibility space. Each year, CDI's strategic footprint grows — not randomly, but in the direction the nesting demands.
+    </p>
+
+    <div class="matrix-row" id="matrixRow">
+      <!-- Filled by JS -->
+    </div>
+
+    <p class="s-prose" style="margin: 24px auto 0; text-align: center; font-size: 14px; color: var(--text-dim);">
+      Cells colored by quadrant: <span style="color:var(--q1);">■</span> Q1 <span style="color:var(--q2);">■</span> Q2 <span style="color:var(--q3);">■</span> Q3 <span style="color:var(--q4);">■</span> Q4 · Glowing cells are new that year.
+    </p>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- THE FLYWHEEL               -->
+<!-- ======================== -->
+<div class="section" id="flywheel">
+  <div class="section-inner" style="text-align: center;">
+    <div class="s-label">Virtuous Cycle</div>
+    <div class="s-title">Education ⇄ Research</div>
+    <p class="s-prose" style="margin: 0 auto 16px; text-align: center;">
+      The outermost ring of the nesting — the Product — is where Education and Research face each other, generating the feedback loop that keeps the whole system honest.
+    </p>
+
+    <div class="flywheel-wrap">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer ring -->
+        <circle cx="200" cy="200" r="160" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="40"/>
+        <!-- Segments -->
+        <path d="M200,40 A160,160 0 0,1 360,200" fill="none" stroke="var(--q1)" stroke-width="40" opacity="0.3"/>
+        <path d="M360,200 A160,160 0 0,1 200,360" fill="none" stroke="var(--q2)" stroke-width="40" opacity="0.3"/>
+        <path d="M200,360 A160,160 0 0,1 40,200" fill="none" stroke="var(--q3)" stroke-width="40" opacity="0.3"/>
+        <path d="M40,200 A160,160 0 0,1 200,40" fill="none" stroke="var(--q4)" stroke-width="40" opacity="0.3"/>
+        <!-- Labels -->
+        <text x="280" y="110" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" font-weight="600" fill="var(--q1)" letter-spacing="1">RESEARCH</text>
+        <text x="310" y="290" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" font-weight="600" fill="var(--q2)" letter-spacing="1">EDUCATION</text>
+        <text x="100" y="300" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" font-weight="600" fill="var(--q3)" letter-spacing="1">PRACTICE</text>
+        <text x="100" y="110" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" font-weight="600" fill="var(--q4)" letter-spacing="1">VALIDATION</text>
+        <!-- Arrows -->
+        <polygon points="340,200 330,190 330,210" fill="var(--q1)" opacity="0.6"/>
+        <polygon points="200,340 190,330 210,330" fill="var(--q2)" opacity="0.6" transform="rotate(90 200 340)"/>
+        <polygon points="60,200 70,190 70,210" fill="var(--q3)" opacity="0.6"/>
+        <polygon points="200,60 190,70 210,70" fill="var(--q4)" opacity="0.6" transform="rotate(-90 200 60)"/>
+        <!-- Center -->
+        <circle cx="200" cy="200" r="50" fill="var(--bg)" stroke="var(--cdi)" stroke-width="1" opacity="0.5"/>
+        <text x="200" y="196" text-anchor="middle" font-family="IBM Plex Sans" font-size="9" font-weight="600" fill="var(--cdi-light)" letter-spacing="1">PRINCIPLED</text>
+        <text x="200" y="210" text-anchor="middle" font-family="IBM Plex Sans" font-size="9" font-weight="600" fill="var(--cdi-light)" letter-spacing="1">HUMILITY</text>
+      </svg>
+    </div>
+
+    <div class="flywheel-notes">
+      <div class="fw-note">
+        <div class="fw-note-year" style="color: var(--q1);">2026</div>
+        Research validates Q1–Q2 pedagogy. Findings reshape curriculum. The loop tightens around what CDI already does well.
+      </div>
+      <div class="fw-note">
+        <div class="fw-note-year" style="color: var(--q3);">2027</div>
+        Q3 research opens a new loop — intersubjective dynamics generate questions individual research couldn't ask.
+      </div>
+      <div class="fw-note">
+        <div class="fw-note-year" style="color: var(--q4);">2028</div>
+        Q4 systemic research completes the cycle. The flywheel now spans all four quadrants: from individual insight to systemic understanding and back.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- STRATEGIC PRINCIPLES       -->
+<!-- ======================== -->
+<div class="section" id="principles" style="background: radial-gradient(ellipse at 50% 50%, rgba(81,88,255,0.06) 0%, transparent 50%);">
+  <div class="section-inner">
+    <div class="s-label">Decision Criteria</div>
+    <div class="s-title">Six Strategic Principles</div>
+    <p class="s-prose">Every initiative in this roadmap — and every decision that follows it — is tested against these principles. They are the nesting applied to strategy itself.</p>
+
+    <div class="principles-row">
+      <div class="p-card">
+        <div class="p-card-title">Does This Nest?</div>
+        <div class="p-card-text">Every initiative must cohere with the layers it grows from. If a product decision can't be traced through Conditions → Mission → Perspective → Meta-Perspective, it doesn't belong.</div>
+      </div>
+      <div class="p-card">
+        <div class="p-card-title">Principled Humility</div>
+        <div class="p-card-text">Grounded in conviction, rooted in curiosity. We hold strong positions — but as posture, not identity. The roadmap itself is held provisionally.</div>
+      </div>
+      <div class="p-card">
+        <div class="p-card-title">Institutional Humility</div>
+        <div class="p-card-text">CDI builds the table, not sits at its head. We practice what we teach: holding our own framework the way we ask others to hold theirs.</div>
+      </div>
+      <div class="p-card">
+        <div class="p-card-title">Education ⇄ Research</div>
+        <div class="p-card-text">Neither drives; both enable. Research without education is sterile. Education without research is stagnant. The flywheel is the engine.</div>
+      </div>
+      <div class="p-card">
+        <div class="p-card-title">Five Altitudes as Coherence Check</div>
+        <div class="p-card-text">Meta-Perspective → Perspective → Mission → Conditions → Product. Skip a level and coherence fractures. The altitude stack is the integrity test.</div>
+      </div>
+      <div class="p-card">
+        <div class="p-card-title">Measure the Dialogue, Not Just the Dialoguers</div>
+        <div class="p-card-text">We measure not just whether individuals improve, but what happens <em>between</em> perspectives. Encounter's success is measured by dialogue quality — perspective uptake, participation equity, curiosity, collective reframing — not just participant satisfaction. The measure is a model of what it measures.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- NEXT STEPS & GOVERNANCE    -->
+<!-- ======================== -->
+<div class="section" id="actions">
+  <div class="section-inner">
+    <div class="s-label">Immediate Priorities</div>
+    <div class="s-title">Now Through May 2026</div>
+
+    <div class="action-grid">
+      <div class="action-item">
+        <div class="action-num">1</div>
+        <div class="action-title">Stabilize Existing Platform</div>
+        <div class="action-desc">Ensure current partners and customers have a reliable experience through the transition period. Zero unplanned downtime. This is the team's primary focus now.</div>
+        <div class="action-when">Ongoing through May 2026</div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">2</div>
+        <div class="action-title">Build AI-Enhanced Perspectives for New Platform</div>
+        <div class="action-desc">Ship AI coaching moments into select Perspectives activities on the new platform. Target: select partner pilots in September. The first concrete AI feature CDI delivers.</div>
+        <div class="action-when">Building now → Sept pilot</div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">3</div>
+        <div class="action-title">Plan June+ Strategic Workstreams</div>
+        <div class="action-desc">Scope the three parallel tracks that open when capacity frees up: evidence base &amp; assessment design, intersubjective research partnerships, and corporate sector conversations. Plan now, execute June.</div>
+        <div class="action-when">Planning now → Launch June</div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">4</div>
+        <div class="action-title">Institute Quarterly Nesting Review</div>
+        <div class="action-desc">Every major product and strategy decision tested against five-altitude coherence. Build the discipline before scaling the roadmap. Start with platform and AI decisions.</div>
+        <div class="action-when">Monthly starting March 2026</div>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <h3 style="font-family: 'PT Sans Narrow', sans-serif; font-size: 22px; color: white; margin-bottom: 16px;">Strategic Review Cadence</h3>
+
+    <div class="cadence-row">
+      <div class="cadence-item">
+        <div class="cadence-freq">Monthly</div>
+        <div class="cadence-desc">Leadership team reviews active initiatives against the nesting test. Adjust or kill what doesn't cohere.</div>
+      </div>
+      <div class="cadence-item">
+        <div class="cadence-freq">Quarterly</div>
+        <div class="cadence-desc">Board briefing on roadmap progress, matrix expansion, flywheel velocity, and cross-sector learning.</div>
+      </div>
+      <div class="cadence-item">
+        <div class="cadence-freq">Annually</div>
+        <div class="cadence-desc">Strategic reset. Assess year outcomes against framework predictions. Recalibrate next year's roadmap. Publish findings.</div>
+      </div>
+      <div class="cadence-item">
+        <div class="cadence-freq">Ongoing</div>
+        <div class="cadence-desc">Thought leadership content aligned with product launches: case studies, white papers, webinars, op-eds, and conference presentations amplify each roadmap initiative and establish CDI as field authority.</div>
+      </div>
+    </div>
+
+    <div class="epigraph" style="margin-top: 40px;">
+      A roadmap is not a prediction. It is a commitment to a principle, tested and retested at every stage. Our principle: <span class="hl">does this nest?</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-org">CONSTRUCTIVE DIALOGUE INSTITUTE</div>
+  Ari Allen · <span style="text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.5);">Draft Proposal</span> · February 2026
+</div>
+
+<script>
+// === Section reveals ===
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.section-inner, .hero-inner').forEach(el => observer.observe(el));
+
+// Hero immediate
+setTimeout(() => {
+  const h = document.getElementById('hero-content');
+  if (h) h.classList.add('visible');
+}, 200);
+
+// === Initiative card expand/collapse ===
+document.querySelectorAll('.init-card').forEach(card => {
+  card.addEventListener('click', () => {
+    card.classList.toggle('open');
+  });
+});
+
+// === Nav dots ===
+const dots = document.querySelectorAll('.nav-dot');
+const sections = [];
+dots.forEach(d => {
+  const target = document.getElementById(d.getAttribute('data-target'));
+  if (target) sections.push({ dot: d, el: target });
+  d.addEventListener('click', () => {
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + window.innerHeight / 3;
+  let active = sections[0];
+  sections.forEach(s => {
+    if (s.el.offsetTop <= scrollY) active = s;
+  });
+  dots.forEach(d => d.classList.remove('active'));
+  if (active) active.dot.classList.add('active');
+});
+
+// === Matrix Evolution (generated) ===
+const qColors = ['#7b80ff', '#5fd4a9', '#ff9d5c', '#e06090'];
+// Cell states: 0=empty, 1=filled, 2=new this year
+const matrixStates = {
+  'Current': {
+    cells: [
+      [1,1,1,0], // Alt 5 (Meta)
+      [1,1,1,0], // Alt 4 (Perspective)
+      [1,1,1,0], // Alt 3 (Mission)
+      [1,1,0,0], // Alt 2 (Conditions)
+      [1,1,1,0], // Alt 1 (Product)
+    ],
+    count: 13
+  },
+  'End 2026': {
+    cells: [
+      [1,1,1,0],
+      [1,1,1,0],
+      [1,1,1,0],
+      [1,1,2,0], // Q3 conditions via intersubjective research
+      [1,1,1,0],
+    ],
+    count: 14
+  },
+  'End 2027': {
+    cells: [
+      [1,1,1,2], // Q4 meta research
+      [1,1,1,2], // Q4 perspective research
+      [1,1,1,0],
+      [1,1,1,0],
+      [1,1,2,2], // Q3 Encounter product + Q4 systemic begins
+    ],
+    count: 17
+  },
+  'End 2028': {
+    cells: [
+      [1,1,1,1],
+      [1,1,1,1],
+      [1,1,1,2], // Q4 mission — systemic awareness tools
+      [1,1,1,2], // Q4 conditions — full-sector
+      [1,1,1,1],
+    ],
+    count: 20
+  }
+};
+
+// === Gantt Chart (generated) ===
+(function buildGantt() {
+  const table = document.getElementById('ganttTable');
+  if (!table) return;
+
+  // Define columns: 12 months for 2026, 4 quarters each for 2027 & 2028 = 20 cols
+  const cols2026 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const cols2027 = ['Q1','Q2','Q3','Q4'];
+  const cols2028 = ['Q1','Q2','Q3','Q4'];
+  const totalCols = 20;
+
+  // Build header rows
+  let headRow1 = '<tr><th rowspan="2" style="text-align:left;min-width:220px;">Initiative</th>';
+  headRow1 += '<th class="year-head" colspan="12">2026</th>';
+  headRow1 += '<th class="year-head" colspan="4">2027</th>';
+  headRow1 += '<th class="year-head" colspan="4">2028</th></tr>';
+
+  let headRow2 = '<tr>';
+  cols2026.forEach(c => headRow2 += '<th>' + c + '</th>');
+  cols2027.forEach(c => headRow2 += '<th>' + c + '</th>');
+  cols2028.forEach(c => headRow2 += '<th>' + c + '</th>');
+  headRow2 += '</tr>';
+
+  // Define initiatives: name, color, start col (0-indexed), span, isResearch, milestones [{col, color}]
+  // Cols 0-11 = Jan-Dec 2026 (monthly), 12-15 = Q1-Q4 2027, 16-19 = Q1-Q4 2028
+  const initiatives = [
+    // 2026: Booked through May (0-4), June opens planning (5+)
+    { name: 'Platform Stabilization', color: 'var(--cdi)', tag: 'INFRA', start: 0, span: 5, research: false, milestones: [] },
+    { name: 'New Platform Build & Migration', color: 'var(--cdi)', tag: 'INFRA', start: 0, span: 14, research: false, milestones: [{col: 8, color: 'var(--cdi)'}, {col: 13, color: 'var(--cdi)'}] },
+    { name: 'AI Perspectives (Coaching Moments)', color: 'var(--cdi)', tag: 'AI', start: 0, span: 12, research: false, milestones: [{col: 8, color: 'var(--cdi)'}] },
+    { name: 'Evidence Base & Assessment Design', color: 'var(--q1)', tag: 'Q1-Q2', start: 5, span: 11, research: true, milestones: [{col: 11, color: 'var(--q1)'}] },
+    { name: 'Intersubjective Research Scoping', color: 'var(--q3)', tag: 'Q3', start: 5, span: 7, research: true, milestones: [{col: 11, color: 'var(--q3)'}] },
+    { name: 'Corporate Exploration (Deferred)', color: 'var(--q2)', tag: 'Q2', start: 5, span: 7, research: false, milestones: [{col: 11, color: 'var(--q2)'}] },
+    { name: 'State System Strategy & Pilot Design', color: 'var(--q2)', tag: 'Q2', start: 5, span: 7, research: true, milestones: [{col: 11, color: 'var(--q2)'}] },
+    // 2027: Full migration H1 (12-13), then expand
+    { name: 'Full Platform Migration & AI Rollout', color: 'var(--cdi)', tag: 'INFRA', start: 12, span: 2, research: false, milestones: [{col: 13, color: 'var(--cdi)'}] },
+    { name: 'Ship Encounter (Q3 Product)', color: 'var(--q3)', tag: 'Q3', start: 13, span: 3, research: false, milestones: [{col: 15, color: 'var(--q3)'}] },
+    { name: 'Systemic Awareness Research', color: 'var(--q4)', tag: 'Q4', start: 13, span: 3, research: true, milestones: [] },
+    { name: 'State Systems, Civic & Corporate (If Go)', color: 'var(--q2)', tag: 'Q2-Q3', start: 13, span: 3, research: false, milestones: [{col: 14, color: 'var(--q2)'}] },
+    { name: 'AI Coaching & Gen. Assessment at Scale', color: 'var(--cdi)', tag: 'AI', start: 12, span: 4, research: false, milestones: [{col: 14, color: 'var(--cdi)'}] },
+    // 2028: Full expansion
+    { name: 'Systemic Awareness Tools', color: 'var(--q4)', tag: 'Q4', start: 16, span: 4, research: false, milestones: [{col: 18, color: 'var(--q4)'}] },
+    { name: 'Full-Sector Five Pillars', color: 'var(--q2)', tag: 'Q2', start: 16, span: 4, research: false, milestones: [] },
+    { name: 'Open-Source Nesting Test', color: 'var(--cdi)', tag: 'All', start: 17, span: 3, research: false, milestones: [{col: 19, color: 'var(--cdi)'}] },
+  ];
+
+  let bodyRows = '';
+  initiatives.forEach(init => {
+    let row = '<tr>';
+    row += '<td class="gantt-label">' + init.name + ' <span class="gl-tag" style="background:rgba(255,255,255,0.08);color:var(--text-dim);">' + init.tag + '</span></td>';
+    for (let c = 0; c < totalCols; c++) {
+      row += '<td class="gantt-cell" style="position:relative;">';
+      // Bar
+      if (c >= init.start && c < init.start + init.span) {
+        let isFirst = c === init.start;
+        let isLast = c === init.start + init.span - 1;
+        let bl = isFirst ? '3px' : '0';
+        let br = isLast ? '3px' : '0';
+        let barStyle = 'position:absolute;top:5px;bottom:5px;left:0;right:0;opacity:0.6;border-radius:' + bl + ' ' + br + ' ' + br + ' ' + bl + ';background:' + init.color + ';';
+        if (init.research) barStyle += 'background:repeating-linear-gradient(45deg,' + init.color + ',' + init.color + ' 3px,rgba(0,0,0,0.2) 3px,rgba(0,0,0,0.2) 6px);';
+        row += '<div style="' + barStyle + '"></div>';
+      }
+      // Milestones
+      init.milestones.forEach(m => {
+        if (m.col === c) {
+          row += '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg);width:8px;height:8px;border:2px solid ' + m.color + ';background:var(--bg);z-index:2;"></div>';
+        }
+      });
+      row += '</td>';
+    }
+    row += '</tr>';
+    bodyRows += row;
+  });
+
+  table.innerHTML = headRow1 + headRow2 + bodyRows;
+})();
+
+const matrixRow = document.getElementById('matrixRow');
+Object.keys(matrixStates).forEach(label => {
+  const state = matrixStates[label];
+  const snap = document.createElement('div');
+  snap.className = 'matrix-snap';
+
+  let labelEl = document.createElement('div');
+  labelEl.className = 'matrix-snap-label';
+  labelEl.textContent = label;
+  snap.appendChild(labelEl);
+
+  let grid = document.createElement('div');
+  grid.className = 'mini-matrix';
+  state.cells.forEach(row => {
+    row.forEach((val, qi) => {
+      let cell = document.createElement('div');
+      cell.className = 'mm-cell';
+      if (val >= 1) {
+        cell.classList.add('filled');
+        cell.style.background = qColors[qi];
+      }
+      if (val === 2) cell.classList.add('new');
+      grid.appendChild(cell);
+    });
+  });
+  snap.appendChild(grid);
+
+  let stat = document.createElement('div');
+  stat.className = 'matrix-snap-stat';
+  stat.innerHTML = state.count + ' <span>/ 20</span>';
+  snap.appendChild(stat);
+
+  matrixRow.appendChild(snap);
+});
+</script>
+</body>
+</html>
