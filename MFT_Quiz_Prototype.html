@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moral Foundations Assessment — CDI Perspectives</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=PT+Sans+Narrow:wght@400;700&display=swap');
+
+  :root {
+    --cdi-purple: #5158FF;
+    --cdi-purple-light: #E8E9FF;
+    --cdi-purple-mid: #9B9EFF;
+    --cdi-body: #333333;
+    --cdi-subtle: #666666;
+    --cdi-bg: #FAFAFE;
+    --cdi-card: #FFFFFF;
+    --cdi-border: #E2E3F0;
+    --care: #E85D75;
+    --fairness: #F5A623;
+    --liberty: #50C878;
+    --loyalty: #4A90D9;
+    --authority: #9B59B6;
+    --sanctity: #D4A76A;
+    --posture: #5158FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    background: var(--cdi-bg);
+    color: var(--cdi-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* HEADER */
+  .quiz-header {
+    text-align: center;
+    padding: 48px 20px 40px;
+    background: linear-gradient(135deg, var(--cdi-purple) 0%, #6C63FF 100%);
+    color: white;
+    border-radius: 0 0 24px 24px;
+    margin-bottom: 32px;
+  }
+  .quiz-header .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .quiz-header h1 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .quiz-header p {
+    font-size: 15px;
+    opacity: 0.85;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* INTRO SCREEN */
+  .intro-screen {
+    background: var(--cdi-card);
+    border-radius: 16px;
+    padding: 40px 32px;
+    border: 1px solid var(--cdi-border);
+    margin-bottom: 24px;
+  }
+  .intro-screen h2 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 24px;
+    color: var(--cdi-purple);
+    margin-bottom: 16px;
+  }
+  .intro-screen p {
+    font-size: 15px;
+    color: var(--cdi-subtle);
+    margin-bottom: 12px;
+  }
+  .intro-screen .detail {
+    display: flex;
+    gap: 24px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .intro-screen .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--cdi-subtle);
+  }
+  .intro-screen .detail-item .icon {
+    width: 32px;
+    height: 32px;
+    background: var(--cdi-purple-light);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  /* PROGRESS */
+  .progress-container {
+    background: var(--cdi-card);
+    border-radius: 12px;
+    padding: 16px 24px;
+    border: 1px solid var(--cdi-border);
+    margin-bottom: 24px;
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .progress-section {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cdi-purple);
+  }
+  .progress-count {
+    font-size: 13px;
+    color: var(--cdi-subtle);
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--cdi-purple-light);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cdi-purple), #6C63FF);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--cdi-card);
+    border-radius: 16px;
+    padding: 32px;
+    border: 1px solid var(--cdi-border);
+    margin-bottom: 24px;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .question-card.entering {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .question-number {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--cdi-purple);
+    margin-bottom: 4px;
+  }
+  .foundation-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+  .question-text {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 28px;
+    color: var(--cdi-body);
+  }
+
+  /* LIKERT OPTIONS */
+  .likert-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .likert-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 2px solid var(--cdi-border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .likert-option:hover {
+    border-color: var(--cdi-purple-mid);
+    background: var(--cdi-purple-light);
+  }
+  .likert-option.selected {
+    border-color: var(--cdi-purple);
+    background: var(--cdi-purple-light);
+  }
+  .likert-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #CCC;
+    border-radius: 50%;
+    margin-right: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .likert-option.selected .likert-radio {
+    border-color: var(--cdi-purple);
+  }
+  .likert-option.selected .likert-radio::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: var(--cdi-purple);
+    border-radius: 50%;
+  }
+  .likert-label {
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .likert-value {
+    margin-left: auto;
+    font-size: 12px;
+    color: #AAA;
+    font-weight: 500;
+  }
+  .prefer-not {
+    text-align: center;
+    margin-top: 12px;
+  }
+  .prefer-not button {
+    background: none;
+    border: none;
+    color: #AAA;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .prefer-not button:hover {
+    color: var(--cdi-subtle);
+    background: #F0F0F0;
+  }
+
+  /* TENSION OPTION (Section A only) */
+  .tension-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 2px dashed var(--cdi-border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    margin-top: 12px;
+    background: #FAFAFE;
+  }
+  .tension-option:hover {
+    border-color: var(--cdi-purple-mid);
+    background: #F5F3FF;
+  }
+  .tension-option.selected {
+    border-color: var(--cdi-purple);
+    background: #F0EEFF;
+    border-style: solid;
+  }
+  .tension-option .tension-icon {
+    font-size: 18px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+  .tension-option.selected .tension-icon {
+    opacity: 1;
+  }
+  .tension-option .tension-label {
+    font-size: 14px;
+    color: var(--cdi-subtle);
+    line-height: 1.4;
+  }
+  .tension-option.selected .tension-label {
+    color: var(--cdi-purple);
+    font-weight: 500;
+  }
+  .tension-hint {
+    font-size: 11px;
+    color: #BBB;
+    margin-top: 4px;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* NAVIGATION */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  .btn {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--cdi-purple);
+    color: white;
+  }
+  .btn-primary:hover { background: #4148E6; }
+  .btn-primary:disabled {
+    background: #C8C9E8;
+    cursor: not-allowed;
+  }
+  .btn-secondary {
+    background: var(--cdi-purple-light);
+    color: var(--cdi-purple);
+  }
+  .btn-secondary:hover { background: #D5D6FF; }
+  .btn-start {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px;
+    font-size: 17px;
+  }
+
+  /* SECTION TRANSITION */
+  .section-transition {
+    background: var(--cdi-card);
+    border-radius: 16px;
+    padding: 40px 32px;
+    border: 1px solid var(--cdi-border);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .section-transition h2 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 24px;
+    color: var(--cdi-purple);
+    margin-bottom: 12px;
+  }
+  .section-transition p {
+    font-size: 15px;
+    color: var(--cdi-subtle);
+    max-width: 480px;
+    margin: 0 auto 24px;
+  }
+
+  /* RESULTS */
+  .results-container {
+    margin-bottom: 40px;
+  }
+  .results-header {
+    text-align: center;
+    padding: 32px;
+    background: var(--cdi-card);
+    border-radius: 16px;
+    border: 1px solid var(--cdi-border);
+    margin-bottom: 24px;
+  }
+  .results-header h2 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 28px;
+    color: var(--cdi-purple);
+    margin-bottom: 8px;
+  }
+  .results-header p {
+    font-size: 15px;
+    color: var(--cdi-subtle);
+  }
+
+  .radar-card {
+    background: var(--cdi-card);
+    border-radius: 16px;
+    padding: 32px;
+    border: 1px solid var(--cdi-border);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .radar-card h3 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 20px;
+    color: var(--cdi-purple);
+    margin-bottom: 4px;
+  }
+  .radar-card .subtitle {
+    font-size: 14px;
+    color: var(--cdi-subtle);
+    margin-bottom: 24px;
+  }
+
+  canvas#radarChart {
+    max-width: 400px;
+    max-height: 400px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .foundation-scores {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .foundation-score {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #F8F8FC;
+  }
+  .foundation-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .foundation-name {
+    font-size: 14px;
+    font-weight: 500;
+    flex: 1;
+  }
+  .foundation-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cdi-purple);
+  }
+
+  /* POSTURE */
+  .posture-card {
+    background: var(--cdi-card);
+    border-radius: 16px;
+    padding: 32px;
+    border: 1px solid var(--cdi-border);
+    margin-bottom: 24px;
+  }
+  .posture-card h3 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 20px;
+    color: var(--cdi-purple);
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .posture-card .subtitle {
+    font-size: 14px;
+    color: var(--cdi-subtle);
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .posture-spectrum {
+    position: relative;
+    height: 40px;
+    background: linear-gradient(90deg, #E8E9FF 0%, #9B9EFF 50%, #5158FF 100%);
+    border-radius: 20px;
+    margin: 0 auto 12px;
+    max-width: 500px;
+  }
+  .posture-marker {
+    position: absolute;
+    top: -6px;
+    width: 52px;
+    height: 52px;
+    background: white;
+    border: 4px solid var(--cdi-purple);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cdi-purple);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transform: translateX(-50%);
+    transition: left 0.8s ease;
+  }
+  .posture-labels {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    margin: 8px auto 0;
+    font-size: 12px;
+    color: var(--cdi-subtle);
+    font-weight: 500;
+  }
+  .posture-tier {
+    text-align: center;
+    margin-top: 24px;
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--cdi-purple-light);
+  }
+  .posture-tier-label {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cdi-purple);
+    margin-bottom: 4px;
+  }
+  .posture-tier-desc {
+    font-size: 14px;
+    color: var(--cdi-subtle);
+  }
+
+  /* FACETS */
+  .facets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .facet-item {
+    text-align: center;
+    padding: 16px 8px;
+    background: #F8F8FC;
+    border-radius: 10px;
+  }
+  .facet-score {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--cdi-purple);
+  }
+  .facet-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--cdi-subtle);
+    margin-top: 4px;
+  }
+
+  /* NARRATIVE */
+  .narrative-card {
+    background: var(--cdi-card);
+    border-radius: 16px;
+    padding: 32px;
+    border: 1px solid var(--cdi-border);
+    margin-bottom: 24px;
+  }
+  .narrative-card h3 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 20px;
+    color: var(--cdi-purple);
+    margin-bottom: 16px;
+  }
+  .narrative-card p {
+    font-size: 15px;
+    color: var(--cdi-body);
+    margin-bottom: 12px;
+    line-height: 1.65;
+  }
+
+  /* PROTOTYPE NOTICE */
+  .proto-notice {
+    text-align: center;
+    padding: 16px;
+    font-size: 12px;
+    color: #AAA;
+    margin-top: 40px;
+    border-top: 1px solid var(--cdi-border);
+  }
+
+  /* SCREEN MANAGEMENT */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .container { padding: 12px; }
+    .question-card { padding: 24px 20px; }
+    .quiz-header h1 { font-size: 26px; }
+    .foundation-scores { grid-template-columns: 1fr; }
+    .facets-grid { grid-template-columns: 1fr; }
+    .intro-screen .detail { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-header">
+  <div class="badge">CDI Perspectives P4</div>
+  <h1>Moral Foundations Assessment</h1>
+  <p>Explore what you value and how you hold those values.</p>
+</div>
+
+<div class="container">
+
+  <!-- INTRO SCREEN -->
+  <div id="introScreen" class="screen active">
+    <div class="intro-screen">
+      <h2>Before You Begin</h2>
+      <p>This assessment has two short sections. The first explores <strong>which moral foundations</strong> you prioritize. The second explores <strong>how you relate</strong> to your own values.</p>
+      <p>There are no right or wrong answers. Answer based on how you actually think and feel, not how you think you should.</p>
+      <div class="detail">
+        <div class="detail-item"><div class="icon">📋</div> 18 questions</div>
+        <div class="detail-item"><div class="icon">⏱</div> ~5 minutes</div>
+        <div class="detail-item"><div class="icon">🔒</div> Private results</div>
+      </div>
+      <button class="btn btn-primary btn-start" onclick="startQuiz()">Begin Assessment</button>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quizScreen" class="screen">
+    <div class="progress-container">
+      <div class="progress-top">
+        <span class="progress-section" id="progressSection">Section A: Your Moral Profile</span>
+        <span class="progress-count" id="progressCount">1 of 18</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <div id="questionArea"></div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()" style="visibility: hidden">← Back</button>
+      <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next →</button>
+    </div>
+  </div>
+
+  <!-- SECTION TRANSITION -->
+  <div id="transitionScreen" class="screen">
+    <div class="section-transition">
+      <h2>Section B: How You Hold It</h2>
+      <p>You've mapped what you value. Now let's explore something different — the <em>quality of relationship</em> you have with your own beliefs.</p>
+      <p>Same scale, six more questions.</p>
+      <button class="btn btn-primary btn-start" onclick="startSectionB()">Continue</button>
+    </div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div id="resultsScreen" class="screen">
+    <div class="results-container">
+      <div class="results-header">
+        <h2>Your Results</h2>
+        <p>Here's what you value — and how you hold it.</p>
+      </div>
+
+      <!-- RADAR -->
+      <div class="radar-card">
+        <h3>Your Moral Profile</h3>
+        <p class="subtitle">Which foundations shape your moral intuitions?</p>
+        <canvas id="radarChart" width="400" height="400"></canvas>
+        <div class="foundation-scores" id="foundationScores"></div>
+      </div>
+
+      <!-- POSTURE -->
+      <div class="posture-card">
+        <h3>Your Posture</h3>
+        <p class="subtitle">How do you hold your values?</p>
+        <div class="posture-spectrum">
+          <div class="posture-marker" id="postureMarker">—</div>
+        </div>
+        <div class="posture-labels">
+          <span>Rooted in Place</span>
+          <span>Principled Humility</span>
+          <span>Expansive</span>
+        </div>
+        <div class="facets-grid" id="facetsGrid"></div>
+        <div class="posture-tier" id="postureTier"></div>
+      </div>
+
+      <!-- NARRATIVE -->
+      <div class="narrative-card">
+        <h3>What This Means</h3>
+        <div id="narrativeContent"></div>
+      </div>
+
+      <div class="proto-notice">
+        Prototype — Constructive Dialogue Institute, March 2026<br>
+        MFT Quiz Redesign Working Group
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ========================================
+// QUIZ DATA
+// ========================================
+const questions = [
+  // SECTION A: Moral Profile (12 items)
+  { id: 1, section: "A", foundation: "Care", color: "#E85D75",
+    text: "Caring for people who have suffered is an important virtue." },
+  { id: 2, section: "A", foundation: "Care", color: "#E85D75",
+    text: "It pains me when I see someone ignoring the needs of another human being." },
+  { id: 3, section: "A", foundation: "Fairness", color: "#F5A623",
+    text: "Everyone deserves to be treated according to the same set of rules, regardless of who they are." },
+  { id: 4, section: "A", foundation: "Fairness", color: "#F5A623",
+    text: "It bothers me when people get special treatment that others don\u2019t have access to." },
+  { id: 5, section: "A", foundation: "Liberty", color: "#50C878",
+    text: "The government should not be able to tell people how to live their lives." },
+  { id: 6, section: "A", foundation: "Liberty", color: "#50C878",
+    text: "People should be free to challenge and even disobey authority when it oversteps." },
+  { id: 7, section: "A", foundation: "Loyalty", color: "#4A90D9",
+    text: "It\u2019s important to stand by the groups you belong to, even when it\u2019s difficult." },
+  { id: 8, section: "A", foundation: "Loyalty", color: "#4A90D9",
+    text: "I feel a strong sense of pride when a group I\u2019m part of succeeds." },
+  { id: 9, section: "A", foundation: "Authority", color: "#9B59B6",
+    text: "Society functions best when people respect established rules and leadership." },
+  { id: 10, section: "A", foundation: "Authority", color: "#9B59B6",
+    text: "There\u2019s wisdom in following the guidance of people with more experience, even when you disagree." },
+  { id: 11, section: "A", foundation: "Sanctity", color: "#D4A76A",
+    text: "Some things should be treated as sacred, whether or not you\u2019re religious." },
+  { id: 12, section: "A", foundation: "Sanctity", color: "#D4A76A",
+    text: "I\u2019m bothered when people treat something deeply meaningful in a crude or disrespectful way." },
+
+  // SECTION B: How You Hold It (6 items)
+  { id: 13, section: "B", facet: "Framework Awareness", color: "#5158FF",
+    text: "People who see the world very differently from me probably have experiences that make their views make sense to them." },
+  { id: 14, section: "B", facet: "Framework Awareness", color: "#5158FF",
+    text: "When I have a strong moral reaction, I try to understand where it\u2019s coming from before assuming I\u2019m right." },
+  { id: 15, section: "B", facet: "Moral Extensibility", color: "#5158FF",
+    text: "Even values I don\u2019t personally share can be important for a healthy society." },
+  { id: 16, section: "B", facet: "Moral Extensibility", color: "#5158FF",
+    text: "I can usually see why someone would hold a view I disagree with, even if I think they\u2019re wrong." },
+  { id: 17, section: "B", facet: "Holding Quality", color: "#5158FF",
+    text: "I\u2019d rather have my beliefs challenged and refined than go unchallenged and stay comfortable." },
+  { id: 18, section: "B", facet: "Holding Quality", color: "#5158FF",
+    text: "I can feel strongly about my values and still be genuinely curious about someone who feels just as strongly about different ones." },
+];
+
+const scaleOptions = [
+  { label: "Strongly Agree", value: 6 },
+  { label: "Agree", value: 5 },
+  { label: "Slightly Agree", value: 4 },
+  { label: "Slightly Disagree", value: 3 },
+  { label: "Disagree", value: 2 },
+  { label: "Strongly Disagree", value: 1 },
+];
+
+// ========================================
+// STATE
+// ========================================
+let currentQ = 0;
+const answers = {};
+const tensionFlags = {}; // tracks which Section A items the student felt tension on
+
+// ========================================
+// QUIZ FLOW
+// ========================================
+function startQuiz() {
+  document.getElementById('introScreen').classList.remove('active');
+  document.getElementById('quizScreen').classList.add('active');
+  renderQuestion();
+}
+
+function startSectionB() {
+  document.getElementById('transitionScreen').classList.remove('active');
+  document.getElementById('quizScreen').classList.add('active');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  const area = document.getElementById('questionArea');
+
+  // Section label
+  const sectionLabel = q.section === "A" ? "Section A: Your Moral Profile" : "Section B: How You Hold It";
+  document.getElementById('progressSection').textContent = sectionLabel;
+  document.getElementById('progressCount').textContent = `${currentQ + 1} of ${questions.length}`;
+  document.getElementById('progressFill').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+
+  // Tag
+  const tagLabel = q.foundation || q.facet;
+  const tagBg = q.section === "A" ? q.color + "20" : "#E8E9FF";
+  const tagColor = q.section === "A" ? q.color : "#5158FF";
+
+  // Tension option (Section A only)
+  const tensionHtml = q.section === "A" ? `
+    <div class="tension-option ${tensionFlags[q.id] ? 'selected' : ''}"
+         onclick="toggleTension(${q.id}, this)">
+      <span class="tension-icon">⟷</span>
+      <span class="tension-label">I feel pulled in both directions on this one</span>
+    </div>
+    <div class="tension-hint">${tensionFlags[q.id] ? 'Noted — still pick the answer closest to where you land' : 'You can select this and still choose a response above'}</div>
+  ` : '';
+
+  // Build card
+  area.innerHTML = `
+    <div class="question-card entering" id="qCard">
+      <div class="question-number">Question ${currentQ + 1}</div>
+      <span class="foundation-tag" style="background:${tagBg}; color:${tagColor}">${tagLabel}</span>
+      <div class="question-text">${q.text}</div>
+      <div class="likert-scale" id="likertScale">
+        ${scaleOptions.map(o => `
+          <div class="likert-option ${answers[q.id] === o.value ? 'selected' : ''}"
+               onclick="selectAnswer(${q.id}, ${o.value}, this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">${o.label}</span>
+            <span class="likert-value">${o.value}</span>
+          </div>
+        `).join('')}
+      </div>
+      ${tensionHtml}
+      <div class="prefer-not">
+        <button onclick="selectAnswer(${q.id}, null, null)"
+                style="${answers[q.id] === null ? 'color: var(--cdi-purple); font-weight: 600' : ''}">
+          Prefer not to say
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Animate in
+  requestAnimationFrame(() => {
+    document.getElementById('qCard').classList.remove('entering');
+  });
+
+  // Nav state
+  document.getElementById('prevBtn').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  const isLast = currentQ === questions.length - 1;
+  document.getElementById('nextBtn').textContent = isLast ? 'See Results' : 'Next →';
+  document.getElementById('nextBtn').disabled = answers[q.id] === undefined;
+}
+
+function selectAnswer(qId, value, el) {
+  answers[qId] = value;
+
+  // Update UI
+  document.querySelectorAll('.likert-option').forEach(o => o.classList.remove('selected'));
+  if (el) el.classList.add('selected');
+
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function toggleTension(qId, el) {
+  tensionFlags[qId] = !tensionFlags[qId];
+  el.classList.toggle('selected');
+  // Update hint text
+  const hint = el.nextElementSibling;
+  if (hint && hint.classList.contains('tension-hint')) {
+    hint.textContent = tensionFlags[qId]
+      ? 'Noted \u2014 still pick the answer closest to where you land'
+      : 'You can select this and still choose a response above';
+  }
+}
+
+function nextQuestion() {
+  if (currentQ === 11) {
+    // Show section B transition
+    document.getElementById('quizScreen').classList.remove('active');
+    document.getElementById('transitionScreen').classList.add('active');
+    currentQ++;
+    return;
+  }
+  if (currentQ === questions.length - 1) {
+    showResults();
+    return;
+  }
+  currentQ++;
+  renderQuestion();
+}
+
+function prevQuestion() {
+  if (currentQ === 12) {
+    // Going back from B to A
+    currentQ = 11;
+    document.getElementById('transitionScreen').classList.remove('active');
+    document.getElementById('quizScreen').classList.add('active');
+    renderQuestion();
+    return;
+  }
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
+}
+
+// ========================================
+// SCORING & RESULTS
+// ========================================
+function calcScore(ids) {
+  const valid = ids.filter(id => answers[id] !== null && answers[id] !== undefined);
+  if (valid.length === 0) return null;
+  return valid.reduce((sum, id) => sum + answers[id], 0) / valid.length;
+}
+
+function showResults() {
+  document.getElementById('quizScreen').classList.remove('active');
+  document.getElementById('resultsScreen').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const foundations = [
+    { name: "Care", ids: [1, 2], color: "#E85D75" },
+    { name: "Fairness", ids: [3, 4], color: "#F5A623" },
+    { name: "Liberty", ids: [5, 6], color: "#50C878" },
+    { name: "Loyalty", ids: [7, 8], color: "#4A90D9" },
+    { name: "Authority", ids: [9, 10], color: "#9B59B6" },
+    { name: "Sanctity", ids: [11, 12], color: "#D4A76A" },
+  ];
+
+  const facets = [
+    { name: "Framework Awareness", ids: [13, 14] },
+    { name: "Moral Extensibility", ids: [15, 16] },
+    { name: "Holding Quality", ids: [17, 18] },
+  ];
+
+  // Calculate scores
+  const fScores = foundations.map(f => ({
+    ...f,
+    score: calcScore(f.ids) || 0
+  }));
+
+  const facetScores = facets.map(f => ({
+    ...f,
+    score: calcScore(f.ids) || 0
+  }));
+
+  const postureIds = [13, 14, 15, 16, 17, 18];
+  const rawPostureScore = calcScore(postureIds) || 0;
+
+  // Tension count from Section A — a signal of framework awareness
+  const tensionCount = Object.values(tensionFlags).filter(Boolean).length;
+  // Tension bonus: each flagged item nudges posture up slightly (max +0.5 from 12 items)
+  // This rewards the self-awareness of recognizing internal tension
+  const tensionBonus = Math.min(tensionCount * 0.042, 0.5);
+  const postureScore = Math.min(rawPostureScore + tensionBonus, 6);
+
+  // Draw radar chart
+  drawRadar(fScores);
+
+  // Foundation scores
+  const scoresEl = document.getElementById('foundationScores');
+  scoresEl.innerHTML = fScores.map(f => `
+    <div class="foundation-score">
+      <div class="foundation-dot" style="background: ${f.color}"></div>
+      <span class="foundation-name">${f.name}</span>
+      <span class="foundation-value">${f.score.toFixed(1)}</span>
+    </div>
+  `).join('');
+
+  // Posture marker
+  const pct = ((postureScore - 1) / 5) * 100;
+  const marker = document.getElementById('postureMarker');
+  marker.textContent = postureScore.toFixed(1);
+  setTimeout(() => { marker.style.left = `${pct}%`; }, 100);
+
+  // Facets + tension signal
+  const facetsEl = document.getElementById('facetsGrid');
+  const tensionDisplay = tensionCount > 0
+    ? `<div class="facet-item" style="border: 1px dashed var(--cdi-purple-mid)">
+        <div class="facet-score">${tensionCount}</div>
+        <div class="facet-name">Tension Points</div>
+       </div>`
+    : '';
+  facetsEl.innerHTML = facetScores.map(f => `
+    <div class="facet-item">
+      <div class="facet-score">${f.score.toFixed(1)}</div>
+      <div class="facet-name">${f.name}</div>
+    </div>
+  `).join('') + tensionDisplay;
+
+  // Posture tier
+  const tierEl = document.getElementById('postureTier');
+  let tierLabel, tierDesc;
+  if (postureScore >= 4.5) {
+    tierLabel = "Expansive";
+    tierDesc = "You hold your values with strong conviction and genuine openness. You can stand firm in what matters to you while remaining deeply curious about perspectives that differ from yours.";
+  } else if (postureScore >= 3.0) {
+    tierLabel = "Principled Humility";
+    tierDesc = "You balance conviction with curiosity. You recognize your moral framework as yours rather than the only valid one, and you\u2019re generally willing to engage with different perspectives.";
+  } else {
+    tierLabel = "Rooted in Place";
+    tierDesc = "Your values feel deeply important to you, and you hold them with strong conviction. There may be opportunities to explore how others arrive at different values while keeping your own intact.";
+  }
+  tierEl.innerHTML = `
+    <div class="posture-tier-label">${tierLabel}</div>
+    <div class="posture-tier-desc">${tierDesc}</div>
+  `;
+
+  // Narrative
+  generateNarrative(fScores, postureScore, facetScores);
+}
+
+function generateNarrative(fScores, postureScore, facetScores) {
+  const el = document.getElementById('narrativeContent');
+  const sorted = [...fScores].sort((a, b) => b.score - a.score);
+  const top2 = sorted.slice(0, 2);
+  const bottom2 = sorted.slice(-2);
+
+  let profileText = `<p>Your moral intuitions are most strongly shaped by <strong>${top2[0].name}</strong> and <strong>${top2[1].name}</strong>. `;
+  profileText += `These are the foundations that likely fire first when you encounter a moral question \u2014 they\u2019re the lens through which situations feel right or wrong before you\u2019ve even begun to reason about them.</p>`;
+
+  profileText += `<p>You scored lower on <strong>${bottom2[0].name}</strong> and <strong>${bottom2[1].name}</strong>. `;
+  profileText += `This doesn\u2019t mean you reject these values \u2014 it means they\u2019re less central to your moral reflexes. Someone who prioritizes these foundations might see moral dimensions in situations where you don\u2019t, and vice versa.</p>`;
+
+  let postureText = '';
+  if (postureScore >= 4.5) {
+    postureText = `<p>Your posture score suggests you already hold your moral framework with significant flexibility. You seem to recognize that your foundations are <em>yours</em> \u2014 shaped by your experiences \u2014 rather than universal truths. This is what CDI calls <strong>principled humility</strong>: being grounded in conviction while remaining rooted in curiosity.</p>`;
+  } else if (postureScore >= 3.0) {
+    postureText = `<p>Your posture score suggests a developing capacity to hold your values openly. You\u2019re moving toward what CDI calls <strong>principled humility</strong> \u2014 the ability to stand firmly in your convictions while staying genuinely curious about different ones. The lessons ahead will give you tools to practice this further.</p>`;
+  } else {
+    postureText = `<p>Your posture score suggests your values feel deeply important \u2014 perhaps non-negotiable. That conviction has real value. Over the course of this program, you\u2019ll explore whether it\u2019s possible to hold that conviction <em>and</em> genuine curiosity about people who see things differently. That\u2019s not about weakening what you believe \u2014 it\u2019s about strengthening <em>how</em> you hold it.</p>`;
+  }
+
+  // Tension narrative
+  let tensionText = '';
+  if (tensionCount > 0) {
+    if (tensionCount >= 4) {
+      tensionText = `<p>You flagged <strong>${tensionCount} items</strong> as pulling you in both directions. That\u2019s a meaningful signal: you\u2019re aware of genuine complexity in your own moral landscape. Feeling tension on a moral question isn\u2019t confusion \u2014 it\u2019s a form of honesty about the fact that values sometimes compete with each other. This kind of self-awareness is itself a dimension of posture.</p>`;
+    } else {
+      tensionText = `<p>You noted tension on <strong>${tensionCount} item${tensionCount > 1 ? 's' : ''}</strong> \u2014 moments where you felt pulled in both directions. That\u2019s worth paying attention to. The places where your moral intuitions compete are often the places where the most interesting growth happens.</p>`;
+    }
+  }
+
+  const lookAhead = `<p><strong>Looking ahead:</strong> In the next lessons, you\u2019ll meet people whose moral profiles look very different from yours. Your profile and posture will help you understand why those conversations feel easy or hard \u2014 and give you language for what\u2019s happening beneath the surface.</p>`;
+
+  el.innerHTML = profileText + postureText + tensionText + lookAhead;
+}
+
+// ========================================
+// RADAR CHART (Canvas)
+// ========================================
+function drawRadar(fScores) {
+  const canvas = document.getElementById('radarChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = 400 * dpr;
+  canvas.height = 400 * dpr;
+  ctx.scale(dpr, dpr);
+
+  const cx = 200, cy = 200, maxR = 150;
+  const n = fScores.length;
+  const angleStep = (2 * Math.PI) / n;
+  const startAngle = -Math.PI / 2; // top
+
+  // Grid rings
+  for (let ring = 1; ring <= 6; ring++) {
+    const r = (ring / 6) * maxR;
+    ctx.beginPath();
+    for (let i = 0; i <= n; i++) {
+      const a = startAngle + i * angleStep;
+      const x = cx + r * Math.cos(a);
+      const y = cy + r * Math.sin(a);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = ring % 2 === 0 ? '#D8D9E8' : '#EAEBF4';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Axes
+  for (let i = 0; i < n; i++) {
+    const a = startAngle + i * angleStep;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + maxR * Math.cos(a), cy + maxR * Math.sin(a));
+    ctx.strokeStyle = '#D8D9E8';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Data shape
+  ctx.beginPath();
+  fScores.forEach((f, i) => {
+    const a = startAngle + i * angleStep;
+    const r = (f.score / 6) * maxR;
+    const x = cx + r * Math.cos(a);
+    const y = cy + r * Math.sin(a);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(81, 88, 255, 0.15)';
+  ctx.fill();
+  ctx.strokeStyle = '#5158FF';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Data points
+  fScores.forEach((f, i) => {
+    const a = startAngle + i * angleStep;
+    const r = (f.score / 6) * maxR;
+    const x = cx + r * Math.cos(a);
+    const y = cy + r * Math.sin(a);
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = f.color;
+    ctx.fill();
+    ctx.strokeStyle = '#FFF';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // Labels
+  ctx.font = '600 13px "IBM Plex Sans", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  fScores.forEach((f, i) => {
+    const a = startAngle + i * angleStep;
+    const labelR = maxR + 24;
+    const x = cx + labelR * Math.cos(a);
+    const y = cy + labelR * Math.sin(a);
+    ctx.fillStyle = f.color;
+    ctx.fillText(f.name, x, y);
+  });
+
+  // Center score labels
+  ctx.font = '400 10px "IBM Plex Sans", sans-serif';
+  ctx.fillStyle = '#AAA';
+  ctx.textAlign = 'center';
+  [2, 4, 6].forEach(v => {
+    const r = (v / 6) * maxR;
+    ctx.fillText(v.toString(), cx + 12, cy - r + 1);
+  });
+}
+</script>
+
+</body>
+</html>
