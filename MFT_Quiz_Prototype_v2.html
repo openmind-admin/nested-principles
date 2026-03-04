@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moral Foundations Assessment v2 — CDI Perspectives</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=PT+Sans+Narrow:wght@400;700&display=swap');
+
+  :root {
+    --cdi-purple: #5158FF;
+    --cdi-purple-light: #E8E9FF;
+    --cdi-purple-mid: #9B9EFF;
+    --cdi-body: #333333;
+    --cdi-subtle: #666666;
+    --cdi-bg: #FAFAFE;
+    --cdi-card: #FFFFFF;
+    --cdi-border: #E2E3F0;
+    --care: #E85D75;
+    --fairness: #F5A623;
+    --liberty: #50C878;
+    --loyalty: #4A90D9;
+    --authority: #9B59B6;
+    --sanctity: #D4A76A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    background: var(--cdi-bg);
+    color: var(--cdi-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 720px; margin: 0 auto; padding: 20px; }
+
+  /* HEADER */
+  .quiz-header {
+    text-align: center;
+    padding: 48px 20px 40px;
+    background: linear-gradient(135deg, var(--cdi-purple) 0%, #6C63FF 100%);
+    color: white;
+    border-radius: 0 0 24px 24px;
+    margin-bottom: 32px;
+  }
+  .quiz-header .badge {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    background: rgba(255,255,255,0.2); padding: 4px 14px;
+    border-radius: 20px; margin-bottom: 16px;
+  }
+  .quiz-header h1 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 32px; font-weight: 700; margin-bottom: 8px;
+  }
+  .quiz-header p { font-size: 15px; opacity: 0.85; max-width: 520px; margin: 0 auto; }
+
+  /* INTRO */
+  .intro-screen {
+    background: var(--cdi-card); border-radius: 16px;
+    padding: 40px 32px; border: 1px solid var(--cdi-border); margin-bottom: 24px;
+  }
+  .intro-screen h2 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 24px; color: var(--cdi-purple); margin-bottom: 16px;
+  }
+  .intro-screen p { font-size: 15px; color: var(--cdi-subtle); margin-bottom: 12px; }
+  .intro-screen .detail {
+    display: flex; gap: 24px; margin: 20px 0; flex-wrap: wrap;
+  }
+  .intro-screen .detail-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; color: var(--cdi-subtle);
+  }
+  .intro-screen .detail-item .icon {
+    width: 32px; height: 32px; background: var(--cdi-purple-light);
+    border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; font-size: 16px;
+  }
+
+  /* PROGRESS */
+  .progress-container {
+    background: var(--cdi-card); border-radius: 12px;
+    padding: 16px 24px; border: 1px solid var(--cdi-border);
+    margin-bottom: 24px; position: sticky; top: 12px; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .progress-section { font-size: 13px; font-weight: 600; color: var(--cdi-purple); }
+  .progress-count { font-size: 13px; color: var(--cdi-subtle); }
+  .progress-bar { height: 6px; background: var(--cdi-purple-light); border-radius: 3px; overflow: hidden; }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--cdi-purple), #6C63FF);
+    border-radius: 3px; transition: width 0.4s ease;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--cdi-card); border-radius: 16px;
+    padding: 32px; border: 1px solid var(--cdi-border);
+    margin-bottom: 24px; transition: opacity 0.3s, transform 0.3s;
+  }
+  .question-card.entering { opacity: 0; transform: translateY(16px); }
+  .question-number {
+    font-size: 12px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--cdi-purple); margin-bottom: 4px;
+  }
+  .foundation-tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 2px 10px; border-radius: 10px; margin-bottom: 12px;
+  }
+  .question-text {
+    font-size: 18px; font-weight: 500; line-height: 1.5;
+    margin-bottom: 28px; color: var(--cdi-body);
+  }
+  .question-prompt {
+    font-size: 14px; color: var(--cdi-subtle); font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* LIKERT OPTIONS */
+  .likert-scale { display: flex; flex-direction: column; gap: 8px; }
+  .likert-option {
+    display: flex; align-items: center; padding: 12px 16px;
+    border: 2px solid var(--cdi-border); border-radius: 10px;
+    cursor: pointer; transition: all 0.2s; user-select: none;
+  }
+  .likert-option:hover { border-color: var(--cdi-purple-mid); background: var(--cdi-purple-light); }
+  .likert-option.selected { border-color: var(--cdi-purple); background: var(--cdi-purple-light); }
+  .likert-radio {
+    width: 20px; height: 20px; border: 2px solid #CCC;
+    border-radius: 50%; margin-right: 12px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+  }
+  .likert-option.selected .likert-radio { border-color: var(--cdi-purple); }
+  .likert-option.selected .likert-radio::after {
+    content: ''; width: 10px; height: 10px;
+    background: var(--cdi-purple); border-radius: 50%;
+  }
+  .likert-label { font-size: 15px; font-weight: 400; }
+  .likert-value { margin-left: auto; font-size: 12px; color: #AAA; font-weight: 500; }
+
+  /* EXPRESSION OPTIONS (Section B) */
+  .expression-options { display: flex; flex-direction: column; gap: 10px; }
+  .expression-option {
+    display: flex; align-items: flex-start; padding: 14px 18px;
+    border: 2px solid var(--cdi-border); border-radius: 12px;
+    cursor: pointer; transition: all 0.2s; user-select: none;
+  }
+  .expression-option:hover { border-color: var(--cdi-purple-mid); background: #F8F7FF; }
+  .expression-option.selected { border-color: var(--cdi-purple); background: var(--cdi-purple-light); }
+  .expression-radio {
+    width: 22px; height: 22px; border: 2px solid #CCC;
+    border-radius: 50%; margin-right: 14px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; margin-top: 2px;
+  }
+  .expression-option.selected .expression-radio { border-color: var(--cdi-purple); }
+  .expression-option.selected .expression-radio::after {
+    content: ''; width: 12px; height: 12px;
+    background: var(--cdi-purple); border-radius: 50%;
+  }
+  .expression-text { font-size: 15px; line-height: 1.5; color: var(--cdi-body); }
+
+  /* TENSION OPTION */
+  .tension-option {
+    display: flex; align-items: center; padding: 12px 16px;
+    border: 2px dashed var(--cdi-border); border-radius: 10px;
+    cursor: pointer; transition: all 0.2s; user-select: none;
+    margin-top: 12px; background: #FAFAFE;
+  }
+  .tension-option:hover { border-color: var(--cdi-purple-mid); background: #F5F3FF; }
+  .tension-option.selected { border-color: var(--cdi-purple); background: #F0EEFF; border-style: solid; }
+  .tension-option .tension-icon { font-size: 18px; margin-right: 12px; flex-shrink: 0; opacity: 0.7; }
+  .tension-option.selected .tension-icon { opacity: 1; }
+  .tension-option .tension-label { font-size: 14px; color: var(--cdi-subtle); line-height: 1.4; }
+  .tension-option.selected .tension-label { color: var(--cdi-purple); font-weight: 500; }
+  .tension-hint { font-size: 11px; color: #BBB; margin-top: 4px; text-align: center; font-style: italic; }
+
+  .prefer-not { text-align: center; margin-top: 12px; }
+  .prefer-not button {
+    background: none; border: none; color: #AAA; font-size: 13px;
+    cursor: pointer; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;
+  }
+  .prefer-not button:hover { color: var(--cdi-subtle); background: #F0F0F0; }
+
+  /* NAVIGATION */
+  .nav-buttons { display: flex; justify-content: space-between; margin-top: 8px; }
+  .btn {
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 15px;
+    font-weight: 600; padding: 12px 28px; border-radius: 10px;
+    cursor: pointer; transition: all 0.2s; border: none;
+  }
+  .btn-primary { background: var(--cdi-purple); color: white; }
+  .btn-primary:hover { background: #4148E6; }
+  .btn-primary:disabled { background: #C8C9E8; cursor: not-allowed; }
+  .btn-secondary { background: var(--cdi-purple-light); color: var(--cdi-purple); }
+  .btn-secondary:hover { background: #D5D6FF; }
+  .btn-start { display: block; width: 100%; margin-top: 24px; padding: 16px; font-size: 17px; }
+
+  /* SECTION TRANSITIONS */
+  .section-transition {
+    background: var(--cdi-card); border-radius: 16px;
+    padding: 40px 32px; border: 1px solid var(--cdi-border);
+    text-align: center; margin-bottom: 24px;
+  }
+  .section-transition h2 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 24px; color: var(--cdi-purple); margin-bottom: 12px;
+  }
+  .section-transition p {
+    font-size: 15px; color: var(--cdi-subtle);
+    max-width: 480px; margin: 0 auto 24px;
+  }
+
+  /* RESULTS */
+  .results-container { margin-bottom: 40px; }
+  .results-header {
+    text-align: center; padding: 32px; background: var(--cdi-card);
+    border-radius: 16px; border: 1px solid var(--cdi-border); margin-bottom: 24px;
+  }
+  .results-header h2 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 28px; color: var(--cdi-purple); margin-bottom: 8px;
+  }
+  .results-header p { font-size: 15px; color: var(--cdi-subtle); }
+
+  .radar-card {
+    background: var(--cdi-card); border-radius: 16px; padding: 32px;
+    border: 1px solid var(--cdi-border); margin-bottom: 24px; text-align: center;
+  }
+  .radar-card h3 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 20px; color: var(--cdi-purple); margin-bottom: 4px;
+  }
+  .radar-card .subtitle { font-size: 14px; color: var(--cdi-subtle); margin-bottom: 24px; }
+
+  canvas#radarChart { max-width: 400px; max-height: 400px; margin: 0 auto; display: block; }
+
+  .foundation-scores {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-top: 24px;
+  }
+  .foundation-score {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px; border-radius: 10px; background: #F8F8FC;
+  }
+  .foundation-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .foundation-name { font-size: 14px; font-weight: 500; flex: 1; }
+  .foundation-value { font-size: 16px; font-weight: 700; color: var(--cdi-purple); }
+
+  /* EXPRESSION CARDS */
+  .expressions-card {
+    background: var(--cdi-card); border-radius: 16px; padding: 32px;
+    border: 1px solid var(--cdi-border); margin-bottom: 24px;
+  }
+  .expressions-card h3 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 20px; color: var(--cdi-purple); margin-bottom: 4px; text-align: center;
+  }
+  .expressions-card .subtitle {
+    font-size: 14px; color: var(--cdi-subtle); margin-bottom: 24px; text-align: center;
+  }
+  .expression-result {
+    padding: 16px 18px; border-radius: 12px; margin-bottom: 12px;
+    border-left: 4px solid; background: #F8F8FC;
+  }
+  .expression-result .er-foundation {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 4px;
+  }
+  .expression-result .er-description {
+    font-size: 14px; color: var(--cdi-body); line-height: 1.5;
+  }
+  .expression-result .er-hint {
+    font-size: 12px; color: var(--cdi-subtle); margin-top: 6px; font-style: italic;
+  }
+
+  /* POSTURE */
+  .posture-card {
+    background: var(--cdi-card); border-radius: 16px; padding: 32px;
+    border: 1px solid var(--cdi-border); margin-bottom: 24px;
+  }
+  .posture-card h3 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 20px; color: var(--cdi-purple); margin-bottom: 4px; text-align: center;
+  }
+  .posture-card .subtitle { font-size: 14px; color: var(--cdi-subtle); margin-bottom: 28px; text-align: center; }
+  .posture-spectrum {
+    position: relative; height: 40px;
+    background: linear-gradient(90deg, #E8E9FF 0%, #9B9EFF 50%, #5158FF 100%);
+    border-radius: 20px; margin: 0 auto 12px; max-width: 500px;
+  }
+  .posture-marker {
+    position: absolute; top: -6px; width: 52px; height: 52px;
+    background: white; border: 4px solid var(--cdi-purple);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 16px; font-weight: 700;
+    color: var(--cdi-purple); box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transform: translateX(-50%); transition: left 0.8s ease;
+  }
+  .posture-labels {
+    display: flex; justify-content: space-between; max-width: 500px;
+    margin: 8px auto 0; font-size: 12px; color: var(--cdi-subtle); font-weight: 500;
+  }
+  .posture-tier {
+    text-align: center; margin-top: 24px; padding: 16px; border-radius: 12px;
+    background: var(--cdi-purple-light);
+  }
+  .posture-tier-label { font-size: 18px; font-weight: 700; color: var(--cdi-purple); margin-bottom: 4px; }
+  .posture-tier-desc { font-size: 14px; color: var(--cdi-subtle); }
+
+  .facets-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px; margin-top: 20px;
+  }
+  .facet-item { text-align: center; padding: 16px 8px; background: #F8F8FC; border-radius: 10px; }
+  .facet-score { font-size: 24px; font-weight: 700; color: var(--cdi-purple); }
+  .facet-name { font-size: 12px; font-weight: 500; color: var(--cdi-subtle); margin-top: 4px; }
+
+  /* NARRATIVE */
+  .narrative-card {
+    background: var(--cdi-card); border-radius: 16px; padding: 32px;
+    border: 1px solid var(--cdi-border); margin-bottom: 24px;
+  }
+  .narrative-card h3 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 20px; color: var(--cdi-purple); margin-bottom: 16px;
+  }
+  .narrative-card p { font-size: 15px; color: var(--cdi-body); margin-bottom: 12px; line-height: 1.65; }
+
+  .proto-notice {
+    text-align: center; padding: 16px; font-size: 12px; color: #AAA;
+    margin-top: 40px; border-top: 1px solid var(--cdi-border);
+  }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  @media (max-width: 600px) {
+    .container { padding: 12px; }
+    .question-card { padding: 24px 20px; }
+    .quiz-header h1 { font-size: 26px; }
+    .foundation-scores { grid-template-columns: 1fr; }
+    .facets-grid { grid-template-columns: 1fr; }
+    .intro-screen .detail { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-header">
+  <div class="badge">CDI Perspectives P4</div>
+  <h1>Moral Foundations Assessment</h1>
+  <p>Explore what you value, how you express those values, and how you hold them.</p>
+</div>
+
+<div class="container">
+
+  <!-- INTRO -->
+  <div id="introScreen" class="screen active">
+    <div class="intro-screen">
+      <h2>Before You Begin</h2>
+      <p>This assessment has three short sections:</p>
+      <p><strong>Section A</strong> explores <strong>which moral foundations</strong> you prioritize.</p>
+      <p><strong>Section B</strong> explores <strong>how you express</strong> each foundation — there are many valid ways.</p>
+      <p><strong>Section C</strong> explores <strong>how you hold</strong> your values overall — rigidly or flexibly, exclusively or expansively.</p>
+      <p style="margin-top: 16px">There are no right or wrong answers. Answer based on how you actually think and feel, not how you think you should.</p>
+      <div class="detail">
+        <div class="detail-item"><div class="icon">📋</div> 20 questions</div>
+        <div class="detail-item"><div class="icon">⏱</div> ~6 minutes</div>
+        <div class="detail-item"><div class="icon">🔒</div> Private results</div>
+      </div>
+      <button class="btn btn-primary btn-start" onclick="startQuiz()">Begin Assessment</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizScreen" class="screen">
+    <div class="progress-container">
+      <div class="progress-top">
+        <span class="progress-section" id="progressSection"></span>
+        <span class="progress-count" id="progressCount"></span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </div>
+    <div id="questionArea"></div>
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()" style="visibility: hidden">← Back</button>
+      <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next →</button>
+    </div>
+  </div>
+
+  <!-- TRANSITION A→B -->
+  <div id="transitionAB" class="screen">
+    <div class="section-transition">
+      <h2>Section B: How You Express Each Foundation</h2>
+      <p>You've mapped what you value. Now let's explore something subtler — <em>how</em> you express each of those values. The same foundation can show up in genuinely different ways.</p>
+      <p>For each foundation, pick the description that resonates most. There's no "best" answer.</p>
+      <button class="btn btn-primary btn-start" onclick="startSection('B')">Continue</button>
+    </div>
+  </div>
+
+  <!-- TRANSITION B→C -->
+  <div id="transitionBC" class="screen">
+    <div class="section-transition">
+      <h2>Section C: How You Hold Your Values</h2>
+      <p>Finally, two questions about the <em>quality of relationship</em> you have with your own beliefs — how flexibly or firmly you hold the whole picture.</p>
+      <button class="btn btn-primary btn-start" onclick="startSection('C')">Continue</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="resultsScreen" class="screen">
+    <div class="results-container">
+      <div class="results-header">
+        <h2>Your Results</h2>
+        <p>Here's what you value, how you express it, and how you hold it.</p>
+      </div>
+
+      <div class="radar-card">
+        <h3>Your Moral Profile</h3>
+        <p class="subtitle">Which foundations shape your moral intuitions?</p>
+        <canvas id="radarChart" width="400" height="400"></canvas>
+        <div class="foundation-scores" id="foundationScores"></div>
+      </div>
+
+      <div class="expressions-card">
+        <h3>How You Express Each Foundation</h3>
+        <p class="subtitle">The same value can show up in genuinely different ways</p>
+        <div id="expressionResults"></div>
+      </div>
+
+      <div class="posture-card">
+        <h3>Your Posture</h3>
+        <p class="subtitle">How do you hold your values?</p>
+        <div class="posture-spectrum">
+          <div class="posture-marker" id="postureMarker">—</div>
+        </div>
+        <div class="posture-labels">
+          <span>Rooted in Place</span>
+          <span>Principled Humility</span>
+          <span>Expansive</span>
+        </div>
+        <div class="facets-grid" id="facetsGrid"></div>
+        <div class="posture-tier" id="postureTier"></div>
+      </div>
+
+      <div class="narrative-card">
+        <h3>What This Means</h3>
+        <div id="narrativeContent"></div>
+      </div>
+
+      <div class="proto-notice">
+        Prototype v2 — Constructive Dialogue Institute, March 2026<br>
+        MFT Quiz Redesign Working Group | Developmental Streams Architecture
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ========================================
+// QUIZ DATA
+// ========================================
+
+// SECTION A: Moral Profile (12 items) — Likert, which foundations
+const sectionA = [
+  { id: 1, section: "A", foundation: "Care", color: "#E85D75",
+    text: "Caring for people who have suffered is an important virtue." },
+  { id: 2, section: "A", foundation: "Care", color: "#E85D75",
+    text: "It pains me when I see someone ignoring the needs of another human being." },
+  { id: 3, section: "A", foundation: "Fairness", color: "#F5A623",
+    text: "Everyone deserves to be treated according to the same set of rules, regardless of who they are." },
+  { id: 4, section: "A", foundation: "Fairness", color: "#F5A623",
+    text: "It bothers me when people get special treatment that others don\u2019t have access to." },
+  { id: 5, section: "A", foundation: "Liberty", color: "#50C878",
+    text: "The government should not be able to tell people how to live their lives." },
+  { id: 6, section: "A", foundation: "Liberty", color: "#50C878",
+    text: "People should be free to challenge and even disobey authority when it oversteps." },
+  { id: 7, section: "A", foundation: "Loyalty", color: "#4A90D9",
+    text: "It\u2019s important to stand by the groups you belong to, even when it\u2019s difficult." },
+  { id: 8, section: "A", foundation: "Loyalty", color: "#4A90D9",
+    text: "I feel a strong sense of pride when a group I\u2019m part of succeeds." },
+  { id: 9, section: "A", foundation: "Authority", color: "#9B59B6",
+    text: "Society functions best when people respect established rules and leadership." },
+  { id: 10, section: "A", foundation: "Authority", color: "#9B59B6",
+    text: "There\u2019s wisdom in following the guidance of people with more experience, even when you disagree." },
+  { id: 11, section: "A", foundation: "Sanctity", color: "#D4A76A",
+    text: "Some things should be treated as sacred, whether or not you\u2019re religious." },
+  { id: 12, section: "A", foundation: "Sanctity", color: "#D4A76A",
+    text: "I\u2019m bothered when people treat something deeply meaningful in a crude or disrespectful way." },
+];
+
+// SECTION B: How You Express Each Foundation (6 items) — forced-choice, developmental altitude
+// Each option maps to a stage: 1=Order/Blue, 2=Achievement/Orange, 3=Pluralistic/Green, 4=Integrative/Teal
+const sectionB = [
+  { id: 13, section: "B", foundation: "Fairness", color: "#F5A623",
+    prompt: "When you think about what makes a situation \u201Cfair,\u201D which comes closest to how you see it?",
+    options: [
+      { text: "Everyone follows the same rules, no exceptions. Consistency is what makes things fair.", altitude: 1 },
+      { text: "Everyone gets an equal shot to succeed based on their own effort and talent.", altitude: 2 },
+      { text: "Outcomes matter \u2014 real fairness means adjusting for the advantages some people start with.", altitude: 3 },
+      { text: "It depends on the situation. Sometimes equal rules are fair; sometimes adjusted outcomes are. Context matters more than a single principle.", altitude: 4 },
+    ]
+  },
+  { id: 14, section: "B", foundation: "Care", color: "#E85D75",
+    prompt: "When someone you know is going through a hard time, what feels like the most meaningful way to care?",
+    options: [
+      { text: "Be there for the people closest to me \u2014 family, friends, my people. That\u2019s where care starts.", altitude: 1 },
+      { text: "Help in concrete ways \u2014 solve the problem, connect them with resources, take action.", altitude: 2 },
+      { text: "Be fully present with them emotionally \u2014 listen deeply, validate what they\u2019re going through, hold space.", altitude: 3 },
+      { text: "Consider what this person actually needs right now, which might be presence, practical help, tough honesty, or even some distance. Real care is discerning.", altitude: 4 },
+    ]
+  },
+  { id: 15, section: "B", foundation: "Loyalty", color: "#4A90D9",
+    prompt: "What does loyalty mean to you at its core?",
+    options: [
+      { text: "Standing by your people no matter what. Blood is thicker than water.", altitude: 1 },
+      { text: "Being reliable and trustworthy within the groups and teams you\u2019ve committed to.", altitude: 2 },
+      { text: "Feeling connected to all of humanity \u2014 loyalty should extend beyond borders and in-groups.", altitude: 3 },
+      { text: "Holding multiple loyalties at once \u2014 to your family, your community, your country, and the broader world \u2014 and navigating the tensions between them honestly.", altitude: 4 },
+    ]
+  },
+  { id: 16, section: "B", foundation: "Authority", color: "#9B59B6",
+    prompt: "How do you think about authority and leadership?",
+    options: [
+      { text: "Clear roles and hierarchies keep things running. People should respect the chain of command.", altitude: 1 },
+      { text: "Authority should be earned through competence and results, not just given by title or tradition.", altitude: 2 },
+      { text: "The best decisions come from inclusive processes where everyone\u2019s voice is heard, not top-down authority.", altitude: 3 },
+      { text: "Different situations call for different kinds of leadership \u2014 sometimes hierarchy, sometimes consensus, sometimes individual initiative. The structure should fit the context.", altitude: 4 },
+    ]
+  },
+  { id: 17, section: "B", foundation: "Sanctity", color: "#D4A76A",
+    prompt: "When something feels \u201Csacred\u201D or deeply important to you, what\u2019s that about?",
+    options: [
+      { text: "There are clear boundaries between what\u2019s pure and what\u2019s not. Some things shouldn\u2019t be crossed.", altitude: 1 },
+      { text: "I care about treating my body and mind well \u2014 health, discipline, and self-improvement feel important.", altitude: 2 },
+      { text: "Nature, the planet, interconnected living systems \u2014 there\u2019s something sacred about ecological wholeness.", altitude: 3 },
+      { text: "Sacredness shows up in many forms \u2014 religious, ecological, interpersonal, aesthetic. I can honor multiple expressions of it without needing them all to be the same.", altitude: 4 },
+    ]
+  },
+  { id: 18, section: "B", foundation: "Liberty", color: "#50C878",
+    prompt: "What does freedom mean to you most deeply?",
+    options: [
+      { text: "Freedom means being strong enough that no one can control you or tell you what to do.", altitude: 1 },
+      { text: "Freedom means being able to pursue your own goals and build your own life without unnecessary interference.", altitude: 2 },
+      { text: "Real freedom requires liberation from systems of oppression \u2014 it\u2019s not just individual, it\u2019s collective.", altitude: 3 },
+      { text: "Freedom is the capacity to author your own life while recognizing that you\u2019re deeply interconnected with others. Autonomy and interdependence aren\u2019t opposites.", altitude: 4 },
+    ]
+  },
+];
+
+// SECTION C: How You Hold It (2 meta-items) — Likert
+const sectionC = [
+  { id: 19, section: "C", facet: "Self-Awareness", color: "#5158FF",
+    text: "I notice that what I value sometimes pulls me in different directions \u2014 and I\u2019m more interested in understanding the tension than resolving it quickly." },
+  { id: 20, section: "C", facet: "Generative Holding", color: "#5158FF",
+    text: "I can feel strongly about my values and still be genuinely curious about someone who feels just as strongly about different ones." },
+];
+
+const allQuestions = [...sectionA, ...sectionB, ...sectionC];
+const totalQ = allQuestions.length; // 20
+
+const scaleOptions = [
+  { label: "Strongly Agree", value: 6 },
+  { label: "Agree", value: 5 },
+  { label: "Slightly Agree", value: 4 },
+  { label: "Slightly Disagree", value: 3 },
+  { label: "Disagree", value: 2 },
+  { label: "Strongly Disagree", value: 1 },
+];
+
+// ========================================
+// STATE
+// ========================================
+let currentQ = 0;
+const answers = {};
+const tensionFlags = {};
+
+// ========================================
+// QUIZ FLOW
+// ========================================
+function startQuiz() {
+  document.getElementById('introScreen').classList.remove('active');
+  document.getElementById('quizScreen').classList.add('active');
+  renderQuestion();
+}
+
+function startSection(s) {
+  document.getElementById(s === 'B' ? 'transitionAB' : 'transitionBC').classList.remove('active');
+  document.getElementById('quizScreen').classList.add('active');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = allQuestions[currentQ];
+  const area = document.getElementById('questionArea');
+
+  // Section labels
+  const sectionLabels = {
+    A: "Section A: Your Moral Profile",
+    B: "Section B: How You Express It",
+    C: "Section C: How You Hold It"
+  };
+  document.getElementById('progressSection').textContent = sectionLabels[q.section];
+  document.getElementById('progressCount').textContent = `${currentQ + 1} of ${totalQ}`;
+  document.getElementById('progressFill').style.width = `${((currentQ + 1) / totalQ) * 100}%`;
+
+  const tagLabel = q.foundation || q.facet;
+  const tagBg = q.color + "20";
+  const tagColor = q.color;
+
+  if (q.section === "A" || q.section === "C") {
+    // Likert question
+    const tensionHtml = q.section === "A" ? `
+      <div class="tension-option ${tensionFlags[q.id] ? 'selected' : ''}"
+           onclick="toggleTension(${q.id}, this)">
+        <span class="tension-icon">\u27F7</span>
+        <span class="tension-label">I feel pulled in both directions on this one</span>
+      </div>
+      <div class="tension-hint">${tensionFlags[q.id] ? 'Noted \u2014 still pick the answer closest to where you land' : 'You can select this and still choose a response above'}</div>
+    ` : '';
+
+    area.innerHTML = `
+      <div class="question-card entering" id="qCard">
+        <div class="question-number">Question ${currentQ + 1}</div>
+        <span class="foundation-tag" style="background:${tagBg}; color:${tagColor}">${tagLabel}</span>
+        <div class="question-text">${q.text}</div>
+        <div class="likert-scale">
+          ${scaleOptions.map(o => `
+            <div class="likert-option ${answers[q.id] === o.value ? 'selected' : ''}"
+                 onclick="selectAnswer(${q.id}, ${o.value}, this, 'likert')">
+              <div class="likert-radio"></div>
+              <span class="likert-label">${o.label}</span>
+              <span class="likert-value">${o.value}</span>
+            </div>
+          `).join('')}
+        </div>
+        ${tensionHtml}
+        <div class="prefer-not">
+          <button onclick="selectAnswer(${q.id}, null, null, 'likert')"
+                  style="${answers[q.id] === null ? 'color: var(--cdi-purple); font-weight: 600' : ''}">
+            Prefer not to say
+          </button>
+        </div>
+      </div>
+    `;
+  } else {
+    // Section B: expression forced-choice
+    // Shuffle options but preserve altitude mapping
+    const shuffled = q.options.map((o, i) => ({...o, origIdx: i}));
+    // Use stable shuffle based on question id
+    const seed = q.id * 7;
+    shuffled.sort((a, b) => ((a.origIdx * seed) % 5) - ((b.origIdx * seed) % 5));
+
+    area.innerHTML = `
+      <div class="question-card entering" id="qCard">
+        <div class="question-number">Question ${currentQ + 1}</div>
+        <span class="foundation-tag" style="background:${tagBg}; color:${tagColor}">${tagLabel}</span>
+        <div class="question-prompt">${q.prompt}</div>
+        <div class="expression-options">
+          ${shuffled.map(o => `
+            <div class="expression-option ${answers[q.id] === o.altitude ? 'selected' : ''}"
+                 onclick="selectAnswer(${q.id}, ${o.altitude}, this, 'expression')">
+              <div class="expression-radio"></div>
+              <span class="expression-text">${o.text}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  requestAnimationFrame(() => {
+    document.getElementById('qCard').classList.remove('entering');
+  });
+
+  document.getElementById('prevBtn').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  const isLast = currentQ === totalQ - 1;
+  document.getElementById('nextBtn').textContent = isLast ? 'See Results' : 'Next \u2192';
+  document.getElementById('nextBtn').disabled = answers[q.id] === undefined;
+}
+
+function selectAnswer(qId, value, el, type) {
+  answers[qId] = value;
+  const selector = type === 'likert' ? '.likert-option' : '.expression-option';
+  document.querySelectorAll(selector).forEach(o => o.classList.remove('selected'));
+  if (el) el.classList.add('selected');
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function toggleTension(qId, el) {
+  tensionFlags[qId] = !tensionFlags[qId];
+  el.classList.toggle('selected');
+  const hint = el.nextElementSibling;
+  if (hint && hint.classList.contains('tension-hint')) {
+    hint.textContent = tensionFlags[qId]
+      ? 'Noted \u2014 still pick the answer closest to where you land'
+      : 'You can select this and still choose a response above';
+  }
+}
+
+function nextQuestion() {
+  // Transition points: after A (idx 11), after B (idx 17)
+  if (currentQ === 11) {
+    document.getElementById('quizScreen').classList.remove('active');
+    document.getElementById('transitionAB').classList.add('active');
+    currentQ++;
+    return;
+  }
+  if (currentQ === 17) {
+    document.getElementById('quizScreen').classList.remove('active');
+    document.getElementById('transitionBC').classList.add('active');
+    currentQ++;
+    return;
+  }
+  if (currentQ === totalQ - 1) {
+    showResults();
+    return;
+  }
+  currentQ++;
+  renderQuestion();
+}
+
+function prevQuestion() {
+  if (currentQ === 12) {
+    currentQ = 11;
+    document.getElementById('transitionAB').classList.remove('active');
+    document.getElementById('quizScreen').classList.add('active');
+    renderQuestion();
+    return;
+  }
+  if (currentQ === 18) {
+    currentQ = 17;
+    document.getElementById('transitionBC').classList.remove('active');
+    document.getElementById('quizScreen').classList.add('active');
+    renderQuestion();
+    return;
+  }
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
+}
+
+// ========================================
+// SCORING & RESULTS
+// ========================================
+function calcScore(ids) {
+  const valid = ids.filter(id => answers[id] !== null && answers[id] !== undefined);
+  if (valid.length === 0) return null;
+  return valid.reduce((sum, id) => sum + answers[id], 0) / valid.length;
+}
+
+// Descriptive labels for altitude (student-facing, no stage names)
+const altitudeDescriptions = {
+  Fairness: {
+    1: "You see fairness as consistency \u2014 the same rules applied equally to everyone.",
+    2: "You see fairness as opportunity \u2014 everyone getting a real shot based on effort and talent.",
+    3: "You see fairness as equity \u2014 adjusting for starting advantages so outcomes are more equal.",
+    4: "You see fairness as context-dependent \u2014 sometimes equal rules, sometimes adjusted outcomes, depending on the situation.",
+  },
+  Care: {
+    1: "Your care runs deep for the people closest to you \u2014 it starts with your inner circle.",
+    2: "You express care through action \u2014 solving problems and connecting people with help.",
+    3: "You express care through deep emotional presence \u2014 listening, validating, holding space.",
+    4: "Your care is discerning \u2014 you read what someone actually needs, whether that\u2019s presence, action, honesty, or space.",
+  },
+  Loyalty: {
+    1: "Loyalty means standing by your people, full stop. The bonds that matter most are close and fierce.",
+    2: "Loyalty means reliability \u2014 showing up for the teams and groups you\u2019ve committed to.",
+    3: "Your loyalty extends broadly \u2014 you feel connected to a wider human community beyond your in-groups.",
+    4: "You hold multiple loyalties at once \u2014 local and global, personal and collective \u2014 and navigate the tensions between them.",
+  },
+  Authority: {
+    1: "You value clear structures and roles. When people know their place, things run well.",
+    2: "You respect authority that\u2019s been earned through competence, not just assigned by title.",
+    3: "You believe the best decisions come from inclusive processes, not top-down directives.",
+    4: "You see leadership as contextual \u2014 different situations call for hierarchy, consensus, or individual initiative.",
+  },
+  Sanctity: {
+    1: "You experience sacredness as clear boundaries \u2014 there are lines that shouldn\u2019t be crossed.",
+    2: "Sacredness for you is tied to self-care and discipline \u2014 treating your body and mind as worthy of respect.",
+    3: "You find sacredness in ecological interconnection \u2014 the natural world carries something worth protecting.",
+    4: "You recognize sacredness in many forms \u2014 religious, ecological, interpersonal, aesthetic \u2014 and can honor them without needing them to be the same.",
+  },
+  Liberty: {
+    1: "Freedom means strength \u2014 being powerful enough that no one controls you.",
+    2: "Freedom means autonomy \u2014 building your own life without unnecessary interference.",
+    3: "Real freedom requires collective liberation \u2014 it\u2019s not just individual, it\u2019s systemic.",
+    4: "Freedom is self-authorship within interdependence \u2014 autonomy and connection aren\u2019t opposites.",
+  },
+};
+
+// Hints about what different expressions mean for dialogue
+const altitudeHints = {
+  1: "Someone who expresses this foundation differently may seem reckless or naive to you \u2014 and vice versa.",
+  2: "Someone with a different expression might seem either too rigid or too idealistic from your vantage point.",
+  3: "You might find rule-based or individualistic expressions of this foundation frustrating or limiting.",
+  4: "You likely see validity in multiple expressions, which can make you a bridge \u2014 and occasionally frustrate people who want a clear stance.",
+};
+
+function showResults() {
+  document.getElementById('quizScreen').classList.remove('active');
+  document.getElementById('resultsScreen').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const foundations = [
+    { name: "Care", ids: [1, 2], color: "#E85D75", exprId: 14 },
+    { name: "Fairness", ids: [3, 4], color: "#F5A623", exprId: 13 },
+    { name: "Liberty", ids: [5, 6], color: "#50C878", exprId: 18 },
+    { name: "Loyalty", ids: [7, 8], color: "#4A90D9", exprId: 15 },
+    { name: "Authority", ids: [9, 10], color: "#9B59B6", exprId: 16 },
+    { name: "Sanctity", ids: [11, 12], color: "#D4A76A", exprId: 17 },
+  ];
+
+  // Foundation scores (Section A)
+  const fScores = foundations.map(f => ({
+    ...f,
+    score: calcScore(f.ids) || 0,
+    altitude: answers[f.exprId] || 0,
+  }));
+
+  // Section C scores
+  const selfAwareness = answers[19] || 0;
+  const generativeHolding = answers[20] || 0;
+
+  // Tension count
+  const tensionCount = Object.values(tensionFlags).filter(Boolean).length;
+
+  // Average altitude across Section B
+  const altitudes = fScores.map(f => f.altitude).filter(a => a > 0);
+  const avgAltitude = altitudes.length > 0 ? altitudes.reduce((s, a) => s + a, 0) / altitudes.length : 0;
+
+  // Composite posture: weighted blend of Section C Likert (scaled 1-6 → 1-4) + avg altitude + tension bonus
+  const cLikertNorm = ((selfAwareness + generativeHolding) / 2 - 1) / 5 * 3 + 1; // normalize to 1-4 scale
+  const tensionBonus = Math.min(tensionCount * 0.04, 0.3);
+  const rawPosture = (cLikertNorm * 0.4) + (avgAltitude * 0.5) + (tensionBonus * 0.1 / 0.1);
+  // Scale posture to 1-6 for display
+  const postureScore = Math.min(Math.max(((rawPosture - 1) / 3) * 5 + 1, 1), 6);
+
+  // Draw radar
+  drawRadar(fScores);
+
+  // Foundation scores display
+  document.getElementById('foundationScores').innerHTML = fScores.map(f => `
+    <div class="foundation-score">
+      <div class="foundation-dot" style="background: ${f.color}"></div>
+      <span class="foundation-name">${f.name}</span>
+      <span class="foundation-value">${f.score.toFixed(1)}</span>
+    </div>
+  `).join('');
+
+  // Expression results (Section B)
+  document.getElementById('expressionResults').innerHTML = fScores.map(f => {
+    const desc = altitudeDescriptions[f.name]?.[f.altitude] || "No response recorded.";
+    const hint = altitudeHints[f.altitude] || "";
+    return `
+      <div class="expression-result" style="border-color: ${f.color}">
+        <div class="er-foundation" style="color: ${f.color}">${f.name}</div>
+        <div class="er-description">${desc}</div>
+        <div class="er-hint">${hint}</div>
+      </div>
+    `;
+  }).join('');
+
+  // Posture
+  const pct = ((postureScore - 1) / 5) * 100;
+  const marker = document.getElementById('postureMarker');
+  marker.textContent = postureScore.toFixed(1);
+  setTimeout(() => { marker.style.left = `${pct}%`; }, 100);
+
+  // Facets grid
+  const facetsEl = document.getElementById('facetsGrid');
+  const tensionDisplay = tensionCount > 0
+    ? `<div class="facet-item" style="border: 1px dashed var(--cdi-purple-mid)">
+        <div class="facet-score">${tensionCount}</div>
+        <div class="facet-name">Tension Points</div>
+       </div>` : '';
+  facetsEl.innerHTML = `
+    <div class="facet-item">
+      <div class="facet-score">${selfAwareness.toFixed ? selfAwareness : selfAwareness}</div>
+      <div class="facet-name">Self-Awareness</div>
+    </div>
+    <div class="facet-item">
+      <div class="facet-score">${generativeHolding}</div>
+      <div class="facet-name">Generative Holding</div>
+    </div>
+    <div class="facet-item">
+      <div class="facet-score">${avgAltitude.toFixed(1)}</div>
+      <div class="facet-name">Expression Complexity</div>
+    </div>
+    ${tensionDisplay}
+  `;
+
+  // Posture tier
+  const tierEl = document.getElementById('postureTier');
+  let tierLabel, tierDesc;
+  if (postureScore >= 4.5) {
+    tierLabel = "Expansive";
+    tierDesc = "You hold your values with strong conviction and genuine openness. You can stand firm in what matters to you while remaining deeply curious about perspectives that differ from yours.";
+  } else if (postureScore >= 3.0) {
+    tierLabel = "Principled Humility";
+    tierDesc = "You balance conviction with curiosity. You recognize your moral framework as yours rather than the only valid one, and you\u2019re generally willing to engage with different perspectives.";
+  } else {
+    tierLabel = "Rooted in Place";
+    tierDesc = "Your values feel deeply important to you, and you hold them with strong conviction. There may be opportunities to explore how others arrive at different values while keeping your own intact.";
+  }
+  tierEl.innerHTML = `
+    <div class="posture-tier-label">${tierLabel}</div>
+    <div class="posture-tier-desc">${tierDesc}</div>
+  `;
+
+  // Narrative
+  generateNarrative(fScores, postureScore, tensionCount, avgAltitude);
+}
+
+function generateNarrative(fScores, postureScore, tensionCount, avgAltitude) {
+  const el = document.getElementById('narrativeContent');
+  const sorted = [...fScores].sort((a, b) => b.score - a.score);
+  const top2 = sorted.slice(0, 2);
+  const bottom2 = sorted.slice(-2);
+
+  let profileText = `<p>Your moral intuitions are most strongly shaped by <strong>${top2[0].name}</strong> and <strong>${top2[1].name}</strong>. These are the foundations that likely fire first when you encounter a moral question \u2014 they\u2019re the lens through which situations feel right or wrong before you\u2019ve even begun to reason about them.</p>`;
+
+  profileText += `<p>You scored lower on <strong>${bottom2[0].name}</strong> and <strong>${bottom2[1].name}</strong>. This doesn\u2019t mean you reject these values \u2014 it means they\u2019re less central to your moral reflexes. Someone who prioritizes these foundations might see moral dimensions in situations where you don\u2019t, and vice versa.</p>`;
+
+  // Expression narrative — the developmental streams insight
+  let exprText = `<p><strong>How you express those foundations matters too.</strong> Two people who both prioritize ${top2[0].name} can still find themselves in genuine disagreement \u2014 not because they value different things, but because they <em>express the same value differently</em>. `;
+
+  const topAlt = top2[0].altitude;
+  const topDesc = altitudeDescriptions[top2[0].name]?.[topAlt] || "";
+  if (topDesc) {
+    exprText += `For you, ${topDesc.charAt(0).toLowerCase() + topDesc.slice(1)} `;
+    exprText += `Someone who expresses ${top2[0].name} differently isn\u2019t wrong \u2014 they\u2019re drawing on the same foundation from a different vantage point.</p>`;
+  } else {
+    exprText += `</p>`;
+  }
+
+  exprText += `<p>This is what Lesson 2 calls the <strong>moral empathy gap</strong> \u2014 and the developmental dimension makes it even more nuanced. The gap isn\u2019t just between people who prioritize <em>different</em> foundations. It can open up between people who share the <em>same</em> foundation but hold it at different altitudes of complexity.</p>`;
+
+  // Posture narrative
+  let postureText = '';
+  if (postureScore >= 4.5) {
+    postureText = `<p>Your overall posture suggests you hold your moral framework with significant flexibility. You seem to recognize that your foundations \u2014 and the way you express them \u2014 are shaped by your experiences rather than being universal truths. This is what CDI calls <strong>principled humility</strong>: conviction grounded in curiosity.</p>`;
+  } else if (postureScore >= 3.0) {
+    postureText = `<p>Your posture suggests a developing capacity to hold your values openly. You\u2019re moving toward what CDI calls <strong>principled humility</strong> \u2014 standing firmly in your convictions while staying curious about different ones. The lessons ahead will give you tools to practice this further.</p>`;
+  } else {
+    postureText = `<p>Your values feel deeply important to you \u2014 perhaps non-negotiable. That conviction has real value. Over the course of this program, you\u2019ll explore whether it\u2019s possible to hold that conviction <em>and</em> genuine curiosity about people who see things differently. That\u2019s not about weakening what you believe \u2014 it\u2019s about strengthening <em>how</em> you hold it.</p>`;
+  }
+
+  // Tension narrative
+  let tensionText = '';
+  if (tensionCount > 0) {
+    if (tensionCount >= 4) {
+      tensionText = `<p>You flagged <strong>${tensionCount} items</strong> as pulling you in both directions. That\u2019s a meaningful signal: you\u2019re aware of genuine complexity in your own moral landscape. Feeling tension on a moral question isn\u2019t confusion \u2014 it\u2019s a form of honesty about the fact that values sometimes compete with each other.</p>`;
+    } else {
+      tensionText = `<p>You noted tension on <strong>${tensionCount} item${tensionCount > 1 ? 's' : ''}</strong> \u2014 moments where you felt pulled in both directions. The places where your moral intuitions compete are often the places where the most interesting growth happens.</p>`;
+    }
+  }
+
+  const lookAhead = `<p><strong>Looking ahead:</strong> In the next lessons, you\u2019ll meet people whose moral profiles look very different from yours \u2014 not just in which foundations they prioritize, but in how they express them. Your profile, your expressions, and your posture will help you understand why those conversations feel easy or hard, and give you language for what\u2019s happening beneath the surface.</p>`;
+
+  el.innerHTML = profileText + exprText + postureText + tensionText + lookAhead;
+}
+
+// ========================================
+// RADAR CHART
+// ========================================
+function drawRadar(fScores) {
+  const canvas = document.getElementById('radarChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = 400 * dpr;
+  canvas.height = 400 * dpr;
+  ctx.scale(dpr, dpr);
+
+  const cx = 200, cy = 200, maxR = 150;
+  const n = fScores.length;
+  const angleStep = (2 * Math.PI) / n;
+  const startAngle = -Math.PI / 2;
+
+  // Grid rings
+  for (let ring = 1; ring <= 6; ring++) {
+    const r = (ring / 6) * maxR;
+    ctx.beginPath();
+    for (let i = 0; i <= n; i++) {
+      const a = startAngle + i * angleStep;
+      const x = cx + r * Math.cos(a);
+      const y = cy + r * Math.sin(a);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = ring % 2 === 0 ? '#D8D9E8' : '#EAEBF4';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Axes
+  for (let i = 0; i < n; i++) {
+    const a = startAngle + i * angleStep;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + maxR * Math.cos(a), cy + maxR * Math.sin(a));
+    ctx.strokeStyle = '#D8D9E8';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Data shape
+  ctx.beginPath();
+  fScores.forEach((f, i) => {
+    const a = startAngle + i * angleStep;
+    const r = (f.score / 6) * maxR;
+    const x = cx + r * Math.cos(a);
+    const y = cy + r * Math.sin(a);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(81, 88, 255, 0.15)';
+  ctx.fill();
+  ctx.strokeStyle = '#5158FF';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Data points
+  fScores.forEach((f, i) => {
+    const a = startAngle + i * angleStep;
+    const r = (f.score / 6) * maxR;
+    const x = cx + r * Math.cos(a);
+    const y = cy + r * Math.sin(a);
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = f.color;
+    ctx.fill();
+    ctx.strokeStyle = '#FFF';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // Labels
+  ctx.font = '600 13px "IBM Plex Sans", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  fScores.forEach((f, i) => {
+    const a = startAngle + i * angleStep;
+    const labelR = maxR + 24;
+    const x = cx + labelR * Math.cos(a);
+    const y = cy + labelR * Math.sin(a);
+    ctx.fillStyle = f.color;
+    ctx.fillText(f.name, x, y);
+  });
+
+  ctx.font = '400 10px "IBM Plex Sans", sans-serif';
+  ctx.fillStyle = '#AAA';
+  ctx.textAlign = 'center';
+  [2, 4, 6].forEach(v => {
+    const r = (v / 6) * maxR;
+    ctx.fillText(v.toString(), cx + 12, cy - r + 1);
+  });
+}
+</script>
+
+</body>
+</html>
